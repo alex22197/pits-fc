@@ -1,11 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SeccionEnConstruccionComponent } from '@shared/components/seccion-en-construccion/seccion-en-construccion.component';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MensajeEstadoComponent } from '@shared/components/mensaje-estado/mensaje-estado.component';
+import { TarjetaJugadorComponent } from '../../components/tarjeta-jugador/tarjeta-jugador.component';
+import { DatosPlantillaService } from '../../services/datos-plantilla.service';
 
-/** Plantilla del equipo con la ficha de cada jugador (pendiente de datos). */
+/** Plantilla del equipo: un jugador por tarjeta, con enlace a su ficha. */
 @Component({
   selector: 'pits-plantilla-page',
-  imports: [SeccionEnConstruccionComponent],
+  imports: [MensajeEstadoComponent, TarjetaJugadorComponent],
+  providers: [DatosPlantillaService],
   templateUrl: './plantilla-page.component.html',
+  styleUrl: './plantilla-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlantillaPageComponent {}
+export class PlantillaPageComponent {
+  protected readonly datos = inject(DatosPlantillaService);
+}

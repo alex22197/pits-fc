@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.jornada {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  scroll-margin-top: var(--espacio-4);
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+  font-size: var(--texto-l);
+  font-weight: 750;
+  font-stretch: var(--anchura-titulo);
+}
+
+.actual {
+  padding: var(--espacio-1) var(--espacio-3);
+  border-radius: var(--radio-pildora);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.partidos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}

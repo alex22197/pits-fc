@@ -1,0 +1,45 @@
+:host {
+  display: inline-block;
+}
+
+.racha {
+  display: flex;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ficha {
+  display: grid;
+  place-items: center;
+  width: var(--minimo-tactil);
+  height: var(--minimo-tactil);
+  border-radius: var(--radio-control);
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-l);
+  font-weight: 800;
+}
+
+.racha--pequena {
+  gap: var(--espacio-1);
+
+  .ficha {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 0.25rem;
+    font-size: var(--texto-xs);
+  }
+}
+
+.ficha--victoria {
+  background: var(--color-victoria);
+}
+
+.ficha--empate {
+  background: var(--color-empate);
+}
+
+.ficha--derrota {
+  background: var(--color-derrota);
+}

@@ -1,0 +1,107 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.partido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-left-width: 4px;
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+// Los nuestros llevan una franja: salmón si no se ha jugado, el color del resultado si sí.
+.partido--nuestro {
+  border-left-color: var(--color-marca);
+  background: var(--color-superficie-elevada);
+}
+
+.partido--victoria {
+  border-left-color: var(--color-victoria);
+}
+
+.partido--empate {
+  border-left-color: var(--color-empate);
+}
+
+.partido--derrota {
+  border-left-color: var(--color-derrota);
+}
+
+.cuando,
+.donde {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2) var(--espacio-3);
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
+.jornada {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.estado {
+  padding: 0 var(--espacio-2);
+  border-radius: var(--radio-pildora);
+  background: var(--color-marca-suave);
+  color: var(--color-marca);
+  font-weight: 700;
+}
+
+.equipos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.equipo {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.equipo--local {
+  text-align: right;
+}
+
+.equipo--nuestro {
+  color: var(--color-marca);
+  font-weight: 800;
+}
+
+// Marcador en letra condensada, como un marcador de verdad.
+.marcador {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espacio-1);
+  min-width: 3.5rem;
+  justify-content: center;
+  font-size: var(--texto-cifra);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  font-variant-numeric: tabular-nums;
+}
+
+.separador {
+  color: var(--color-tinta-tenue);
+}
+
+.enlace {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+@include bp.desde(tablet) {
+  .cuando,
+  .donde {
+    font-size: var(--texto-s);
+  }
+}

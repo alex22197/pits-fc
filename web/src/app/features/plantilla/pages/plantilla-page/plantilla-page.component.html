@@ -1,4 +1,20 @@
-<pits-seccion-en-construccion
-  titulo="Plantilla"
-  descripcion="Aquí saldrán los jugadores del equipo con su dorsal, posición y ficha de estadísticas."
-/>
+<h1 class="titulo-pagina">Plantilla</h1>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando la plantilla…" />
+} @else if (datos.plantilla.value(); as jugadores) {
+  @if (jugadores.length > 0) {
+    <div class="jugadores">
+      @for (jugador of jugadores; track jugador.id) {
+        <pits-tarjeta-jugador
+          [jugador]="jugador"
+          [cifras]="datos.cifrasPorJugador().get(jugador.id) ?? null"
+        />
+      }
+    </div>
+  } @else {
+    <pits-mensaje-estado tipo="vacio" mensaje="Todavía no hay jugadores dados de alta." />
+  }
+}

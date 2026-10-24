@@ -52,12 +52,14 @@ terminarla, se marca aquí.
 
 ## 4. Pantallas públicas
 
-- [ ] Portada: próximo partido, convocatoria publicada, último resultado y resumen de la
-      clasificación.
-- [ ] Calendario: jornadas con fecha, hora, campo y marcador; detalle de nuestro partido con
-      goles y tarjetas.
-- [ ] Clasificación: tabla del grupo con nuestra fila destacada.
-- [ ] Plantilla: jugadores con dorsal y posición; ficha con sus estadísticas.
+- [x] Portada: próximo partido, convocatoria publicada, último resultado y resumen de la
+      clasificación (#7).
+- [x] Calendario: jornadas con fecha, hora, campo y marcador, abierto por la jornada que
+      toca y con filtro a nuestros partidos; detalle de nuestro partido con cronología de
+      goles y tarjetas, alineación y convocatoria (#7).
+- [x] Clasificación: tabla del grupo con nuestra fila destacada (#7).
+- [x] Plantilla: jugadores con dorsal y posición; ficha con sus cifras y sus partidos (#7).
+- [ ] Página de privacidad con Alex como contacto, antes de publicar.
 
 ## 5. Gestión
 

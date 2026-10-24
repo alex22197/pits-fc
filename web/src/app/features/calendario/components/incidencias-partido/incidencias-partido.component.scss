@@ -1,0 +1,77 @@
+:host {
+  display: block;
+}
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.cronologia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.incidencia {
+  display: grid;
+  grid-template-columns: 2.5rem 1.25rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--minimo-tactil);
+}
+
+.incidencia--rival {
+  color: var(--color-tinta-tenue);
+}
+
+.minuto {
+  color: var(--color-tinta-tenue);
+  font-variant-numeric: tabular-nums;
+}
+
+// Icono de gol: un balón sencillo; tarjetas: un rectángulo del color que toca.
+.icono {
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--color-marca);
+}
+
+.incidencia--rival .icono--gol {
+  background: var(--color-tinta-tenue);
+}
+
+.icono--amarilla,
+.icono--roja {
+  width: 0.625rem;
+  height: 0.875rem;
+  border-radius: 2px;
+}
+
+.icono--amarilla {
+  background: var(--color-amarilla);
+}
+
+.icono--roja {
+  background: var(--color-roja);
+}
+
+.quien {
+  font-weight: 600;
+}
+
+.marcador {
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  font-variant-numeric: tabular-nums;
+}

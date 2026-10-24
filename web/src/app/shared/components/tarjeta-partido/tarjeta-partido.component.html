@@ -1,0 +1,49 @@
+@let p = partido();
+<article
+  class="partido"
+  [class.partido--nuestro]="p.esNuestro"
+  [class]="
+    'partido' +
+    (p.esNuestro ? ' partido--nuestro' : '') +
+    (resultado() ? ' partido--' + resultado() : '')
+  "
+>
+  <div class="cuando">
+    @if (conJornada()) {
+      <span class="jornada">Jornada {{ p.jornadaNumero }}</span>
+    }
+    <span class="fecha">{{ p | fechaPartido }}</span>
+    @if (estado(); as estado) {
+      <span class="estado">{{ estado }}</span>
+    }
+  </div>
+
+  <div class="equipos">
+    <span class="equipo equipo--local" [class.equipo--nuestro]="p.local.esNuestro">{{
+      p.local.nombre
+    }}</span>
+    <span class="marcador">
+      @if (p.marcador; as marcador) {
+        <span class="cifra">{{ marcador.local }}</span>
+        <span class="separador" aria-hidden="true">-</span>
+        <span class="cifra">{{ marcador.visitante }}</span>
+        <span class="solo-lector">a</span>
+      } @else {
+        <span class="separador" aria-hidden="true">–</span>
+        <span class="solo-lector">contra</span>
+      }
+    </span>
+    <span class="equipo equipo--visitante" [class.equipo--nuestro]="p.visitante.esNuestro">{{
+      p.visitante.nombre
+    }}</span>
+  </div>
+
+  <div class="donde">
+    @if (p.campo) {
+      <span class="campo">{{ p.campo }}</span>
+    }
+    @if (enlazable()) {
+      <a class="enlace" [routerLink]="['/calendario', 'partido', p.id]">Ver acta</a>
+    }
+  </div>
+</article>

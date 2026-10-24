@@ -1,4 +1,21 @@
-<pits-seccion-en-construccion
-  titulo="Clasificación"
-  descripcion="Aquí saldrá la tabla del grupo 2ª Aficionados G2 con puntos, partidos, goles y la racha de cada equipo."
-/>
+<h1 class="titulo-pagina">Clasificación</h1>
+@if (competicion.value(); as competicion) {
+  <p class="texto-secundario">
+    {{ competicion.nombre }} · {{ competicion.grupo }} · {{ competicion.temporada }}
+  </p>
+}
+
+@if (error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando la clasificación…" />
+} @else if (tabla.value(); as filas) {
+  @if (filas.length > 0) {
+    <pits-tabla-clasificacion [filas]="filas" />
+  } @else {
+    <pits-mensaje-estado
+      tipo="vacio"
+      mensaje="La federación aún no ha publicado la clasificación."
+    />
+  }
+}

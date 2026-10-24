@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.proximo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-5);
+  border: 1px solid var(--color-marca);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie-elevada);
+}
+
+.etiqueta {
+  color: var(--color-marca);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rival {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--texto-xl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.contra {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+  font-weight: 600;
+  font-stretch: normal;
+  letter-spacing: 0.04em;
+}
+
+.cuando {
+  margin-top: var(--espacio-2);
+  font-size: var(--texto-l);
+  font-weight: 700;
+}
+
+.cuando::first-letter {
+  text-transform: uppercase;
+}
+
+.donde,
+.aviso {
+  color: var(--color-tinta-tenue);
+}
+
+.aviso {
+  color: var(--color-empate);
+  font-weight: 700;
+}

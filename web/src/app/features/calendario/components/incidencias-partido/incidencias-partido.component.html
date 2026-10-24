@@ -1,0 +1,24 @@
+<section class="bloque">
+  <h2 class="titulo-seccion">Cómo fue</h2>
+  <ol class="cronologia">
+    @for (incidencia of incidencias(); track $index) {
+      <li class="incidencia" [class.incidencia--rival]="!incidencia.nuestro">
+        <span class="minuto">{{ incidencia.minuto !== null ? incidencia.minuto + "'" : '–' }}</span>
+        <span class="icono" [class]="'icono icono--' + incidencia.tipo" aria-hidden="true"></span>
+        <span class="solo-lector">
+          {{
+            incidencia.tipo === 'gol'
+              ? 'Gol'
+              : incidencia.tipo === 'amarilla'
+                ? 'Tarjeta amarilla'
+                : 'Tarjeta roja'
+          }}
+        </span>
+        <span class="quien">{{ incidencia.quien }}</span>
+        @if (incidencia.marcador) {
+          <span class="marcador">{{ incidencia.marcador }}</span>
+        }
+      </li>
+    }
+  </ol>
+</section>

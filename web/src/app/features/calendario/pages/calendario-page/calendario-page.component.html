@@ -1,4 +1,24 @@
-<pits-seccion-en-construccion
-  titulo="Calendario"
-  descripcion="Aquí saldrán las 26 jornadas de la liga con fecha, hora, campo, marcador y la convocatoria de cada partido."
-/>
+<header class="cabecera">
+  <h1 class="titulo-pagina">Calendario</h1>
+  <label class="filtro">
+    <input type="checkbox" [checked]="datos.soloNuestros()" (change)="cambiarFiltro($event)" />
+    Solo nuestros partidos
+  </label>
+</header>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando el calendario…" />
+} @else if (datos.jornadas().length === 0) {
+  <pits-mensaje-estado tipo="vacio" mensaje="Todavía no hay calendario." />
+} @else {
+  @if (datos.jornadaActual(); as actual) {
+    <a class="salto" [href]="'#jornada-' + actual.numero">Ir a la jornada {{ actual.numero }}</a>
+  }
+  <div class="jornadas">
+    @for (jornada of datos.jornadas(); track jornada.id) {
+      <pits-lista-jornada [jornada]="jornada" [actual]="jornada.id === datos.jornadaActual()?.id" />
+    }
+  </div>
+}

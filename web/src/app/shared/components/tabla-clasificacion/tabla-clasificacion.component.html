@@ -1,0 +1,50 @@
+<div class="contenedor">
+  <table class="tabla" [class.tabla--resumida]="primeros() > 0">
+    <thead>
+      <tr>
+        <th scope="col" class="posicion"><span class="solo-lector">Puesto</span></th>
+        <th scope="col" class="equipo">Equipo</th>
+        <th scope="col" class="numero" title="Puntos">Pts</th>
+        <th scope="col" class="numero" title="Partidos jugados">PJ</th>
+        <th scope="col" class="numero ancha" title="Ganados">G</th>
+        <th scope="col" class="numero ancha" title="Empatados">E</th>
+        <th scope="col" class="numero ancha" title="Perdidos">P</th>
+        <th scope="col" class="numero" title="Goles a favor">GF</th>
+        <th scope="col" class="numero" title="Goles en contra">GC</th>
+        <th scope="col" class="numero ancha" title="Diferencia de goles">DG</th>
+        <th scope="col" class="racha ancha">Últimos</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (fila of visibles(); track fila.equipo.id) {
+        @if (haySalto() && $last && fila.posicion > primeros() + 1) {
+          <tr class="salto" aria-hidden="true">
+            <td colspan="11">···</td>
+          </tr>
+        }
+        <tr [class.nuestra]="fila.equipo.esNuestro">
+          <td class="posicion">{{ fila.posicion }}</td>
+          <th scope="row" class="equipo">{{ fila.equipo.nombre }}</th>
+          <td class="numero puntos">{{ fila.puntos }}</td>
+          <td class="numero">{{ fila.jugados }}</td>
+          <td class="numero ancha">{{ fila.ganados }}</td>
+          <td class="numero ancha">{{ fila.empatados }}</td>
+          <td class="numero ancha">{{ fila.perdidos }}</td>
+          <td class="numero">{{ fila.golesFavor }}</td>
+          <td class="numero">{{ fila.golesContra }}</td>
+          <td class="numero ancha">
+            {{ fila.diferencia > 0 ? '+' + fila.diferencia : fila.diferencia }}
+          </td>
+          <td class="racha ancha">
+            <pits-racha [resultados]="fila.ultimos" tamano="pequena" />
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+@if (actualizada(); as fecha) {
+  <p class="texto-secundario pie">
+    Clasificación oficial de la federación, actualizada el {{ fecha }}.
+  </p>
+}

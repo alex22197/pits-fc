@@ -1,0 +1,15 @@
+@let p = partido();
+<article class="proximo">
+  <p class="etiqueta">Próximo partido · Jornada {{ p.jornadaNumero }}</p>
+  <h2 class="rival">
+    <span class="contra">{{ enCasa() ? 'Recibimos a' : 'Visitamos a' }}</span>
+    {{ rival() }}
+  </h2>
+  <p class="cuando">{{ p | fechaPartido: 'larga' }}</p>
+  @if (p.campo) {
+    <p class="donde">{{ p.campo }}</p>
+  }
+  @if (p.estado === 'aplazado') {
+    <p class="aviso">Aplazado, pendiente de nueva fecha.</p>
+  }
+</article>
