@@ -49,7 +49,13 @@ features/
 ```
 
 Secciones actuales: `inicio`, `calendario`, `clasificacion`, `plantilla`, `estadisticas`,
-`acceso` y `no-encontrado`. `data-access/` está vacía hasta que exista el modelo de datos.
+`acceso` y `no-encontrado`.
+
+Entidades de `data-access/`: `competiciones`, `equipos`, `partidos` (calendario, detalle con
+acta, próximo partido y último resultado), `clasificacion`, `jugadores`, `estadisticas` y
+`convocatorias`. Cada una tiene en `interfaces/` sus modelos de dominio (`*.interface.ts`) y
+la forma de las filas que devuelve Supabase (`fila-*.type.ts`), y un `*.fixtures.ts` con filas
+de ejemplo para los tests.
 
 ### Reglas de dependencia
 
