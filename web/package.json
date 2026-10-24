@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:cloudflare": "npm run lint && npm run test:ci && ng build",
     "test": "ng test",
     "test:ci": "ng test --watch=false",
     "lint": "ng lint --max-warnings=0",
