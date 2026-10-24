@@ -1,0 +1,39 @@
+<figure class="grafica">
+  <figcaption class="cabecera">
+    <h3 class="titulo-seccion">{{ titulo() }}</h3>
+    @if (descripcion()) {
+      <p class="texto-secundario">{{ descripcion() }}</p>
+    }
+  </figcaption>
+
+  <div
+    class="lienzo"
+    echarts
+    [options]="opciones()"
+    [style.height.px]="altura()"
+    role="img"
+    [attr.aria-label]="titulo()"
+  ></div>
+
+  <details class="datos">
+    <summary>Ver datos</summary>
+    <table>
+      <thead>
+        <tr>
+          @for (cabecera of tabla().cabeceras; track $index) {
+            <th scope="col">{{ cabecera }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (fila of tabla().filas; track $index) {
+          <tr>
+            @for (celda of fila; track $index) {
+              <td>{{ celda }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </details>
+</figure>

@@ -30,6 +30,15 @@
   --color-velo: rgb(0 0 0 / 60%); // fondo oscurecido detrás de un panel
   --sombra-panel: 0 -8px 32px rgb(0 0 0 / 50%);
 
+  // Gráficas: colores de marca validados para fondo oscuro (banda de luminosidad y
+  // separación para daltonismo, ver docs/diseno.md). Las etiquetas usan los de texto.
+  --color-grafica-nosotros: #d9773a; // naranja: nuestras series
+  --color-grafica-rival: #4f86c6; // azul: lo que hace el rival
+  --color-grafica-victoria: #199e70;
+  --color-grafica-empate: #c98500;
+  --color-grafica-derrota: #d55181;
+  --color-grafica-rejilla: #2a2a2a;
+
   // Movimiento: corto y con propósito. Se anula con «reducir movimiento».
   --duracion-rapida: 150ms;
   --duracion-media: 300ms;

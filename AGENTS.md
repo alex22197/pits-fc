@@ -118,6 +118,11 @@ Detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
 - Puntos de corte con `@use 'breakpoints' as bp;` y `@include bp.desde(tablet)`.
 - Clases globales reutilizables en `web/src/styles/_tipografia.scss` (`titulo-pagina`,
   `titulo-seccion`, `texto-secundario`, `boton`).
+- Gráficas con ECharts solo a través de `pits-grafica` (`shared/components/grafica`), con
+  las opciones comunes de `shared/utils/graficas` y los colores `--color-grafica-*` leídos
+  en tiempo de ejecución por `TemaGraficasService`; cada gráfica lleva su tabla de datos. Un
+  color nuevo se valida para fondo oscuro antes de usarlo (ver
+  [`docs/diseno.md`](docs/diseno.md)).
 - Cualquier origen externo nuevo (scripts, estilos, letras, peticiones) se añade a la política
   de contenido de `web/public/_headers`; ver [`docs/despliegue.md`](docs/despliegue.md).
 

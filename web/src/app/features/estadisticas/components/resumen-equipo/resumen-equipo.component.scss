@@ -1,0 +1,124 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.fichas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.etiqueta {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+}
+
+// Cifra grande en letra condensada, como un marcador.
+.valor {
+  font-size: var(--texto-xl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 1;
+}
+
+.detalle {
+  color: var(--color-tinta-suave);
+  font-size: var(--texto-xs);
+}
+
+.bloques {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+}
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+// Un resultado por chip: letra y color, nunca solo color.
+.racha {
+  display: flex;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resultado {
+  display: grid;
+  place-items: center;
+  width: var(--minimo-tactil);
+  height: var(--minimo-tactil);
+  border-radius: var(--radio-control);
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-l);
+  font-weight: 800;
+}
+
+.resultado--victoria {
+  background: var(--color-victoria);
+}
+
+.resultado--empate {
+  background: var(--color-empate);
+}
+
+.resultado--derrota {
+  background: var(--color-derrota);
+}
+
+.balance {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-s);
+
+  th,
+  td {
+    padding: var(--espacio-2) var(--espacio-2);
+    border-bottom: 1px solid var(--color-borde);
+    text-align: center;
+  }
+
+  th[scope='row'] {
+    color: var(--color-tinta-suave);
+    text-align: left;
+  }
+
+  thead th {
+    color: var(--color-tinta-tenue);
+    font-weight: 600;
+  }
+
+  td {
+    font-variant-numeric: tabular-nums;
+  }
+}

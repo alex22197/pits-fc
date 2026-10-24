@@ -1,0 +1,88 @@
+<div class="fichas">
+  <div class="ficha">
+    <span class="etiqueta">Posición</span>
+    @if (posicion(); as fila) {
+      <span class="valor">{{ fila.posicion }}.º</span>
+      <span class="detalle"
+        >{{ fila.puntos }} {{ fila.puntos === 1 ? 'punto' : 'puntos' }} en la liga</span
+      >
+    } @else {
+      <span class="valor">–</span>
+      <span class="detalle">Sin clasificación todavía</span>
+    }
+  </div>
+  <div class="ficha">
+    <span class="etiqueta">Partidos</span>
+    <span class="valor">{{ resumen().jugados }}</span>
+    <span class="detalle"
+      >{{ resumen().victorias }} V · {{ resumen().empates }} E · {{ resumen().derrotas }} D</span
+    >
+  </div>
+  <div class="ficha">
+    <span class="etiqueta">Goles a favor</span>
+    <span class="valor">{{ resumen().golesFavor }}</span>
+    <span class="detalle">Diferencia {{ diferencia() }}</span>
+  </div>
+  <div class="ficha">
+    <span class="etiqueta">Goles en contra</span>
+    <span class="valor">{{ resumen().golesContra }}</span>
+    <span class="detalle"
+      >{{ resumen().puntos }} {{ resumen().puntos === 1 ? 'punto' : 'puntos' }} por resultados</span
+    >
+  </div>
+</div>
+
+<div class="bloques">
+  <section class="bloque">
+    <h3 class="titulo-seccion">Racha</h3>
+    @if (racha().length > 0) {
+      <ol class="racha" aria-label="Últimos resultados, del más antiguo al más reciente">
+        @for (paso of racha(); track $index) {
+          <li class="resultado" [class]="'resultado resultado--' + paso.resultado">
+            <span aria-hidden="true">{{ paso.letra }}</span>
+            <span class="solo-lector">{{ paso.resultado }}</span>
+          </li>
+        }
+      </ol>
+    } @else {
+      <p class="texto-secundario">Aún no hay partidos jugados.</p>
+    }
+  </section>
+
+  <section class="bloque">
+    <h3 class="titulo-seccion">Casa y fuera</h3>
+    <table class="balance">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">PJ</th>
+          <th scope="col">V</th>
+          <th scope="col">E</th>
+          <th scope="col">D</th>
+          <th scope="col">GF</th>
+          <th scope="col">GC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">En casa</th>
+          <td>{{ resumen().casa.jugados }}</td>
+          <td>{{ resumen().casa.victorias }}</td>
+          <td>{{ resumen().casa.empates }}</td>
+          <td>{{ resumen().casa.derrotas }}</td>
+          <td>{{ resumen().casa.golesFavor }}</td>
+          <td>{{ resumen().casa.golesContra }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Fuera</th>
+          <td>{{ resumen().fuera.jugados }}</td>
+          <td>{{ resumen().fuera.victorias }}</td>
+          <td>{{ resumen().fuera.empates }}</td>
+          <td>{{ resumen().fuera.derrotas }}</td>
+          <td>{{ resumen().fuera.golesFavor }}</td>
+          <td>{{ resumen().fuera.golesContra }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
