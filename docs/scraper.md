@@ -96,6 +96,20 @@ en el resumen para que Alex les ponga el nombre o apodo que prefiera desde gesti
 Los goleadores del grupo no se importan: su tabla solo sirve para contrastar y traería
 nombres de rivales (ADR 0004).
 
+### Tres cosas que se aprendieron al ponerlo en marcha
+
+- **La intranet rechaza las conexiones desde las regiones de Supabase en Irlanda y
+  Fráncfort** («Connection refused»), pero acepta las de París. Supabase elige la región de la
+  función por petición y se fija con la cabecera `x-region: eu-west-3`; el cron ya la manda
+  (migración `scraper_en_paris`). Si algún día París deja de funcionar, se prueba otra región
+  cambiando esa cabecera.
+- **El HTML viene en ISO-8859-1**, no en UTF-8: leerlo con `text()` destroza tildes y eñes
+  («�lvaro») y el analizador de la clasificación no encuentra «Últimos». Se decodifica con la
+  codificación que declara la respuesta (`intranet/codificacion.ts`).
+- **El rol de servicio no tenía permisos**: el proyecto se creó sin exponer tablas
+  automáticamente y las migraciones solo daban permisos a visitantes y gestores. La migración
+  `permisos_service_role` se los da a todo lo que exista y a lo que se cree después.
+
 ## Dónde y cuándo corre
 
 - Edge Function `importar-federacion`, escrita en TypeScript para Deno. Escribe en la base de
@@ -108,10 +122,12 @@ nombres de rivales (ADR 0004).
 - Para probarla a mano desde el terminal, con la sesión de la CLI y la URL del proyecto:
 
   ```bash
-  curl -X POST https://ozmhigfbexqgteiythfx.supabase.co/functions/v1/importar-federacion -H "Authorization: Bearer <clave de servicio>"
+  curl -X POST https://ozmhigfbexqgteiythfx.supabase.co/functions/v1/importar-federacion -H "x-region: eu-west-3" -H "Authorization: Bearer <clave de servicio>"
   ```
 
-  La clave de servicio se copia del panel en el momento y no se guarda en ningún sitio.
+  La clave de servicio se copia del panel en el momento y no se guarda en ningún sitio. Sin
+  salir de la base de datos, también se puede lanzar con el mismo `net.http_post` del cron
+  desde el SQL Editor, que lee la clave del Vault.
 
 ## Puesta en marcha (Alex, una vez)
 

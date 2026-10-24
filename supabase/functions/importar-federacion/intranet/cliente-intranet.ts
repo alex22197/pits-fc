@@ -1,4 +1,5 @@
 import type { CodigosCompeticion } from '../interfaces/codigos-competicion.interface.ts';
+import { decodificar } from './codificacion.ts';
 import { urlLogin } from './urls.ts';
 
 /**
@@ -46,7 +47,7 @@ export class ClienteIntranet {
       redirect: 'manual',
     });
     this.recogerCookies(respuesta);
-    const html = await respuesta.text();
+    const html = await leerHtml(respuesta);
     if (respuesta.status >= 400 || esPaginaDeLogin(html)) {
       throw new Error('La intranet ha rechazado el inicio de sesión.');
     }
@@ -59,7 +60,7 @@ export class ClienteIntranet {
       redirect: 'manual',
     });
     this.recogerCookies(respuesta);
-    const html = await respuesta.text();
+    const html = await leerHtml(respuesta);
     if (respuesta.status >= 400) {
       throw new Error(`La intranet ha respondido ${respuesta.status} a ${rutaConParametros}`);
     }
@@ -78,6 +79,11 @@ export class ClienteIntranet {
       this.cookies = nuevas.join('; ');
     }
   }
+}
+
+/** Cuerpo de la respuesta como texto, con la codificación que declara (ISO-8859-1). */
+async function leerHtml(respuesta: Response): Promise<string> {
+  return decodificar(await respuesta.arrayBuffer(), respuesta.headers.get('content-type'));
 }
 
 /** La intranet no devuelve 401: cuando no hay sesión, sirve la página de login con 200. */
