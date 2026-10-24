@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+.mensaje {
+  padding: var(--espacio-4) var(--espacio-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+  color: var(--color-tinta-suave);
+}
+
+.mensaje--cargando {
+  color: var(--color-tinta-tenue);
+}
+
+.mensaje--error {
+  border-color: var(--color-derrota);
+  color: var(--color-derrota);
+}

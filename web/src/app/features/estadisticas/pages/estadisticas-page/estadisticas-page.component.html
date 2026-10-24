@@ -1,4 +1,54 @@
-<pits-seccion-en-construccion
-  titulo="Estadísticas"
-  descripcion="Aquí saldrán goles, asistencias, tarjetas y partidos jugados de cada jugador, con gráficas del equipo a lo largo de la temporada."
-/>
+<h1 class="titulo-pagina">Estadísticas</h1>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+}
+
+<section class="seccion" aria-labelledby="equipo">
+  <h2 id="equipo" class="titulo-seccion">El equipo</h2>
+  @if (datos.cargandoEquipo()) {
+    <pits-mensaje-estado tipo="cargando" mensaje="Cargando los partidos…" />
+  } @else if (datos.resumen().jugados === 0) {
+    <pits-mensaje-estado tipo="vacio" mensaje="Todavía no hay partidos jugados." />
+  } @else {
+    <pits-resumen-equipo [resumen]="datos.resumen()" [posicion]="datos.posicion()" />
+    <div class="graficas">
+      <pits-grafica-puntos [puntos]="datos.puntos()" />
+      <pits-grafica-goles-jornada [goles]="datos.golesJornada()" />
+    </div>
+  }
+</section>
+
+<section class="seccion" aria-labelledby="jugadores">
+  <h2 id="jugadores" class="titulo-seccion">Los jugadores</h2>
+  @if (datos.cargandoJugadores()) {
+    <pits-mensaje-estado tipo="cargando" mensaje="Cargando las actas…" />
+  } @else if (datos.jugadoresConDatos().length === 0) {
+    <pits-mensaje-estado
+      tipo="vacio"
+      mensaje="Las estadísticas de los jugadores salen de las actas de la federación. Aparecerán en cuanto se importe la primera."
+    />
+  } @else {
+    <div class="graficas">
+      <pits-grafica-goles-tramo [tramos]="datos.tramos()" />
+      <pits-grafica-jugadores
+        titulo="Goleadores"
+        descripcion="Goles de cada jugador en la liga."
+        medida="goles"
+        [jugadores]="datos.jugadoresConDatos()"
+      />
+      <pits-grafica-jugadores
+        titulo="Partidos jugados"
+        descripcion="Cuántos partidos ha jugado cada uno, de inicio o desde el banquillo."
+        medida="partidos"
+        [jugadores]="datos.jugadoresConDatos()"
+      />
+      <pits-grafica-jugadores
+        titulo="Tarjetas"
+        descripcion="Amarillas y rojas de cada jugador."
+        medida="tarjetas"
+        [jugadores]="datos.jugadoresConDatos()"
+      />
+    </div>
+  }
+</section>

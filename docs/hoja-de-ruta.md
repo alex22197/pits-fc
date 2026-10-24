@@ -68,8 +68,13 @@ terminarla, se marca aquí.
 
 ## 6. Estadísticas
 
-- [ ] Por jugador: partidos, titularidades, goles, tarjetas; goles encajados para porteros.
-- [ ] Del equipo por jornada, con gráficas (Apache ECharts).
+- [x] Del equipo: fichas de posición, partidos, goles y diferencia; racha; casa y fuera;
+      puntos acumulados y goles por jornada (gráficas con Apache ECharts) (#6).
+- [x] Por jugador: goleadores, partidos (titular y suplente) y tarjetas; minuto de los goles
+      del equipo (#6).
+- [ ] Goles encajados por portero y ficha de cada jugador en «Plantilla».
+- [ ] Más ideas: racha de partidos sin perder, media de goles por partido, mejor jornada,
+      comparativa con el rival del próximo partido.
 
 ## Mejoras para después
 
