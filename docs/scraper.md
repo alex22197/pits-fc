@@ -57,27 +57,87 @@ Las actas de esta liga no registran sustituciones, así que no hay minutos por j
 
 ## Qué hace cada ejecución
 
-1. Inicia sesión y guarda la cookie.
-2. Descarga el calendario completo y actualiza fechas, campos y marcadores de todos los
-   partidos del grupo.
-3. Descarga la clasificación y la sobrescribe.
-4. Descarga los goleadores (para contrastar nuestros goles).
-5. Para cada partido nuestro ya jugado sin acta importada, descarga el acta y guarda
-   participaciones, goles y tarjetas. Los jugadores se reconocen por
-   `jugador_privado.nombre_federacion`; si uno no se reconoce, se registra en el resumen
-   para que un gestor lo asocie.
-6. Escribe una fila en `ejecucion_scraper` con el resumen o el error.
+Código en `supabase/functions/importar-federacion/`:
 
-Si algo falla (la intranet no responde, una tabla cambia de forma), no se escribe nada de ese
-paso, queda el error registrado y la web sigue con los últimos datos buenos.
+```
+index.ts            Entrada HTTP: autoriza al llamante y responde con el resumen
+autorizacion.ts     Acepta la clave de servicio (cron) o la sesión de un gestor
+importar.ts         Orquesta los pasos y registra la ejecución
+intranet/           Cliente con sesión, URLs y un analizador por página (con tests)
+guardado/           Un fichero por tabla que se escribe, más el nombre corto de jugadores
+utils/fechas.ts     Fechas de la intranet y hora de Madrid con horario de verano
+```
+
+1. Abre una fila en `ejecucion_scraper` e inicia sesión en la intranet.
+2. **Calendario**: lee las 26 jornadas y, para cada partido, el código de acta, el marcador y
+   el estado. Crea los partidos que no existan y actualiza el equipo que descansa.
+3. **Jornadas** de las tres semanas anteriores y las cuatro siguientes: lee fecha, hora y
+   campo de cada partido (lo único que el calendario no trae).
+4. **Clasificación** de la última jornada cuya fecha ya ha pasado: borra la anterior y guarda
+   la nueva. Los equipos se reconocen por su código de la federación.
+5. **Actas** de nuestros partidos jugados que no se hayan importado, y también las de los
+   últimos 14 días por si la federación las corrige: participaciones (titular o suplente y
+   dorsal), goles (los rivales sin autor) y tarjetas nuestras.
+6. Cierra la ejecución con estado, resumen (cuántos partidos, jornadas, filas y actas, avisos
+   y jugadores nuevos) y el error si lo hubo.
+
+Cada paso se intenta aunque el anterior falle; lo que falla queda anotado en `errores` y la
+ejecución se marca como `error`. Si un paso falla, no se escribe nada de ese paso y la web
+sigue con los últimos datos buenos.
+
+### Jugadores que no existen
+
+Si en un acta aparece uno de los nuestros cuyo nombre no está en
+`jugador_privado.nombre_federacion`, el scraper lo da de alta con un **nombre corto**: su
+primer nombre con mayúscula inicial («Álvaro»), y si ya lo usa otro, la inicial del apellido
+(«Samuel G.») o el apellido entero. El nombre completo va a la tabla privada. Los nuevos salen
+en el resumen para que Alex les ponga el nombre o apodo que prefiera desde gestión.
+
+Los goleadores del grupo no se importan: su tabla solo sirve para contrastar y traería
+nombres de rivales (ADR 0004).
 
 ## Dónde y cuándo corre
 
-- Edge Function `importar-federacion` en `supabase/functions/`, escrita en TypeScript (Deno).
-  Escribe en la base de datos con la clave de servicio, que también es un secreto.
-- `pg_cron` + `pg_net` la llaman cada martes a las 9:00 (hora de Madrid), cuando los partidos
-  del lunes ya están cerrados. Puede cambiarse a diario: es barato.
-- Desde la zona de gestión, un botón «Actualizar ahora» la lanza a mano.
+- Edge Function `importar-federacion`, escrita en TypeScript para Deno. Escribe en la base de
+  datos con la clave de servicio, que Supabase inyecta a la función.
+- `pg_cron` + `pg_net` la llaman cada martes a las 8:00 UTC (9:00 o 10:00 en Madrid), cuando
+  los partidos del lunes ya están cerrados (migración `programar_scraper`). Puede cambiarse a
+  diario: es barato.
+- Desde la zona de gestión, un botón «Actualizar ahora» la lanzará a mano con la sesión del
+  gestor (pendiente de pantalla).
+- Para probarla a mano desde el terminal, con la sesión de la CLI y la URL del proyecto:
+
+  ```bash
+  curl -X POST https://ozmhigfbexqgteiythfx.supabase.co/functions/v1/importar-federacion -H "Authorization: Bearer <clave de servicio>"
+  ```
+
+  La clave de servicio se copia del panel en el momento y no se guarda en ningún sitio.
+
+## Puesta en marcha (Alex, una vez)
+
+1. Secretos de la función, desde el terminal en la raíz del repositorio:
+
+   ```bash
+   npx supabase secrets set FEDERACION_USUARIO=… FEDERACION_CLAVE=…
+   ```
+
+2. Desplegar la función: `npm run funciones:desplegar`.
+3. Para el cron, dos secretos en el Vault de Supabase (panel → SQL Editor):
+
+   ```sql
+   select vault.create_secret('https://ozmhigfbexqgteiythfx.supabase.co/functions/v1/importar-federacion', 'url_importar_federacion');
+   select vault.create_secret('<clave de servicio>', 'clave_servicio');
+   ```
+
+4. Aplicar la migración `programar_scraper` (`npm run db:migrar`), que activa `pg_cron` y
+   `pg_net` y programa la llamada semanal.
+
+## Probar y mantener
+
+- `npm run funciones:probar`: comprueba tipos, formato y los tests de los analizadores y de
+  las fechas, con fixtures anonimizadas que copian la estructura real de cada página.
+- Si la intranet cambia una página, el analizador correspondiente fallará con un error claro
+  en el resumen; se actualiza el analizador y su fixture.
 
 ## Privacidad
 

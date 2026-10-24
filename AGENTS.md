@@ -32,7 +32,8 @@ npm run verificar --prefix web
 ```
 
 Ejecuta linter, formato, tests y compilación, igual que la integración continua. Un cambio
-no está terminado hasta que pasa.
+no está terminado hasta que pasa. Si el cambio toca `supabase/`, también `npm run db:probar`
+(migraciones) y `npm run funciones:probar` (Edge Function), desde la raíz.
 
 ## Estructura
 

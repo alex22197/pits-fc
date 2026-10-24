@@ -23,7 +23,8 @@ terminarla, se marca aquí.
 - [x] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil` (24-10-2026).
 - [ ] Guardar las credenciales de la intranet como secretos de Supabase (`supabase secrets
       set FEDERACION_USUARIO=… FEDERACION_CLAVE=…`), tecleadas en el terminal, nunca en
-      ficheros.
+      ficheros. Después, los secretos del Vault y el despliegue de la función
+      ([`scraper.md`](scraper.md), «Puesta en marcha»).
 - [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
       (24-10-2026).
 - [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
@@ -43,10 +44,12 @@ terminarla, se marca aquí.
 
 ## 3. Scraper de la federación
 
-- [ ] Edge Function `importar-federacion`: login, lectura de calendario, clasificación,
-      goleadores y actas nuevas, y guardado en la base de datos.
-- [ ] Programación semanal con `pg_cron` y botón «Actualizar ahora» en gestión.
-- [ ] Registro de cada ejecución (`ejecucion_scraper`) visible para los gestores.
+- [x] Edge Function `importar-federacion`: login, lectura de calendario, jornadas,
+      clasificación y actas nuevas, y guardado en la base de datos, con tests de los
+      analizadores (#5).
+- [x] Programación semanal con `pg_cron` (migración `programar_scraper`) (#5).
+- [ ] Alex: secretos de la función, secretos del Vault y despliegue ([`scraper.md`](scraper.md)).
+- [ ] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión.
 
 ## 4. Pantallas públicas
 

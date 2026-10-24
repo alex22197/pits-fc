@@ -42,6 +42,9 @@ trabajar con la base de datos desde la terminal:
 | `npm run verificar --prefix web`      | Todo lo que comprueba la integración continua |
 | `npm run db:nueva-migracion -- nombre` | Crea una migración vacía                     |
 | `npm run db:probar`                   | Ejecuta y comprueba las migraciones sin Docker |
+| `npm run funciones:probar`            | Tipos, formato y tests de la Edge Function    |
+| `npm run funciones:formatear`         | Formatea la Edge Function con Deno            |
+| `npm run funciones:desplegar`         | Sube la Edge Function al proyecto             |
 | `npm run db:migrar`                   | Aplica las migraciones pendientes en la nube  |
 | `npm run db:tipos`                    | Regenera `database.types.ts`                  |
 
