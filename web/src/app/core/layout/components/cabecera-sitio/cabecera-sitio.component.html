@@ -1,0 +1,38 @@
+<header class="cabecera">
+  <div class="interior">
+    <a class="marca" routerLink="/">
+      <span class="nombre">
+        <span class="nombre-equipo">PITS FC</span>
+        <span class="nombre-liga">Fútbol 7 · Alcobendas</span>
+      </span>
+      <span class="solo-lector">, ir al inicio</span>
+    </a>
+
+    <nav class="navegacion" aria-label="Secciones">
+      @for (enlace of enlaces; track enlace.ruta) {
+        <a
+          class="enlace"
+          [routerLink]="enlace.ruta"
+          routerLinkActive="enlace--activo"
+          ariaCurrentWhenActive="page"
+          [routerLinkActiveOptions]="{ exact: enlace.coincidenciaExacta }"
+        >
+          {{ enlace.etiqueta }}
+        </a>
+      }
+    </nav>
+
+    <div class="accesos">
+      <a
+        class="cuenta"
+        routerLink="/acceso"
+        routerLinkActive="cuenta--activa"
+        ariaCurrentWhenActive="page"
+        [attr.aria-label]="auth.estaAutenticado() ? 'Tu cuenta' : 'Entrar como gestor'"
+      >
+        <pits-icono nombre="usuario" />
+        <span class="cuenta-texto">{{ auth.estaAutenticado() ? 'Tu cuenta' : 'Entrar' }}</span>
+      </a>
+    </div>
+  </div>
+</header>

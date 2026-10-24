@@ -1,0 +1,15 @@
+:host {
+  display: inline-flex;
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+.icono {
+  width: 100%;
+  height: 100%;
+  background-color: currentcolor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}

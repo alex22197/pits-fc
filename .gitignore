@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Compilación y cachés
+web/dist/
+web/.angular/
+coverage/
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Secretos: nunca se suben. Las credenciales de la intranet de la federación
+# viven solo como secretos de Supabase (ver docs/scraper.md).
+.env
+.env.*
+
+# Ajustes personales de Claude Code (modelo, permisos…): no se comparten
+.claude/settings.local.json
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+
+# Copias comprimidas del proyecto: pueden llevar datos personales.
+*.zip

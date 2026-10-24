@@ -1,0 +1,14 @@
+<section class="portada">
+  <p class="temporada">Temporada {{ competicion.temporada }}</p>
+  <h1 class="titulo-pagina">PITS FC</h1>
+  <p class="competicion">{{ competicion.nombre }} · {{ competicion.grupo }}</p>
+</section>
+
+<nav class="secciones" aria-label="Secciones de la web">
+  @for (seccion of secciones; track seccion.ruta) {
+    <a class="seccion" [routerLink]="seccion.ruta">
+      <pits-icono [nombre]="seccion.icono" />
+      <span class="seccion-etiqueta">{{ seccion.etiqueta }}</span>
+    </a>
+  }
+</nav>

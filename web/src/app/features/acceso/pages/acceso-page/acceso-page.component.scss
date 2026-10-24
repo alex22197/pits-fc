@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-4);
+  max-width: 28rem;
+  margin-top: var(--espacio-6);
+  padding: var(--espacio-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.nombre {
+  font-weight: 700;
+}
+
+.error {
+  margin-top: var(--espacio-4);
+  color: var(--color-derrota);
+}

@@ -1,0 +1,71 @@
+// Sistema de diseño: única fuente de colores, tipografía, espacios y radios.
+// Los componentes usan estas variables; nunca valores sueltos.
+// Tema oscuro fijo con los dos colores del escudo: negro y salmón (ADR 0006).
+
+:root {
+  color-scheme: dark;
+
+  // Color: el negro del escudo como fondo y el salmón como acento.
+  --color-fondo: #0d0d0d;
+  --color-superficie: #171717;
+  --color-superficie-elevada: #202020;
+  --color-tinta: #f6f0ea;
+  --color-tinta-suave: #d8cec5;
+  --color-tinta-tenue: #b1a59a; // 8,6:1 sobre el fondo
+  --color-borde: #2a2a2a;
+  --color-borde-fuerte: #3b3b3b;
+  --color-borde-control: #8c8178; // borde de campos de formulario: 3:1 o más
+
+  --color-marca: #efa882; // salmón del escudo: estrellas, gorila y letras
+  --color-marca-claro: #f6c3a6;
+  --color-marca-oscuro: #d9875c;
+  --color-marca-suave: rgb(239 168 130 / 14%); // fondo de la fila de nuestro equipo
+  --color-sobre-marca: #0d0d0d; // texto negro sobre salmón: 11:1
+
+  --color-victoria: #5ec98a;
+  --color-empate: #e3c35b;
+  --color-derrota: #ef6b5e;
+  --color-amarilla: #f2d44d;
+  --color-roja: #e04b3f;
+  --color-velo: rgb(0 0 0 / 60%); // fondo oscurecido detrás de un panel
+  --sombra-panel: 0 -8px 32px rgb(0 0 0 / 50%);
+
+  // Movimiento: corto y con propósito. Se anula con «reducir movimiento».
+  --duracion-rapida: 150ms;
+  --duracion-media: 300ms;
+  --curva-salida: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  // Tipografía: Archivo, con su eje de anchura para los textos tipo marcador.
+  --fuente: 'Archivo', 'Helvetica Neue', helvetica, arial, sans-serif;
+  --anchura-condensada: 66%;
+  --anchura-titulo: 85%;
+
+  --texto-xxs: 0.75rem; // 12px, solo la barra inferior: cinco secciones en 320 px
+  --texto-xs: 0.8125rem; // 13px
+  --texto-s: 0.875rem; // 14px
+  --texto-m: 1rem; // 16px
+  --texto-l: 1.4375rem; // 23px
+  --texto-cifra: 1.75rem; // 28px, cifras en letra condensada: marcadores y «J1»
+  --texto-xl: 2.75rem; // 44px
+  --texto-xxl: 4.5rem; // 72px
+
+  // Espaciado (escala de 4px).
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-5: 1.25rem;
+  --espacio-6: 1.5rem;
+  --espacio-8: 2rem;
+  --espacio-10: 2.5rem;
+  --espacio-12: 3rem;
+
+  // Radios: jerarquía de contenedor a control.
+  --radio-contenedor: 0.75rem;
+  --radio-control: 0.625rem;
+  --radio-pildora: 999px;
+
+  --ancho-contenido: 72rem;
+  --alto-navegacion-inferior: 4.5rem;
+  --minimo-tactil: 2.75rem; // 44px
+}

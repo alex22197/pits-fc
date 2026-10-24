@@ -1,0 +1,4 @@
+// Punto de entrada de estilos globales. Los estilos de cada componente viven en su .scss.
+@use 'styles/tokens';
+@use 'styles/base';
+@use 'styles/tipografia';

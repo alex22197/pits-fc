@@ -1,0 +1,17 @@
+# Cabeceras de seguridad para todas las páginas y ficheros (Cloudflare las lee de aquí).
+# Ver docs/despliegue.md antes de cambiar la política de contenido. Al enlazar el proyecto de
+# Supabase hay que sustituir «pendiente.supabase.co» por su dirección real.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://pendiente.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# Los ficheros con huella en el nombre (main-XXXX.js, styles-XXXX.css…) no cambian nunca: el
+# navegador los guarda un año. index.html no entra aquí y se revalida en cada visita.
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/*.css
+  Cache-Control: public, max-age=31536000, immutable

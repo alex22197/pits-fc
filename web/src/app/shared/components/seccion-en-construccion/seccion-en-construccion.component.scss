@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.aviso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  max-width: 36rem;
+  margin-top: var(--espacio-6);
+  padding: var(--espacio-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+  color: var(--color-tinta-suave);
+}
+
+.etiqueta {
+  align-self: flex-start;
+  padding: var(--espacio-1) var(--espacio-3);
+  border-radius: var(--radio-pildora);
+  background: var(--color-marca-suave);
+  color: var(--color-marca);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

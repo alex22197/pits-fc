@@ -1,0 +1,28 @@
+<h1 class="titulo-pagina">Acceso</h1>
+
+@if (!auth.lista()) {
+  <p class="texto-secundario">Comprobando la sesión…</p>
+} @else if (auth.sesion(); as sesion) {
+  <section class="tarjeta">
+    <p class="nombre">{{ sesion.nombre ?? sesion.email }}</p>
+    @if (sesion.rol) {
+      <p class="texto-secundario">Tienes permisos de {{ sesion.rol }}.</p>
+    } @else {
+      <p class="texto-secundario">
+        Tu cuenta aún no tiene permisos de gestión. Pídeselos al administrador.
+      </p>
+    }
+    <button type="button" class="boton" [disabled]="enCurso()" (click)="salir()">Salir</button>
+  </section>
+} @else {
+  <section class="tarjeta">
+    <p>La web es pública. Solo hace falta entrar para gestionar los datos del equipo.</p>
+    <button type="button" class="boton boton--principal" [disabled]="enCurso()" (click)="entrar()">
+      Entrar con Google
+    </button>
+  </section>
+}
+
+@if (error(); as mensaje) {
+  <p class="error" role="alert">{{ mensaje }}</p>
+}

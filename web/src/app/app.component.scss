@@ -1,0 +1,33 @@
+@use 'breakpoints' as bp;
+
+.saltar-contenido {
+  position: absolute;
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  z-index: 20;
+  padding: var(--espacio-2) var(--espacio-4);
+  border-radius: var(--radio-control);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: none;
+  }
+}
+
+.contenido {
+  display: block;
+  max-width: var(--ancho-contenido);
+  margin: 0 auto;
+  padding: var(--espacio-4) var(--espacio-3)
+    calc(var(--alto-navegacion-inferior) + var(--espacio-8));
+
+  &:focus {
+    outline: none;
+  }
+
+  @include bp.desde(tablet) {
+    padding: var(--espacio-8) var(--espacio-5) var(--espacio-12);
+  }
+}

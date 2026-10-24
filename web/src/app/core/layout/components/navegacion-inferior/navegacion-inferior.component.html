@@ -1,0 +1,14 @@
+<nav class="barra" aria-label="Secciones">
+  @for (enlace of enlaces; track enlace.ruta) {
+    <a
+      class="enlace"
+      [routerLink]="enlace.ruta"
+      routerLinkActive="enlace--activo"
+      ariaCurrentWhenActive="page"
+      [routerLinkActiveOptions]="{ exact: enlace.coincidenciaExacta }"
+    >
+      <pits-icono [nombre]="enlace.icono" />
+      <span class="etiqueta">{{ enlace.etiqueta }}</span>
+    </a>
+  }
+</nav>

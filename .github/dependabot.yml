@@ -1,0 +1,27 @@
+# Avisa con una pull request cuando hay versiones nuevas de dependencias.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /web
+    target-branch: develop
+    schedule:
+      interval: weekly
+    ignore:
+      # Angular 22 exige TypeScript 6. Quitar cuando Angular admita TypeScript 7.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-devkit/*", "angular-eslint"]
+      herramientas:
+        patterns: ["eslint", "@eslint/*", "typescript-eslint", "prettier", "vitest", "jsdom"]
+  - package-ecosystem: npm
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: monthly
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: monthly

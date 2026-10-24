@@ -1,0 +1,13 @@
+@use 'sass:map';
+
+// Puntos de corte compartidos. Uso: `@use 'breakpoints' as bp;` y `@include bp.desde(tablet) { … }`.
+$puntos: (
+  tablet: 48rem,
+  escritorio: 64rem,
+);
+
+@mixin desde($nombre) {
+  @media (min-width: map.get($puntos, $nombre)) {
+    @content;
+  }
+}

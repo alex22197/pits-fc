@@ -1,0 +1,57 @@
+// Clases tipográficas compartidas por todas las páginas, para no repetir estilos.
+
+// Título grande condensado y en mayúsculas, como las letras del escudo.
+.titulo-pagina {
+  font-size: var(--texto-xl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.titulo-seccion {
+  font-size: var(--texto-l);
+  font-weight: 750;
+  font-stretch: var(--anchura-titulo);
+  letter-spacing: -0.01em;
+}
+
+.texto-secundario {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+}
+
+// Botones de acción.
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: 3.25rem;
+  padding: 0 var(--espacio-6);
+  border: 1.5px solid var(--color-borde-fuerte);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+  color: var(--color-tinta);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: progress;
+    opacity: 0.6;
+  }
+}
+
+.boton--principal {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+
+  &:hover {
+    border-color: var(--color-marca-claro);
+    background: var(--color-marca-claro);
+    color: var(--color-sobre-marca);
+  }
+}

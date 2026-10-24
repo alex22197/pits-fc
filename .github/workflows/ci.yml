@@ -1,0 +1,39 @@
+# Comprueba cada cambio antes de darlo por bueno: linter, formato, tests y compilación.
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+# Solo lee el repositorio: no publica nada ni escribe en GitHub.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - name: Linter
+        run: npm run lint
+      - name: Formato
+        run: npm run formatear:comprobar
+      - name: Tests
+        run: npm run test:ci
+      - name: Compilación de producción
+        run: npm run build
