@@ -1,0 +1,44 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.tareas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+  color: var(--color-tinta);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--color-marca);
+  }
+}
+
+.tarea-titulo {
+  font-size: var(--texto-l);
+  font-weight: 750;
+  font-stretch: var(--anchura-titulo);
+}
+
+.tarea-texto {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+}

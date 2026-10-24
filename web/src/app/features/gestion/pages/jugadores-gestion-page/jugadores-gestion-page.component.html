@@ -1,0 +1,30 @@
+<a class="volver" routerLink="/gestion">Volver a gestión</a>
+<h1 class="titulo-pagina">Jugadores</h1>
+<p class="texto-secundario">
+  El nombre que se muestra es el que ve todo el mundo; el de las actas solo lo veis los gestores.
+  Los jugadores que no están en el equipo no salen en la plantilla ni en las convocatorias.
+</p>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.plantilla.isLoading() && !datos.plantilla.value()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando la plantilla…" />
+} @else if (datos.plantilla.value(); as jugadores) {
+  @if (jugadores.length > 0) {
+    <div class="jugadores">
+      @for (jugador of jugadores; track jugador.jugador.id) {
+        <pits-editor-jugador
+          [jugador]="jugador"
+          [estado]="datos.estados()[jugador.jugador.id] ?? null"
+          [guardando]="datos.guardando() === jugador.jugador.id"
+          (guardar)="datos.guardar(jugador.jugador.id, $event)"
+        />
+      }
+    </div>
+  } @else {
+    <pits-mensaje-estado
+      tipo="vacio"
+      mensaje="Los jugadores aparecerán con la primera acta importada."
+    />
+  }
+}

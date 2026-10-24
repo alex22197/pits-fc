@@ -49,7 +49,8 @@ features/
 ```
 
 Secciones actuales: `inicio`, `calendario` (con la página de un partido), `clasificacion`,
-`plantilla` (con la ficha de un jugador), `estadisticas`, `acceso` y `no-encontrado`.
+`plantilla` (con la ficha de un jugador), `estadisticas`, `acceso`, `gestion` (jugadores,
+convocatoria e importación; solo gestores, protegida por `gestorGuard`) y `no-encontrado`.
 
 Componentes compartidos que usan varias secciones: `pits-tarjeta-partido` (un partido en
 una línea, con el color del resultado si es nuestro), `pits-tabla-clasificacion` (completa o
