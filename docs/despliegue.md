@@ -1,26 +1,57 @@
 # Despliegue
 
-Pendiente de hacer la primera vez. Este documento recoge el plan; se completa con los pasos
-reales cuando se haga.
+La web es un sitio estático en Cloudflare Workers (lo que antes era Cloudflare Pages), igual
+que en `ctp-valdelasfuentes`. Cloudflare compila y publica solo cada vez que llega algo a
+`main`.
 
-## Cloudflare Pages (una sola vez)
+## Cloudflare (una sola vez)
 
-- Proyecto conectado al repositorio `alex22197/pits-fc`, rama `main`.
-- Comando de compilación: `npm ci && npm run build` con directorio raíz `web`.
-- Directorio de salida: `web/dist/pits-fc-web/browser`.
-- Variable `NODE_VERSION=24`.
-- `web/public/_headers` fija las cabeceras de seguridad y la caché; Cloudflare lo lee tal cual.
+1. En el panel de Cloudflare, ve a **Workers & Pages** → **Create** → **Import a repository**
+   y da acceso a la cuenta de GitHub al repositorio `alex22197/pits-fc`.
+2. Configura la compilación:
+
+   | Campo             | Valor                      |
+   | ----------------- | -------------------------- |
+   | Project name      | `pits-fc`                  |
+   | Production branch | `main`                     |
+   | Root directory    | `web`                      |
+   | Build command     | `npm run build:cloudflare` |
+   | Deploy command    | `npx wrangler deploy`      |
+
+   La versión de Node la toma de `web/.nvmrc`; no hace falta ninguna variable de entorno.
+   Si **Root directory** se queda vacío, Cloudflare compila desde la raíz del repositorio y
+   falla con `Missing script: "build:cloudflare"`.
+
+3. Desactiva **Builds for non-production branches**: solo se publica lo que llega a `main`.
+4. Guarda y despliega. La web queda en `https://pits-fc.<subdominio>.workers.dev`, donde el
+   subdominio es el de la cuenta de Cloudflare.
+
+`build:cloudflare` ejecuta linter y tests antes de compilar: si algo falla, no se publica y
+la versión anterior sigue en línea. La configuración del sitio está en
+[`web/wrangler.jsonc`](../web/wrangler.jsonc); `single-page-application` hace que cualquier
+ruta de Angular (`/clasificacion`, `/calendario/partido/…`) funcione al recargar la página.
+`web/public/_headers` fija las cabeceras de seguridad y la caché; Cloudflare lo lee tal cual.
 
 ## Publicar una versión
 
-1. `develop` pasa `npm run verificar --prefix web`.
-2. Pull request «Publicación X.Y.Z» de `develop` a `main`.
-3. Al fusionar, Cloudflare publica. Etiquetar `vX.Y.Z`.
+1. Pull request de `develop` a `main` titulada «Publicación X.Y.Z», con la lista de lo que
+   entra.
+2. Cuando la integración continua está en verde, se integra con un merge commit y se etiqueta
+   `main` con `vX.Y.Z`.
+3. Cloudflare compila y publica solo.
+
+Versiones: la cifra del medio sube con funcionalidades nuevas (0.2.0) y la última con
+correcciones (0.2.1). La 1.0.0 será la primera que se comparta con el equipo.
 
 ## Supabase: direcciones permitidas para el login
 
-En Authentication → URL Configuration: la URL de producción y `http://localhost:4200`, ambas
-con `/acceso` como ruta de vuelta.
+En Authentication → URL Configuration:
+
+- **Site URL**: la dirección de producción (`https://pits-fc.<subdominio>.workers.dev`).
+- **Redirect URLs**: `https://pits-fc.<subdominio>.workers.dev/acceso` y
+  `http://localhost:4200/acceso`.
+
+Sin la de producción, «Entrar con Google» devuelve a `localhost` o da error.
 
 ## Google (login)
 
