@@ -24,8 +24,8 @@ terminarla, se marca aquí.
 - [ ] Guardar las credenciales de la intranet como secretos de Supabase (`supabase secrets
       set FEDERACION_USUARIO=… FEDERACION_CLAVE=…`), tecleadas en el terminal, nunca en
       ficheros.
-- [ ] Dejar el escudo en `web/public/imagenes/escudo-pits-fc.png` (y un favicon a partir
-      de él) para que la cabecera y la pestaña lo usen.
+- [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
+      (24-10-2026).
 - [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
       [`despliegue.md`](despliegue.md)).
 - [ ] Decidir el nombre corto que se muestra de cada jugador.

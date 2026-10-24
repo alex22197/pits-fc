@@ -4,11 +4,37 @@
   display: block;
 }
 
+// Escudo y presentación: apilados en móvil, en fila a partir de tableta.
 .portada {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-2);
+  align-items: center;
+  gap: var(--espacio-6);
   padding: var(--espacio-8) 0;
+  text-align: center;
+
+  @include bp.desde(tablet) {
+    flex-direction: row;
+    gap: var(--espacio-8);
+    text-align: left;
+  }
+}
+
+.escudo {
+  flex: none;
+  width: 10rem;
+  height: 10rem;
+
+  @include bp.desde(tablet) {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+.presentacion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
 }
 
 .temporada {
