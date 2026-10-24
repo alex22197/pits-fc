@@ -31,6 +31,12 @@ for (const migracion of migraciones) {
   const sql = readFileSync(join(directorioMigraciones, migracion), 'utf8');
   try {
     await parse(sql);
+    // Las que dependen de extensiones que solo existen en Supabase (pg_cron, pg_net) se
+    // comprueban solo en sintaxis: lo declaran en su cabecera con «-- requiere:».
+    if (/^-- requiere:/m.test(sql)) {
+      console.log(`omit  ${migracion} (solo sintaxis: necesita extensiones de Supabase)`);
+      continue;
+    }
     await db.exec(sql);
     console.log(`ok    ${migracion}`);
   } catch (error) {

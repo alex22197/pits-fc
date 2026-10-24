@@ -38,8 +38,8 @@ jobs:
       - name: Compilación de producción
         run: npm run build
 
-  base-de-datos:
-    name: Base de datos
+  supabase:
+    name: Base de datos y funciones
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -51,3 +51,5 @@ jobs:
       - run: npm ci --ignore-scripts
       - name: Migraciones en PostgreSQL embebido
         run: npm run db:probar
+      - name: Funciones (tipos, formato y tests con Deno)
+        run: npm run funciones:probar
