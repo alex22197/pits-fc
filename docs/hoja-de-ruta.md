@@ -14,9 +14,9 @@ terminarla, se marca aquí.
 
 ## 1. Configuración pendiente (Alex, desde los paneles)
 
-- [ ] Crear el proyecto de Supabase «pits-fc» y pasar la URL y la publishable key a
-      `web/src/environments/` y a `web/public/_headers`.
-- [ ] Enlazar el repositorio con el proyecto (`npx supabase link`) y aplicar la migración
+- [x] Crear el proyecto de Supabase «pits-fc» y pasar la URL y la publishable key a
+      `web/src/environments/` y a `web/public/_headers` (24-10-2026).
+- [ ] Enlazar el repositorio con el proyecto (`npx supabase link`) y aplicar las migraciones
       (`npm run db:migrar`); después `npm run db:tipos`.
 - [ ] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud.
 - [ ] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil`.

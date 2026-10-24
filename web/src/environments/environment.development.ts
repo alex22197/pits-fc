@@ -7,7 +7,7 @@ import type { Entorno } from './entorno.interface';
 export const environment: Entorno = {
   produccion: false,
   supabase: {
-    url: 'https://pendiente.supabase.co',
-    publishableKey: 'sb_publishable_pendiente',
+    url: 'https://ozmhigfbexqgteiythfx.supabase.co',
+    publishableKey: 'sb_publishable_dmLeVMNVdACQd7i-M6kDxw_RxgDX645',
   },
 };
