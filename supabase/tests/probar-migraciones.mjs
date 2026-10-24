@@ -21,7 +21,7 @@ let fallos = 0;
 await db.exec(`
   create role anon nologin;
   create role authenticated nologin;
-  create role service_role nologin;
+  create role service_role nologin bypassrls;
   create schema auth;
   create table auth.users (id uuid primary key);
   create function auth.uid() returns uuid language sql stable as $$ select null::uuid $$;
@@ -130,6 +130,14 @@ await db.exec('reset role');
 await db.exec('update public.partido set convocatoria_publicada = true where id in (select partido_id from public.convocatoria)');
 await db.exec('set role anon');
 comprobar('visitante ve la convocatoria publicada', (await contar('select count(*) n from public.convocatoria')) === 1);
+await db.exec('reset role');
+
+// Permisos del rol de servicio (el scraper): sin exponer tablas automáticamente, hay que
+// dárselos en una migración.
+await db.exec('set role service_role');
+comprobar('el rol de servicio lee el registro del scraper', (await contar('select count(*) n from public.ejecucion_scraper')) === 0);
+comprobar('el rol de servicio escribe partidos', !(await rechaza(`update public.partido set campo = campo where false`)));
+comprobar('el rol de servicio lee jugador_privado', (await contar('select count(*) n from public.jugador_privado')) === 1);
 await db.exec('reset role');
 
 await db.close();

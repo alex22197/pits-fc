@@ -22,6 +22,9 @@ una regla o una tabla, se añade su comprobación ahí.
 | `esquema_inicial`  | enum `rol_usuario`, tabla `perfil` y función `es_gestor()`.                |
 | `modelo_de_datos`  | Todo el modelo de abajo, con triggers, vista y permisos.                   |
 | `datos_iniciales`  | Competición 2026-2027, 13 equipos, 26 jornadas, 156 partidos y resultados conocidos al 23-10-2026; función `id_equipo()`. |
+| `programar_scraper` | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local). |
+| `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros. |
+| `scraper_en_paris` | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones. |
 
 ## Modelo
 

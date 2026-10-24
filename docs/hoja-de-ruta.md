@@ -21,10 +21,8 @@ terminarla, se marca aquí.
 - [x] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud
       (24-10-2026).
 - [x] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil` (24-10-2026).
-- [ ] Guardar las credenciales de la intranet como secretos de Supabase (`supabase secrets
-      set FEDERACION_USUARIO=… FEDERACION_CLAVE=…`), tecleadas en el terminal, nunca en
-      ficheros. Después, los secretos del Vault y el despliegue de la función
-      ([`scraper.md`](scraper.md), «Puesta en marcha»).
+- [x] Credenciales de la intranet como secretos de la función, secretos del Vault y
+      despliegue (24-10-2026).
 - [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
       (24-10-2026).
 - [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
@@ -48,7 +46,8 @@ terminarla, se marca aquí.
       clasificación y actas nuevas, y guardado en la base de datos, con tests de los
       analizadores (#5).
 - [x] Programación semanal con `pg_cron` (migración `programar_scraper`) (#5).
-- [ ] Alex: secretos de la función, secretos del Vault y despliegue ([`scraper.md`](scraper.md)).
+- [x] Secretos de la función y del Vault, despliegue y primera importación con éxito:
+      clasificación, fechas, horas y dos actas (24-10-2026).
 - [ ] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión.
 
 ## 4. Pantallas públicas
