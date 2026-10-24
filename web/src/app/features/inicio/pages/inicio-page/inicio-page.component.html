@@ -1,7 +1,16 @@
 <section class="portada">
-  <p class="temporada">Temporada {{ competicion.temporada }}</p>
-  <h1 class="titulo-pagina">PITS FC</h1>
-  <p class="competicion">{{ competicion.nombre }} · {{ competicion.grupo }}</p>
+  <img
+    class="escudo"
+    src="/imagenes/escudo-pits-fc-512.png"
+    alt="Escudo de PITS FC: un gorila rodeado de estrellas"
+    width="160"
+    height="160"
+  />
+  <div class="presentacion">
+    <p class="temporada">Temporada {{ competicion.temporada }}</p>
+    <h1 class="titulo-pagina">PITS FC</h1>
+    <p class="competicion">{{ competicion.nombre }} · {{ competicion.grupo }}</p>
+  </div>
 </section>
 
 <nav class="secciones" aria-label="Secciones de la web">

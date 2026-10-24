@@ -42,6 +42,16 @@ Todos cumplen 4,5:1 sobre el fondo y las superficies.
 
 ## Escudo y favicon
 
-Pendiente: dejar el escudo en `web/public/imagenes/escudo-pits-fc.png` (mínimo 512 px) y
-generar `favicon.ico` y `apple-touch-icon.png` a partir de él. La cabecera lo mostrará junto
-al nombre.
+El escudo original es un JPG con el círculo sobre fondo blanco. En `web/public/` están las
+versiones derivadas, todas PNG con el fondo transparente para que funcionen sobre el tema
+oscuro:
+
+| Fichero                              | Uso                                   |
+| ------------------------------------ | ------------------------------------- |
+| `imagenes/escudo-pits-fc-512.png`    | Portada y cualquier sitio en grande   |
+| `imagenes/escudo-pits-fc-96.png`     | Cabecera (se muestra a 44 px)         |
+| `favicon.png` (64 px)                | Pestaña del navegador                 |
+| `apple-touch-icon.png` (180 px)      | Icono al añadir la web al móvil       |
+
+Si cambia el escudo, se regeneran los cuatro a partir del original (fondo blanco → alfa,
+reescalado); no se retocan a mano.
