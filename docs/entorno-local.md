@@ -42,6 +42,7 @@ Cuando exista:
 | `npm run formatear --prefix web`      | Prettier sobre todo `web/`                    |
 | `npm run verificar --prefix web`      | Todo lo que comprueba la integración continua |
 | `npm run db:nueva-migracion -- nombre` | Crea una migración vacía                     |
+| `npm run db:probar`                   | Ejecuta y comprueba las migraciones sin Docker |
 | `npm run db:migrar`                   | Aplica las migraciones pendientes en la nube  |
 | `npm run db:tipos`                    | Regenera `database.types.ts`                  |
 

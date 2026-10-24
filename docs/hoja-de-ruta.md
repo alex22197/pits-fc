@@ -31,10 +31,12 @@ terminarla, se marca aquí.
 
 ## 2. Modelo de datos
 
-- [ ] Revisar [`base-de-datos.md`](base-de-datos.md) y escribir la migración del modelo:
-      competición, equipos, jornadas, partidos, clasificación, jugadores, participaciones,
-      goles, tarjetas, convocatorias y registro del scraper, con RLS y permisos.
-- [ ] Cargar la competición actual, los 13 equipos y el calendario de 26 jornadas.
+- [x] Migración del modelo: competición, equipos, jornadas, partidos, clasificación,
+      jugadores, participaciones, goles, tarjetas, convocatorias y registro del scraper, con
+      RLS, triggers y vista de estadísticas (#3).
+- [x] Datos iniciales: competición 2026-2027, 13 equipos, 26 jornadas y 156 partidos (#3).
+- [x] `npm run db:probar`: las migraciones se ejecutan y comprueban en un PostgreSQL embebido,
+      también en la integración continua (#3).
 - [ ] Servicios de `data-access/` con mapeadores y tests.
 
 ## 3. Scraper de la federación

@@ -6,10 +6,13 @@
     "prepare": "husky",
     "db:migrar": "supabase db push",
     "db:nueva-migracion": "supabase migration new",
-    "db:tipos": "supabase gen types typescript --linked --schema public > web/src/app/core/supabase/interfaces/database.types.ts && npm --prefix web run formatear:tipos"
+    "db:tipos": "supabase gen types typescript --linked --schema public > web/src/app/core/supabase/interfaces/database.types.ts && npm --prefix web run formatear:tipos",
+    "db:probar": "node supabase/tests/probar-migraciones.mjs"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "supabase": "^2.120.0"
+    "supabase": "^2.120.0",
+    "@electric-sql/pglite": "^0.5.11",
+    "libpg-query": "^18.2.0"
   }
 }
