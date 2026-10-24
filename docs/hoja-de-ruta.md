@@ -18,8 +18,9 @@ terminarla, se marca aquí.
       `web/src/environments/` y a `web/public/_headers` (24-10-2026).
 - [x] Enlazar el repositorio con el proyecto (`npx supabase link`) y aplicar las migraciones
       (`npm run db:migrar`); después `npm run db:tipos` (24-10-2026).
-- [ ] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud.
-- [ ] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil`.
+- [x] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud
+      (24-10-2026).
+- [x] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil` (24-10-2026).
 - [ ] Guardar las credenciales de la intranet como secretos de Supabase (`supabase secrets
       set FEDERACION_USUARIO=… FEDERACION_CLAVE=…`), tecleadas en el terminal, nunca en
       ficheros.
