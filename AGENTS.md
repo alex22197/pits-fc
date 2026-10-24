@@ -149,6 +149,9 @@ Detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
   nunca se edita una migración ya aplicada ni se cambia el esquema desde el panel de Supabase.
 - Cada tabla nueva: RLS activado, políticas explícitas y `grant` solo de lo necesario (el
   proyecto no expone tablas automáticamente).
+- Antes de dar por buena una migración, `npm run db:probar` (la ejecuta en un PostgreSQL
+  embebido junto con las comprobaciones de `supabase/tests/`); cada regla nueva lleva su
+  comprobación ahí.
 - Tras aplicar la migración, `npm run db:tipos`.
 - Quien termina una tarea con migración la aplica en Supabase (`npm run db:migrar`) después
   de probarla en local, si solo añade (funciones, vistas, tablas o columnas nuevas). Si
