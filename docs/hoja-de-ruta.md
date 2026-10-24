@@ -37,7 +37,8 @@ terminarla, se marca aquí.
 - [x] Datos iniciales: competición 2026-2027, 13 equipos, 26 jornadas y 156 partidos (#3).
 - [x] `npm run db:probar`: las migraciones se ejecutan y comprueban en un PostgreSQL embebido,
       también en la integración continua (#3).
-- [ ] Servicios de `data-access/` con mapeadores y tests.
+- [x] Servicios de `data-access/` con mapeadores, fixtures, funciones puras (próximo
+      partido, resultado) y tests (#4).
 
 ## 3. Scraper de la federación
 
