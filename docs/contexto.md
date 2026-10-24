@@ -6,9 +6,11 @@ cambios. El repositorio es público: aquí no van nombres completos ni datos de 
 
 ## Quién lo usa
 
-- **Autor y administrador**: Alex (cuenta de GitHub `alex22197`). Programa en **Angular**;
-  tiene otro proyecto parecido, `ctp-valdelasfuentes` (equipo de pádel), del que este hereda
-  la estructura y las convenciones.
+- **Autor y administrador**: Alex (cuenta de GitHub `alex22197`). **No pertenece al equipo**:
+  hace la web para ellos. Programa en **Angular**; tiene otro proyecto parecido,
+  `ctp-valdelasfuentes` (equipo de pádel), del que este hereda la estructura y las
+  convenciones. Las pantallas de gestión las prueban y usan los gestores del equipo, por lo
+  que tienen que ser autoexplicativas y poder invitarse desde la propia web.
 - **Jugadores y cuerpo técnico**: consultan la web desde el móvil, sin cuenta. La
   comunicación del equipo va por **WhatsApp**, así que los enlaces se comparten por ahí.
 - **Gestores**: quien publica las convocatorias y revisa los datos. Entran con Google y el

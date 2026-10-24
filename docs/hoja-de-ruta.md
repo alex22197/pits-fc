@@ -26,7 +26,7 @@ terminarla, se marca aquí.
 - [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
       (24-10-2026).
 - [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
-      [`despliegue.md`](despliegue.md)).
+      [`despliegue.md`](despliegue.md)) (#10).
 - [ ] Decidir el nombre corto que se muestra de cada jugador.
 
 ## 2. Modelo de datos
@@ -59,7 +59,7 @@ terminarla, se marca aquí.
       goles y tarjetas, alineación y convocatoria (#7).
 - [x] Clasificación: tabla del grupo con nuestra fila destacada (#7).
 - [x] Plantilla: jugadores con dorsal y posición; ficha con sus cifras y sus partidos (#7).
-- [ ] Página de privacidad con Alex como contacto, antes de publicar.
+- [ ] Página de privacidad con Alex como contacto, antes de publicar (#10).
 
 ## 5. Gestión
 
@@ -67,7 +67,8 @@ terminarla, se marca aquí.
       guardar, publicar o retirar, y copiar el texto para WhatsApp (#8).
 - [x] Jugadores: nombre corto, dorsal, posición y si sigue en el equipo, viendo el nombre
       de las actas (#8).
-- [ ] Invitar gestores por correo (de momento el administrador da el rol desde el panel).
+- [ ] Invitar gestores por correo desde la web (#9); de momento el administrador da el rol
+      desde el panel.
 - [ ] Asociar a mano un jugador con otro nombre de las actas cuando la federación lo escriba
       distinto.
 
@@ -77,11 +78,41 @@ terminarla, se marca aquí.
       puntos acumulados y goles por jornada (gráficas con Apache ECharts) (#6).
 - [x] Por jugador: goleadores, partidos (titular y suplente) y tarjetas; minuto de los goles
       del equipo (#6).
-- [ ] Goles encajados por portero y ficha de cada jugador en «Plantilla».
-- [ ] Más ideas: racha de partidos sin perder, media de goles por partido, mejor jornada,
-      comparativa con el rival del próximo partido.
+- [x] Ficha de cada jugador en «Plantilla», con goles encajados si es portero (#7).
+- [ ] Montaña rusa de la liga: posición de cada equipo jornada a jornada (#17).
+- [ ] Datos curiosos y récords del equipo (#19).
 
-## Mejoras para después
+## 7. Una web viva: interactividad y animación
+
+Ideas para que la web sea original y divertida, cada una con su issue. Primero la guía de
+animación (#14), que fija cómo se anima en todo el proyecto.
+
+Prioridad alta:
+
+- [ ] Invitar gestores desde la web (#9).
+- [ ] Publicar la web: Cloudflare Pages, dominio y privacidad (#10).
+- [ ] Portada viva: cuenta atrás y cara a cara con el próximo rival (#11).
+- [ ] Añadir los partidos al calendario del móvil, con suscripción (#12).
+- [ ] Instalable como app en el móvil (PWA) (#13).
+
+Prioridad media:
+
+- [ ] Guía de animación: ADR, tokens de movimiento y transiciones entre páginas (#14).
+- [ ] Revivir el partido: cronología animada del acta (#15).
+- [ ] Cromos de jugadores que giran, con foto (#16).
+- [ ] Montaña rusa de la liga (#17).
+- [ ] Compartir el resultado como imagen para WhatsApp e Instagram (#18).
+- [ ] Datos curiosos y récords del equipo (#19).
+- [ ] Celebración al abrir la web tras una victoria (#20).
+
+Prioridad baja (requieren decidirlo con el equipo o identidad para jugadores):
+
+- [ ] Porra del equipo: predicciones y ranking (#21).
+- [ ] Votación del jugador del partido (#22).
+- [ ] Cómo llegar a los campos (#23).
+- [ ] Avisos en el móvil cuando se publica la convocatoria (#24).
+
+## Mejoras sin fecha
 
 - Disponibilidad de los jugadores en la web, entrenamientos, cuotas y multas.
 - Torneo de la Hispanidad u otras competiciones.
