@@ -21,6 +21,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'calendario/partido/:idPartido',
+    title: 'Partido',
+    loadComponent: () =>
+      import('@features/calendario/pages/partido-page/partido-page.component').then(
+        (m) => m.PartidoPageComponent,
+      ),
+  },
+  {
     path: 'clasificacion',
     title: 'Clasificación',
     loadComponent: () =>
@@ -34,6 +42,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('@features/plantilla/pages/plantilla-page/plantilla-page.component').then(
         (m) => m.PlantillaPageComponent,
+      ),
+  },
+  {
+    path: 'jugadores/:idJugador',
+    title: 'Jugador',
+    loadComponent: () =>
+      import('@features/plantilla/pages/ficha-jugador-page/ficha-jugador-page.component').then(
+        (m) => m.FichaJugadorPageComponent,
       ),
   },
   {

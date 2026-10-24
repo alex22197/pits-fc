@@ -1,0 +1,66 @@
+<a class="volver" routerLink="/plantilla">Volver a la plantilla</a>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando el jugador…" />
+} @else if (datos.jugador.value(); as jugador) {
+  <header class="cabecera">
+    <span class="dorsal">{{ jugador.dorsal ?? '–' }}</span>
+    <div>
+      <h1 class="titulo-pagina">{{ jugador.nombreMostrar }}</h1>
+      @if (posicion()) {
+        <p class="texto-secundario">{{ posicion() }}</p>
+      }
+    </div>
+  </header>
+
+  @if (datos.cifras(); as cifras) {
+    <div class="cifras">
+      <div class="cifra">
+        <span class="valor">{{ cifras.partidos }}</span>
+        <span class="etiqueta">Partidos</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ cifras.titularidades }}</span>
+        <span class="etiqueta">De inicio</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ cifras.goles }}</span>
+        <span class="etiqueta">Goles</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ cifras.amarillas }}</span>
+        <span class="etiqueta">Amarillas</span>
+      </div>
+      <div class="cifra">
+        <span class="valor">{{ cifras.rojas }}</span>
+        <span class="etiqueta">Rojas</span>
+      </div>
+      @if (jugador.posicion === 'portero') {
+        <div class="cifra">
+          <span class="valor">{{ cifras.golesEncajados }}</span>
+          <span class="etiqueta">Encajados</span>
+        </div>
+      }
+    </div>
+  }
+
+  <section class="partidos">
+    <h2 class="titulo-seccion">Partidos jugados</h2>
+    @if (datos.participaciones.value(); as participaciones) {
+      @if (participaciones.length > 0) {
+        @for (participacion of participaciones; track participacion.partido.id) {
+          <div class="participacion">
+            <pits-tarjeta-partido [partido]="participacion.partido" [conJornada]="true" />
+            <span class="rol">{{ participacion.titular ? 'Titular' : 'Suplente' }}</span>
+          </div>
+        }
+      } @else {
+        <pits-mensaje-estado tipo="vacio" mensaje="Todavía no figura en ningún acta." />
+      }
+    }
+  </section>
+} @else {
+  <pits-mensaje-estado tipo="vacio" mensaje="Ese jugador no existe." />
+}

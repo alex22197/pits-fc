@@ -1,0 +1,11 @@
+@let j = jugador();
+<a class="tarjeta" [routerLink]="['/jugadores', j.id]">
+  <span class="dorsal">{{ j.dorsal ?? '–' }}</span>
+  <span class="datos">
+    <span class="nombre">{{ j.nombreMostrar }}</span>
+    @if (posicion()) {
+      <span class="posicion">{{ posicion() }}</span>
+    }
+    <span class="resumen">{{ resumen() }}</span>
+  </span>
+</a>

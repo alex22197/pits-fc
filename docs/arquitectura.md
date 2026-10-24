@@ -48,8 +48,14 @@ features/
     interfaces/     Tipos propios de la sección
 ```
 
-Secciones actuales: `inicio`, `calendario`, `clasificacion`, `plantilla`, `estadisticas`,
-`acceso` y `no-encontrado`.
+Secciones actuales: `inicio`, `calendario` (con la página de un partido), `clasificacion`,
+`plantilla` (con la ficha de un jugador), `estadisticas`, `acceso` y `no-encontrado`.
+
+Componentes compartidos que usan varias secciones: `pits-tarjeta-partido` (un partido en
+una línea, con el color del resultado si es nuestro), `pits-tabla-clasificacion` (completa o
+resumida), `pits-racha`, `pits-convocatoria-partido`, `pits-grafica` y `pits-mensaje-estado`.
+Las fechas se escriben con `shared/utils/fechas` y el pipe `fechaPartido`, siempre en hora de
+Madrid.
 
 Entidades de `data-access/`: `competiciones`, `equipos`, `partidos` (calendario, detalle con
 acta, próximo partido y último resultado), `clasificacion`, `jugadores`, `estadisticas` y

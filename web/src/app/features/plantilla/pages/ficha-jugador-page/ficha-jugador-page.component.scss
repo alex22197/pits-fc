@@ -1,0 +1,81 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.volver {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.dorsal {
+  min-width: 4rem;
+  color: var(--color-marca);
+  font-size: var(--texto-xxl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 1;
+  text-align: center;
+}
+
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.cifra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.valor {
+  font-size: var(--texto-xl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 1;
+}
+
+.etiqueta {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
+.partidos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.participacion {
+  position: relative;
+}
+
+.rol {
+  position: absolute;
+  top: var(--espacio-3);
+  right: var(--espacio-4);
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

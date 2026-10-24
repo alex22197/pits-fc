@@ -35,15 +35,8 @@
 <div class="bloques">
   <section class="bloque">
     <h3 class="titulo-seccion">Racha</h3>
-    @if (racha().length > 0) {
-      <ol class="racha" aria-label="Últimos resultados, del más antiguo al más reciente">
-        @for (paso of racha(); track $index) {
-          <li class="resultado" [class]="'resultado resultado--' + paso.resultado">
-            <span aria-hidden="true">{{ paso.letra }}</span>
-            <span class="solo-lector">{{ paso.resultado }}</span>
-          </li>
-        }
-      </ol>
+    @if (resumen().ultimos.length > 0) {
+      <pits-racha [resultados]="resumen().ultimos" />
     } @else {
       <p class="texto-secundario">Aún no hay partidos jugados.</p>
     }

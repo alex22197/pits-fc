@@ -1,0 +1,28 @@
+<a class="volver" routerLink="/calendario">Volver al calendario</a>
+<h1 class="titulo-pagina">Partido</h1>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando el partido…" />
+} @else if (datos.detalle.value(); as detalle) {
+  <pits-tarjeta-partido [partido]="detalle.partido" [conJornada]="true" [enlazar]="false" />
+
+  @if (detalle.goles.length > 0 || detalle.tarjetas.length > 0) {
+    <pits-incidencias-partido [detalle]="detalle" />
+  }
+
+  @if (detalle.participantes.length > 0) {
+    <pits-alineacion-partido [participantes]="detalle.participantes" />
+  } @else if (detalle.partido.estado === 'jugado') {
+    <pits-mensaje-estado tipo="vacio" mensaje="El acta de este partido aún no se ha importado." />
+  }
+
+  @if (datos.convocatoria.value(); as convocados) {
+    @if (convocados.length > 0) {
+      <pits-convocatoria-partido [convocados]="convocados" />
+    }
+  }
+} @else {
+  <pits-mensaje-estado tipo="vacio" mensaje="Ese partido no existe." />
+}

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.volver {
+  align-self: flex-start;
+  font-weight: 700;
+}

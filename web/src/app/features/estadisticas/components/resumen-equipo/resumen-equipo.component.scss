@@ -64,38 +64,6 @@
   background: var(--color-superficie);
 }
 
-// Un resultado por chip: letra y color, nunca solo color.
-.racha {
-  display: flex;
-  gap: var(--espacio-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.resultado {
-  display: grid;
-  place-items: center;
-  width: var(--minimo-tactil);
-  height: var(--minimo-tactil);
-  border-radius: var(--radio-control);
-  color: var(--color-sobre-marca);
-  font-size: var(--texto-l);
-  font-weight: 800;
-}
-
-.resultado--victoria {
-  background: var(--color-victoria);
-}
-
-.resultado--empate {
-  background: var(--color-empate);
-}
-
-.resultado--derrota {
-  background: var(--color-derrota);
-}
-
 .balance {
   width: 100%;
   border-collapse: collapse;

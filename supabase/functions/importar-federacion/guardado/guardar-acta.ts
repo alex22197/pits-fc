@@ -25,6 +25,7 @@ export async function guardarActa(
   }
   const nuestros: EquipoActa = somosLocal ? acta.local : acta.visitante;
   const jugadores = await asegurarJugadores(db, nombresDe(nuestros, acta, somosLocal), resumen);
+  await completarDorsales(db, nuestros, jugadores);
 
   await reemplazar(db, 'participacion', partido.id, [
     ...nuestros.titulares.map((jugador) => ({
@@ -149,6 +150,31 @@ async function asegurarJugadores(
     resumen.jugadoresNuevos.push(corto);
   }
   return mapa;
+}
+
+/**
+ * A los jugadores sin dorsal se les pone el que llevaron en el acta. Si ese dorsal ya lo
+ * tiene otro jugador activo, se deja vacío: lo decidirá un gestor.
+ */
+async function completarDorsales(
+  db: SupabaseClient,
+  nuestros: EquipoActa,
+  jugadores: Map<string, string>,
+): Promise<void> {
+  for (const jugador of [...nuestros.titulares, ...nuestros.suplentes]) {
+    const id = jugadores.get(clave(jugador.nombre));
+    if (!id || jugador.dorsal === null) {
+      continue;
+    }
+    const { error } = await db
+      .from('jugador')
+      .update({ dorsal: jugador.dorsal })
+      .eq('id', id)
+      .is('dorsal', null);
+    if (error) {
+      console.warn(`No se ha podido asignar el dorsal ${jugador.dorsal}`, error.message);
+    }
+  }
 }
 
 /** Vacía las filas del partido en una tabla y mete las nuevas. */

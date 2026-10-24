@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.tarjeta {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  min-height: 5rem;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+  color: var(--color-tinta);
+  text-decoration: none;
+  transition: border-color var(--duracion-rapida) var(--curva-salida);
+
+  &:hover {
+    border-color: var(--color-marca);
+  }
+}
+
+// Dorsal grande, como en la camiseta.
+.dorsal {
+  min-width: 3rem;
+  color: var(--color-marca);
+  font-size: var(--texto-xl);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  line-height: 1;
+  text-align: center;
+}
+
+.datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.nombre {
+  font-size: var(--texto-l);
+  font-weight: 750;
+  font-stretch: var(--anchura-titulo);
+}
+
+.posicion,
+.resumen {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}

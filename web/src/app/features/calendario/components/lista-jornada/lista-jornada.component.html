@@ -1,0 +1,26 @@
+@let j = jornada();
+<section class="jornada" [class.jornada--actual]="actual()" [id]="'jornada-' + j.numero">
+  <header class="cabecera">
+    <h2 class="titulo">
+      Jornada {{ j.numero }}
+      @if (actual()) {
+        <span class="actual">Esta jornada</span>
+      }
+    </h2>
+    <p class="texto-secundario">
+      {{ fecha() }}
+      @if (j.descansa) {
+        · descansa {{ j.descansa.nombre }}
+      }
+    </p>
+  </header>
+  @if (j.partidos.length > 0) {
+    <div class="partidos">
+      @for (partido of j.partidos; track partido.id) {
+        <pits-tarjeta-partido [partido]="partido" />
+      }
+    </div>
+  } @else {
+    <p class="texto-secundario">No jugamos esta jornada.</p>
+  }
+</section>
