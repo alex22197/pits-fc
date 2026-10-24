@@ -24,6 +24,18 @@
     </nav>
 
     <div class="accesos">
+      @if (auth.esGestor()) {
+        <a
+          class="cuenta"
+          routerLink="/gestion"
+          routerLinkActive="cuenta--activa"
+          ariaCurrentWhenActive="page"
+          aria-label="Gestión"
+        >
+          <pits-icono nombre="gestion" />
+          <span class="cuenta-texto">Gestión</span>
+        </a>
+      }
       <a
         class="cuenta"
         routerLink="/acceso"

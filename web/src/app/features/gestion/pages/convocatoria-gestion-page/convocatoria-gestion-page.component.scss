@@ -1,0 +1,124 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.volver {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.etiqueta {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
+select,
+input[type='text'] {
+  min-height: var(--minimo-tactil);
+  padding: 0 var(--espacio-3);
+  border: 1.5px solid var(--color-borde-control);
+  border-radius: var(--radio-control);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font: inherit;
+}
+
+.publicacion {
+  color: var(--color-tinta-tenue);
+  font-weight: 600;
+}
+
+.publicacion--publicada {
+  color: var(--color-victoria);
+}
+
+.jugadores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.jugador {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 8rem;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 9rem minmax(0, 1fr);
+  }
+}
+
+.jugador--decidido {
+  border-color: var(--color-marca);
+}
+
+.dorsal {
+  color: var(--color-marca);
+  font-size: var(--texto-l);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  text-align: center;
+}
+
+.nombre {
+  font-weight: 600;
+}
+
+.nota {
+  grid-column: 1 / -1;
+
+  @include bp.desde(tablet) {
+    grid-column: auto;
+  }
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.estado {
+  color: var(--color-victoria);
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.estado--error {
+  color: var(--color-derrota);
+}
+
+.whatsapp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.texto {
+  margin: 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio-control);
+  background: var(--color-fondo);
+  font: inherit;
+  white-space: pre-wrap;
+}

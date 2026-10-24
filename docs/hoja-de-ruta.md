@@ -48,7 +48,7 @@ terminarla, se marca aquí.
 - [x] Programación semanal con `pg_cron` (migración `programar_scraper`) (#5).
 - [x] Secretos de la función y del Vault, despliegue y primera importación con éxito:
       clasificación, fechas, horas y dos actas (24-10-2026).
-- [ ] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión.
+- [x] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión (#8).
 
 ## 4. Pantallas públicas
 
@@ -63,9 +63,13 @@ terminarla, se marca aquí.
 
 ## 5. Gestión
 
-- [ ] Convocatoria de un partido: elegir jugadores y publicarla; texto para WhatsApp.
-- [ ] Jugadores: nombre corto, dorsal, posición y correspondencia con el nombre de las actas.
-- [ ] Invitar gestores por correo.
+- [x] Convocatoria de un partido: elegir jugadores (convocado, duda, no va, con nota),
+      guardar, publicar o retirar, y copiar el texto para WhatsApp (#8).
+- [x] Jugadores: nombre corto, dorsal, posición y si sigue en el equipo, viendo el nombre
+      de las actas (#8).
+- [ ] Invitar gestores por correo (de momento el administrador da el rol desde el panel).
+- [ ] Asociar a mano un jugador con otro nombre de las actas cuando la federación lo escriba
+      distinto.
 
 ## 6. Estadísticas
 

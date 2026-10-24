@@ -1,0 +1,76 @@
+<a class="volver" routerLink="/gestion">Volver a gestión</a>
+<h1 class="titulo-pagina">Importar de la federación</h1>
+<p class="texto-secundario">
+  Cada martes por la mañana se importa sola. Con este botón se trae ahora mismo el calendario, la
+  clasificación y las actas nuevas; tarda medio minuto.
+</p>
+
+<div class="acciones">
+  <button
+    type="button"
+    class="boton boton--principal"
+    [disabled]="datos.enCurso()"
+    (click)="datos.lanzar()"
+  >
+    {{ datos.enCurso() ? 'Importando…' : 'Actualizar ahora' }}
+  </button>
+  @if (datos.estado(); as estado) {
+    <span class="estado" [class.estado--error]="estado.tipo === 'error'" role="status">{{
+      estado.mensaje
+    }}</span>
+  }
+</div>
+
+<section class="registro">
+  <h2 class="titulo-seccion">Últimas importaciones</h2>
+  @if (datos.error(); as error) {
+    <pits-mensaje-estado tipo="error" [mensaje]="error" />
+  } @else if (datos.ejecuciones.isLoading() && !datos.ejecuciones.value()) {
+    <pits-mensaje-estado tipo="cargando" mensaje="Cargando el registro…" />
+  } @else if (datos.ejecuciones.value(); as ejecuciones) {
+    @if (ejecuciones.length === 0) {
+      <pits-mensaje-estado tipo="vacio" mensaje="Todavía no se ha importado nada." />
+    }
+    @for (ejecucion of ejecuciones; track ejecucion.id) {
+      <article
+        class="ejecucion"
+        [class]="'ejecucion ejecucion--' + (ejecucion.estado ?? 'en-curso')"
+      >
+        <header class="cabecera">
+          <span class="cuando">{{ fecha(ejecucion.inicio) }}</span>
+          <span class="resultado">
+            {{
+              ejecucion.estado === 'ok'
+                ? 'Bien'
+                : ejecucion.estado === 'error'
+                  ? 'Con errores'
+                  : 'En curso'
+            }}
+          </span>
+          @if (ejecucion.llamante) {
+            <span class="texto-secundario">{{
+              ejecucion.llamante === 'servicio' ? 'automática' : 'a mano'
+            }}</span>
+          }
+        </header>
+        <p class="cifras">
+          {{ ejecucion.partidosActualizados }} partidos · clasificación de
+          {{ ejecucion.filasClasificacion }} equipos · {{ ejecucion.actasImportadas }}
+          {{ ejecucion.actasImportadas === 1 ? 'acta' : 'actas' }}
+        </p>
+        @if (ejecucion.jugadoresNuevos.length > 0) {
+          <p class="detalle">
+            Jugadores nuevos: {{ ejecucion.jugadoresNuevos.join(', ') }}. Ponles nombre en
+            «Jugadores».
+          </p>
+        }
+        @for (aviso of ejecucion.avisos; track $index) {
+          <p class="detalle">{{ aviso }}</p>
+        }
+        @for (error of ejecucion.errores; track $index) {
+          <p class="detalle detalle--error">{{ error }}</p>
+        }
+      </article>
+    }
+  }
+</section>

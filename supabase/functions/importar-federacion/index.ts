@@ -8,7 +8,8 @@ import { importar } from './importar.ts';
 const CABECERAS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, content-type',
+  // Los que manda el cliente de Supabase desde el navegador, más la región elegida.
+  'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info, x-region',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 

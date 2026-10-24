@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '@core/auth/auth.service';
 
 /**
@@ -7,6 +8,7 @@ import { AuthService } from '@core/auth/auth.service';
  */
 @Component({
   selector: 'pits-acceso-page',
+  imports: [RouterLink],
   templateUrl: './acceso-page.component.html',
   styleUrl: './acceso-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

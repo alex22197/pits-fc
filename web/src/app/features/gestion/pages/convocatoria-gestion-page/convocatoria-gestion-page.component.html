@@ -1,0 +1,105 @@
+<a class="volver" routerLink="/gestion">Volver a gestión</a>
+<h1 class="titulo-pagina">Convocatoria</h1>
+
+@if (datos.calendario.isLoading() || datos.plantilla.isLoading()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando partidos y jugadores…" />
+} @else if (datos.pendientes().length === 0) {
+  <pits-mensaje-estado tipo="vacio" mensaje="No queda ningún partido pendiente." />
+} @else if (datos.partido(); as partido) {
+  <label class="campo">
+    <span class="etiqueta">Partido</span>
+    <select (change)="elegirPartido($event)">
+      @for (pendiente of datos.pendientes(); track pendiente.id) {
+        <option [value]="pendiente.id" [selected]="pendiente.id === partido.id">
+          J{{ pendiente.jornadaNumero }} · {{ pendiente.local.nombre }} -
+          {{ pendiente.visitante.nombre }} · {{ pendiente | fechaPartido }}
+        </option>
+      }
+    </select>
+  </label>
+
+  <p class="publicacion" [class.publicacion--publicada]="partido.convocatoriaPublicada">
+    {{
+      partido.convocatoriaPublicada
+        ? 'Publicada: la ve todo el mundo.'
+        : 'Sin publicar: solo la veis los gestores.'
+    }}
+  </p>
+
+  @if (datos.plantilla.value(); as jugadores) {
+    <div class="jugadores">
+      @for (jugador of jugadores; track jugador.id) {
+        @let decision = datos.decisiones().get(jugador.id);
+        <div class="jugador" [class.jugador--decidido]="decision">
+          <span class="dorsal">{{ jugador.dorsal ?? '–' }}</span>
+          <span class="nombre">{{ jugador.nombreMostrar }}</span>
+          <select
+            class="decision"
+            [attr.aria-label]="'Decisión para ' + jugador.nombreMostrar"
+            (change)="decidir(jugador.id, $event)"
+          >
+            @for (opcion of opciones; track opcion.valor) {
+              <option [value]="opcion.valor" [selected]="(decision?.estado ?? '') === opcion.valor">
+                {{ opcion.etiqueta }}
+              </option>
+            }
+          </select>
+          @if (decision) {
+            <input
+              class="nota"
+              type="text"
+              placeholder="Nota (opcional)"
+              maxlength="80"
+              [value]="decision.nota ?? ''"
+              (change)="anotar(jugador.id, $event)"
+              [attr.aria-label]="'Nota para ' + jugador.nombreMostrar"
+            />
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <div class="acciones">
+    <button type="button" class="boton" [disabled]="datos.ocupado()" (click)="datos.guardar()">
+      Guardar
+    </button>
+    @if (partido.convocatoriaPublicada) {
+      <button
+        type="button"
+        class="boton"
+        [disabled]="datos.ocupado()"
+        (click)="datos.publicar(false)"
+      >
+        Retirar
+      </button>
+    } @else {
+      <button
+        type="button"
+        class="boton boton--principal"
+        [disabled]="datos.ocupado()"
+        (click)="datos.publicar(true)"
+      >
+        Guardar y publicar
+      </button>
+    }
+    @if (datos.estado(); as estado) {
+      <span class="estado" [class.estado--error]="estado.tipo === 'error'" role="status">{{
+        estado.mensaje
+      }}</span>
+    }
+  </div>
+
+  @if (datos.convocadosEnFormulario().length > 0) {
+    <section class="whatsapp">
+      <h2 class="titulo-seccion">Para WhatsApp</h2>
+      <pre class="texto">{{ datos.texto() }}</pre>
+      <div class="acciones">
+        <button type="button" class="boton" (click)="copiar()">Copiar texto</button>
+        @if (copiado(); as mensaje) {
+          <span class="estado" role="status">{{ mensaje }}</span>
+        }
+      </div>
+    </section>
+  }
+}
