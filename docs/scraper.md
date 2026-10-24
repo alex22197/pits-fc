@@ -71,8 +71,11 @@ utils/fechas.ts     Fechas de la intranet y hora de Madrid con horario de verano
 1. Abre una fila en `ejecucion_scraper` e inicia sesión en la intranet.
 2. **Calendario**: lee las 26 jornadas y, para cada partido, el código de acta, el marcador y
    el estado. Crea los partidos que no existan y actualiza el equipo que descansa.
-3. **Jornadas** de las tres semanas anteriores y las cuatro siguientes: lee fecha, hora y
-   campo de cada partido (lo único que el calendario no trae).
+3. **Jornadas** de las tres semanas anteriores y las cuatro siguientes, más cualquiera con
+   partidos pendientes: lee fecha, hora y campo de cada partido (lo único que el calendario
+   no trae). Un partido sin resultado cuya fecha pasó hace más de dos días se marca
+   **aplazado**; la intranet no lo dice, se deduce. Cuando la federación le pone fecha nueva,
+   vuelve a `programado` (`guardado/estado-partido.ts`).
 4. **Clasificación** de la última jornada cuya fecha ya ha pasado: borra la anterior y guarda
    la nueva. Los equipos se reconocen por su código de la federación.
 5. **Actas** de nuestros partidos jugados que no se hayan importado, y también las de los

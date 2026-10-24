@@ -4,6 +4,7 @@ import type { JornadaCalendario } from '../interfaces/jornada-calendario.interfa
 import type { PartidoCalendario } from '../interfaces/partido-calendario.interface.ts';
 import type { ResumenImportacion } from '../interfaces/resumen-importacion.interface.ts';
 import { exigir } from './base-de-datos.ts';
+import { estadoDePartido } from './estado-partido.ts';
 
 /**
  * Lleva a `partido` lo que dice el calendario: código de acta, marcador y estado. Un partido
@@ -13,6 +14,7 @@ export async function guardarCalendario(
   db: SupabaseClient,
   contexto: Contexto,
   jornadas: readonly JornadaCalendario[],
+  hoy: string,
   resumen: ResumenImportacion,
 ): Promise<void> {
   for (const jornada of jornadas) {
@@ -25,7 +27,7 @@ export async function guardarCalendario(
     }
     await actualizarDescanso(db, contexto, jornadaBd.id, jornadaBd.descansa_id, jornada.descansa);
     for (const partido of jornada.partidos) {
-      await guardarPartido(db, contexto, jornadaBd.id, partido, resumen);
+      await guardarPartido(db, contexto, jornadaBd.id, jornada.fecha, hoy, partido, resumen);
     }
   }
 }
@@ -50,6 +52,8 @@ async function guardarPartido(
   db: SupabaseClient,
   contexto: Contexto,
   jornadaId: string,
+  fechaPrevista: string,
+  hoy: string,
   partido: PartidoCalendario,
   resumen: ResumenImportacion,
 ): Promise<void> {
@@ -68,11 +72,13 @@ async function guardarPartido(
       candidato.local_id === localId &&
       candidato.visitante_id === visitanteId,
   );
-  const estado = jugado
-    ? 'jugado'
-    : existente && existente.estado !== 'jugado'
-    ? existente.estado
-    : 'programado';
+  const estado = estadoDePartido({
+    jugado,
+    fechaHora: existente?.fecha_hora ?? null,
+    fechaPrevista,
+    hoy,
+    estadoActual: existente?.estado ?? null,
+  });
   const cambios = {
     cod_acta: partido.codActa,
     goles_local: jugado ? partido.golesLocal : null,

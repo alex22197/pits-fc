@@ -40,23 +40,28 @@ export async function importar(
     await intranet.iniciarSesion();
     const codigos = codigosDesde(contexto.competicion);
 
+    const hoy = hoyEnMadrid();
     await paso(resumen, 'calendario', async () => {
       const jornadas = analizarCalendario(await intranet.descargar(urlCalendario(codigos)));
-      await guardarCalendario(db, contexto, jornadas, resumen);
+      await guardarCalendario(db, contexto, jornadas, hoy, resumen);
     });
 
-    const hoy = hoyEnMadrid();
+    // Fecha, hora y campo: las jornadas de estas semanas y cualquiera con partidos pendientes
+    // (aplazados a los que la federación puede poner fecha nueva en cualquier momento).
     const desde = sumarDias(hoy, -DIAS_ATRAS);
     const hasta = sumarDias(hoy, DIAS_ADELANTE);
     for (const jornada of contexto.jornadas) {
-      if (jornada.fecha_prevista < desde || jornada.fecha_prevista > hasta) {
+      const enVentana = jornada.fecha_prevista >= desde && jornada.fecha_prevista <= hasta;
+      const pasadaConPendientes = jornada.fecha_prevista < desde &&
+        tienePendientes(contexto, jornada.id);
+      if (!enVentana && !pasadaConPendientes) {
         continue;
       }
       await paso(resumen, `jornada ${jornada.numero}`, async () => {
         const partidos = analizarJornada(
           await intranet.descargar(urlJornada(codigos, jornada.numero)),
         );
-        await guardarDetallesJornada(db, contexto, jornada.id, partidos, resumen);
+        await guardarDetallesJornada(db, contexto, jornada, hoy, partidos, resumen);
       });
     }
 
@@ -92,6 +97,13 @@ async function paso(
   } catch (error) {
     resumen.errores.push(`${nombre}: ${mensajeSeguro(error)}`);
   }
+}
+
+/** Si en la jornada queda algún partido sin jugar. */
+function tienePendientes(contexto: Contexto, jornadaId: string): boolean {
+  return contexto.partidos.some(
+    (partido) => partido.jornada_id === jornadaId && partido.estado !== 'jugado',
+  );
 }
 
 /** La última jornada cuya fecha prevista ya ha llegado (o la primera). */

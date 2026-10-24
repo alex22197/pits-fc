@@ -1,9 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Contexto } from '../interfaces/contexto.interface.ts';
+import type { Contexto, JornadaBd } from '../interfaces/contexto.interface.ts';
 import type { PartidoJornada } from '../interfaces/partido-jornada.interface.ts';
 import type { ResumenImportacion } from '../interfaces/resumen-importacion.interface.ts';
 import { instanteEnMadrid } from '../utils/fechas.ts';
 import { exigir } from './base-de-datos.ts';
+import { estadoDePartido } from './estado-partido.ts';
 import { idEquipo } from './guardar-calendario.ts';
 
 /**
@@ -13,7 +14,8 @@ import { idEquipo } from './guardar-calendario.ts';
 export async function guardarDetallesJornada(
   db: SupabaseClient,
   contexto: Contexto,
-  jornadaId: string,
+  jornada: JornadaBd,
+  hoy: string,
   partidos: readonly PartidoJornada[],
   resumen: ResumenImportacion,
 ): Promise<void> {
@@ -23,7 +25,7 @@ export async function guardarDetallesJornada(
     )) ||
       contexto.partidos.find(
         (p) =>
-          p.jornada_id === jornadaId &&
+          p.jornada_id === jornada.id &&
           p.local_id === idEquipo(contexto, partido.local) &&
           p.visitante_id === idEquipo(contexto, partido.visitante),
       );
@@ -37,26 +39,28 @@ export async function guardarDetallesJornada(
       ? instanteEnMadrid(partido.fecha, partido.hora)
       : null;
     const jugado = partido.golesLocal !== null && partido.golesVisitante !== null;
+    const estado = estadoDePartido({
+      jugado,
+      fechaHora,
+      fechaPrevista: jornada.fecha_prevista,
+      hoy,
+      estadoActual: existente.estado,
+    });
     const cambios: Record<string, unknown> = {
       fecha_hora: fechaHora,
       campo: partido.campo,
+      estado,
       ...(partido.codActa && !existente.cod_acta ? { cod_acta: partido.codActa } : {}),
       ...(jugado
-        ? {
-          estado: 'jugado',
-          goles_local: partido.golesLocal,
-          goles_visitante: partido.golesVisitante,
-        }
-        : {}),
+        ? { goles_local: partido.golesLocal, goles_visitante: partido.golesVisitante }
+        : { goles_local: null, goles_visitante: null }),
     };
     exigir(
       await db.from('partido').update(cambios).eq('id', existente.id),
       'No se ha podido guardar el detalle de un partido',
     );
     existente.fecha_hora = fechaHora;
-    if (jugado) {
-      existente.estado = 'jugado';
-    }
+    existente.estado = estado;
     if (partido.codActa && !existente.cod_acta) {
       existente.cod_acta = partido.codActa;
     }
