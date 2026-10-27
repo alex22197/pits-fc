@@ -28,14 +28,19 @@ export async function guardarActa(
   const nuestros: EquipoActa = somosLocal ? acta.local : acta.visitante;
   const jugadores = await asegurarJugadores(db, nombresDe(nuestros), resumen);
   await completarDorsales(db, nuestros, jugadores);
+  const puestos = await puestosPublicados(db, partido.id);
 
   await reemplazar(db, 'participacion', partido.id, [
-    ...nuestros.titulares.map((jugador) => ({
-      partido_id: partido.id,
-      jugador_id: jugadores.get(clave(jugador.nombre)),
-      titular: true,
-      dorsal: jugador.dorsal,
-    })),
+    ...nuestros.titulares.map((jugador) => {
+      const jugadorId = jugadores.get(clave(jugador.nombre));
+      return {
+        partido_id: partido.id,
+        jugador_id: jugadorId,
+        titular: true,
+        dorsal: jugador.dorsal,
+        puesto: (jugadorId && puestos.get(jugadorId)) ?? null,
+      };
+    }),
     ...nuestros.suplentes.map((jugador) => ({
       partido_id: partido.id,
       jugador_id: jugadores.get(clave(jugador.nombre)),
@@ -59,6 +64,25 @@ export async function guardarActa(
   );
   partido.acta_importada_en = new Date().toISOString();
   resumen.actasImportadas += 1;
+}
+
+/**
+ * Puesto de cada jugador en la alineación publicada del partido, para que los titulares del
+ * acta salgan ya colocados en la pizarra (#36). Los gestores pueden cambiarlo después.
+ */
+async function puestosPublicados(
+  db: SupabaseClient,
+  partidoId: string,
+): Promise<Map<string, string>> {
+  const filas = exigir(
+    await db
+      .from('convocatoria')
+      .select('jugador_id, puesto')
+      .eq('partido_id', partidoId)
+      .not('puesto', 'is', null),
+    'No se ha podido leer la alineación publicada',
+  ) as { jugador_id: string; puesto: string }[];
+  return new Map(filas.map((fila) => [fila.jugador_id, fila.puesto]));
 }
 
 /** Nombres de la federación de los nuestros que jugaron, sin repetir. */

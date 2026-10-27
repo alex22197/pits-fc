@@ -28,6 +28,7 @@ una regla o una tabla, se añade su comprobación ahí.
 | `ultima_importacion`    | Función pública con el fin de la última importación correcta, para el aviso del pie (#31).                                                    |
 | `puesto_alineacion`     | Enum con los siete puestos del 1-2-3-1 y columna `convocatoria.puesto` con sus reglas (#33).                                                  |
 | `actas_a_mano`          | `gol.asistente_id`, asistencias en la vista, función `es_partido_nuestro()` y permisos para que los gestores escriban goles y tarjetas (#34). |
+| `puesto_participacion`  | Columna `participacion.puesto` (titulares del acta en el 1-2-3-1) y permiso de los gestores para colocarlos (#36).                            |
 
 ## Modelo
 
@@ -72,7 +73,9 @@ perfil      ejecucion_scraper      vista estadisticas_jugador
   El dorsal es único entre los activos.
 - **jugador_privado**: `jugador_id`, `nombre_federacion`. El nombre tal como aparece en las
   actas, para que el scraper sepa quién es quién. Solo lo leen los gestores.
-- **participacion**: `partido_id`, `jugador_id`, `titular`, `dorsal` (el de ese día). Una
+- **participacion**: `partido_id`, `jugador_id`, `titular`, `dorsal` (el de ese día),
+  `puesto` (dónde jugó el titular en el 1-2-3-1: lo copia el scraper de la alineación
+  publicada y lo corrigen los gestores; único por partido). Una
   fila por jugador que figura en el acta de nuestro partido.
 - **gol**: `id`, `partido_id`, `equipo_id`, `jugador_id` (`null` si es rival), `asistente_id`
   (solo en goles nuestros y distinto del goleador), `minuto`, `marcador_local`,

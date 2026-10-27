@@ -26,6 +26,17 @@
   @if (datos.guardada.isLoading()) {
     <pits-mensaje-estado tipo="cargando" mensaje="Cargando el acta…" />
   } @else if (datos.plantilla.value(); as jugadores) {
+    @if (datos.titularesActa().length > 0) {
+      <section class="seccion" aria-labelledby="titulo-alineacion">
+        <h2 id="titulo-alineacion" class="titulo-seccion">Alineación</h2>
+        <pits-editor-alineacion
+          [candidatos]="datos.titularesActa()"
+          [titulares]="datos.alineacion()"
+          (cambio)="datos.colocar($event)"
+        />
+      </section>
+    }
+
     <section class="seccion" aria-labelledby="titulo-goles">
       <h2 id="titulo-goles" class="titulo-seccion">Goles</h2>
       @if (datos.goles().length === 0) {

@@ -13,6 +13,7 @@ export function mapearDetallePartido(fila: FilaDetallePartido): DetallePartido {
         jugador: mapearJugador(participacion.jugador),
         titular: participacion.titular,
         dorsal: participacion.dorsal,
+        puesto: participacion.titular ? participacion.puesto : null,
       }))
       .sort(compararParticipantes),
     goles: [...fila.goles]
