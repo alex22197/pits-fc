@@ -45,6 +45,10 @@
   color: var(--color-tinta-tenue);
   font-size: var(--texto-s);
 
+  .pie-aviso {
+    flex-basis: 100%;
+  }
+
   a {
     display: inline-flex;
     align-items: center;
