@@ -17,16 +17,17 @@ una regla o una tabla, se añade su comprobación ahí.
 
 ## Migraciones
 
-| Migración               | Qué trae                                                                                                                  |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `esquema_inicial`       | enum `rol_usuario`, tabla `perfil` y función `es_gestor()`.                                                               |
-| `modelo_de_datos`       | Todo el modelo de abajo, con triggers, vista y permisos.                                                                  |
-| `datos_iniciales`       | Competición 2026-2027, 13 equipos, 26 jornadas, 156 partidos y resultados conocidos al 23-10-2026; función `id_equipo()`. |
-| `programar_scraper`     | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local).                                  |
-| `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros.                                                  |
-| `scraper_en_paris`      | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones.                                  |
-| `ultima_importacion`    | Función pública con el fin de la última importación correcta, para el aviso del pie (#31).                                |
-| `puesto_alineacion`     | Enum con los siete puestos del 1-2-3-1 y columna `convocatoria.puesto` con sus reglas (#33).                              |
+| Migración               | Qué trae                                                                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `esquema_inicial`       | enum `rol_usuario`, tabla `perfil` y función `es_gestor()`.                                                                                   |
+| `modelo_de_datos`       | Todo el modelo de abajo, con triggers, vista y permisos.                                                                                      |
+| `datos_iniciales`       | Competición 2026-2027, 13 equipos, 26 jornadas, 156 partidos y resultados conocidos al 23-10-2026; función `id_equipo()`.                     |
+| `programar_scraper`     | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local).                                                      |
+| `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros.                                                                      |
+| `scraper_en_paris`      | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones.                                                      |
+| `ultima_importacion`    | Función pública con el fin de la última importación correcta, para el aviso del pie (#31).                                                    |
+| `puesto_alineacion`     | Enum con los siete puestos del 1-2-3-1 y columna `convocatoria.puesto` con sus reglas (#33).                                                  |
+| `actas_a_mano`          | `gol.asistente_id`, asistencias en la vista, función `es_partido_nuestro()` y permisos para que los gestores escriban goles y tarjetas (#34). |
 
 ## Modelo
 
@@ -73,10 +74,12 @@ perfil      ejecucion_scraper      vista estadisticas_jugador
   actas, para que el scraper sepa quién es quién. Solo lo leen los gestores.
 - **participacion**: `partido_id`, `jugador_id`, `titular`, `dorsal` (el de ese día). Una
   fila por jugador que figura en el acta de nuestro partido.
-- **gol**: `id`, `partido_id`, `equipo_id`, `jugador_id` (`null` si es rival), `minuto`,
-  `marcador_local`, `marcador_visitante`. Los goles rivales se guardan sin autor (ADR 0004).
+- **gol**: `id`, `partido_id`, `equipo_id`, `jugador_id` (`null` si es rival), `asistente_id`
+  (solo en goles nuestros y distinto del goleador), `minuto`, `marcador_local`,
+  `marcador_visitante`. Los apuntan los gestores tras cada partido (#34); los goles rivales
+  van sin autor (ADR 0004).
 - **tarjeta**: `id`, `partido_id`, `jugador_id`, `tipo` (`amarilla`, `roja`), `minuto`.
-  Solo las nuestras.
+  Solo las nuestras; las apuntan los gestores.
 - **convocatoria**: `partido_id`, `jugador_id`, `estado` (`convocado`, `duda`,
   `descartado`), `puesto` (enum `puesto_alineacion`: los siete del 1-2-3-1; solo un convocado
   por puesto y partido, y solo si está convocado) y `nota`. Convocado con puesto es titular;
@@ -99,6 +102,8 @@ Por jugador: `partidos`, `titularidades`, `goles`, `amarillas`, `rojas` y `goles
 - `es_gestor()`: si la cuenta actual tiene fila en `perfil`. La usan las políticas.
 - `id_equipo(nombre_en_federacion)`: id de un equipo por su nombre en la intranet. La usan
   las migraciones de datos y el scraper.
+- `es_partido_nuestro(id)`: si en ese partido juega nuestro equipo. La usa la política de
+  escritura de `gol`.
 - `ultima_importacion()`: fin de la última importación correcta, o `null`. La puede llamar
   cualquiera (la usa el pie de la web); no da acceso al registro `ejecucion_scraper`.
 - `set_updated_at()`, `validar_gol()` y `exigir_partido_nuestro()`: triggers de abajo.
@@ -118,17 +123,18 @@ Por jugador: `partidos`, `titularidades`, `goles`, `amarillas`, `rojas` y `goles
 
 ### Permisos (RLS)
 
-| Tabla                                      | Visitante             | Gestor        | Scraper (service role) |
-| ------------------------------------------ | --------------------- | ------------- | ---------------------- |
-| competicion, equipo, jornada               | lee                   | lee           | escribe                |
-| partido                                    | lee                   | lee y corrige | escribe                |
-| clasificacion, gol, tarjeta, participacion | lee                   | lee           | escribe                |
-| jugador                                    | lee                   | lee y escribe | lee                    |
-| jugador_privado                            | —                     | lee y escribe | lee                    |
-| convocatoria                               | lee si está publicada | lee y escribe | —                      |
-| estadisticas_jugador (vista)               | lee                   | lee           | —                      |
-| ejecucion_scraper                          | —                     | lee           | escribe                |
-| perfil                                     | —                     | lee el suyo   | —                      |
+| Tabla                        | Visitante             | Gestor        | Scraper (service role) |
+| ---------------------------- | --------------------- | ------------- | ---------------------- |
+| competicion, equipo, jornada | lee                   | lee           | escribe                |
+| partido                      | lee                   | lee y corrige | escribe                |
+| clasificacion, participacion | lee                   | lee           | escribe                |
+| gol, tarjeta                 | lee                   | lee y escribe | lee                    |
+| jugador                      | lee                   | lee y escribe | lee                    |
+| jugador_privado              | —                     | lee y escribe | lee                    |
+| convocatoria                 | lee si está publicada | lee y escribe | —                      |
+| estadisticas_jugador (vista) | lee                   | lee           | —                      |
+| ejecucion_scraper            | —                     | lee           | escribe                |
+| perfil                       | —                     | lee el suyo   | —                      |
 
 ## Convenciones
 

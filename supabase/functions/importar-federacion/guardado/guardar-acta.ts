@@ -6,9 +6,11 @@ import { exigir } from './base-de-datos.ts';
 import { nombreCorto } from './nombre-corto.ts';
 
 /**
- * Guarda lo que el acta dice de nuestro partido: participaciones, goles (los rivales sin
- * autor) y tarjetas nuestras. Los jugadores se reconocen por `jugador_privado.nombre_federacion`;
- * los que no existan se dan de alta con un nombre corto y se anotan en el resumen.
+ * Guarda lo que el acta dice de nuestro partido: el resultado y las participaciones (titulares
+ * y suplentes con su dorsal). Los goles y las tarjetas no se importan: los apuntan los gestores
+ * después de cada partido, con las asistencias (#34). Los jugadores se reconocen por
+ * `jugador_privado.nombre_federacion`; los que no existan se dan de alta con un nombre corto y
+ * se anotan en el resumen.
  */
 export async function guardarActa(
   db: SupabaseClient,
@@ -24,7 +26,7 @@ export async function guardarActa(
     throw new Error(`El acta ${partido.cod_acta} no es de nuestro equipo.`);
   }
   const nuestros: EquipoActa = somosLocal ? acta.local : acta.visitante;
-  const jugadores = await asegurarJugadores(db, nombresDe(nuestros, acta, somosLocal), resumen);
+  const jugadores = await asegurarJugadores(db, nombresDe(nuestros), resumen);
   await completarDorsales(db, nuestros, jugadores);
 
   await reemplazar(db, 'participacion', partido.id, [
@@ -41,38 +43,6 @@ export async function guardarActa(
       dorsal: jugador.dorsal,
     })),
   ]);
-
-  let anteriorLocal = 0;
-  await reemplazar(
-    db,
-    'gol',
-    partido.id,
-    acta.goles.map((gol) => {
-      const deLocal = gol.marcadorLocal > anteriorLocal;
-      anteriorLocal = gol.marcadorLocal;
-      const nuestro = deLocal === somosLocal;
-      return {
-        partido_id: partido.id,
-        equipo_id: deLocal ? partido.local_id : partido.visitante_id,
-        jugador_id: nuestro ? (jugadores.get(clave(gol.nombre)) ?? null) : null,
-        minuto: gol.minuto,
-        marcador_local: gol.marcadorLocal,
-        marcador_visitante: gol.marcadorVisitante,
-      };
-    }),
-  );
-
-  await reemplazar(
-    db,
-    'tarjeta',
-    partido.id,
-    nuestros.tarjetas.map((tarjeta) => ({
-      partido_id: partido.id,
-      jugador_id: jugadores.get(clave(tarjeta.nombre)),
-      tipo: tarjeta.tipo,
-      minuto: tarjeta.minuto,
-    })),
-  );
 
   const jugado = acta.golesLocal !== null && acta.golesVisitante !== null;
   exigir(
@@ -91,21 +61,10 @@ export async function guardarActa(
   resumen.actasImportadas += 1;
 }
 
-/** Nombres de la federación de los nuestros que aparecen en el acta, sin repetir. */
-function nombresDe(nuestros: EquipoActa, acta: Acta, somosLocal: boolean): string[] {
-  let anteriorLocal = 0;
-  const golesNuestros = acta.goles.filter((gol) => {
-    const deLocal = gol.marcadorLocal > anteriorLocal;
-    anteriorLocal = gol.marcadorLocal;
-    return deLocal === somosLocal;
-  });
-  const nombres = [
-    ...nuestros.titulares.map((j) => j.nombre),
-    ...nuestros.suplentes.map((j) => j.nombre),
-    ...nuestros.tarjetas.map((t) => t.nombre),
-    ...golesNuestros.map((g) => g.nombre),
-  ];
-  return [...new Set(nombres.map((nombre) => nombre.trim()).filter((nombre) => nombre.length > 0))];
+/** Nombres de la federación de los nuestros que jugaron, sin repetir. */
+function nombresDe(nuestros: EquipoActa): string[] {
+  const nombres = [...nuestros.titulares, ...nuestros.suplentes].map((j) => j.nombre.trim());
+  return [...new Set(nombres.filter((nombre) => nombre.length > 0))];
 }
 
 /** Mapa nombre de federación → id de jugador, dando de alta a los que falten. */

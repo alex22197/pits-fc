@@ -1,0 +1,160 @@
+<a class="volver" routerLink="/gestion">Volver a gestión</a>
+<h1 class="titulo-pagina">Acta del partido</h1>
+<p class="texto-secundario">
+  Después de cada partido, apunta aquí quién marcó, quién dio el pase y las tarjetas. El resultado
+  lo trae la federación; esto es lo que ella no cuenta.
+</p>
+
+@if (datos.calendario.isLoading() || datos.plantilla.isLoading()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando partidos y jugadores…" />
+} @else if (datos.jugados().length === 0) {
+  <pits-mensaje-estado tipo="vacio" mensaje="Todavía no se ha jugado ningún partido." />
+} @else if (datos.partido(); as partido) {
+  <label class="campo">
+    <span class="etiqueta">Partido</span>
+    <select (change)="elegirPartido($event)">
+      @for (jugado of datos.jugados(); track jugado.id) {
+        <option [value]="jugado.id" [selected]="jugado.id === partido.id">
+          J{{ jugado.jornadaNumero }} · {{ jugado.local.nombre }}
+          {{ jugado.marcador ? jugado.marcador.local + '-' + jugado.marcador.visitante : '-' }}
+          {{ jugado.visitante.nombre }} · {{ jugado | fechaPartido }}
+        </option>
+      }
+    </select>
+  </label>
+
+  @if (datos.guardada.isLoading()) {
+    <pits-mensaje-estado tipo="cargando" mensaje="Cargando el acta…" />
+  } @else if (datos.plantilla.value(); as jugadores) {
+    <section class="seccion" aria-labelledby="titulo-goles">
+      <h2 id="titulo-goles" class="titulo-seccion">Goles</h2>
+      @if (datos.goles().length === 0) {
+        <p class="texto-secundario">Ningún gol apuntado.</p>
+      }
+      @for (gol of datos.goles(); track $index) {
+        <div class="fila fila--gol">
+          <label class="celda celda--minuto">
+            <span class="etiqueta">Minuto</span>
+            <input
+              type="number"
+              min="0"
+              max="130"
+              inputmode="numeric"
+              [value]="gol.minuto ?? ''"
+              (change)="datos.cambiarGol($index, { minuto: minutoDe($event) })"
+            />
+          </label>
+          <label class="celda">
+            <span class="etiqueta">De quién</span>
+            <select (change)="datos.cambiarGol($index, { nuestro: equipoDe($event) })">
+              <option value="nuestro" [selected]="gol.nuestro">PITS FC</option>
+              <option value="rival" [selected]="!gol.nuestro">Rival</option>
+            </select>
+          </label>
+          @if (gol.nuestro) {
+            <label class="celda">
+              <span class="etiqueta">Goleador</span>
+              <select (change)="datos.cambiarGol($index, { jugadorId: idDe($event) })">
+                <option value="" [selected]="gol.jugadorId === null">Sin apuntar</option>
+                @for (jugador of jugadores; track jugador.id) {
+                  <option [value]="jugador.id" [selected]="jugador.id === gol.jugadorId">
+                    {{ jugador.dorsal ?? '–' }} · {{ jugador.nombreMostrar }}
+                  </option>
+                }
+              </select>
+            </label>
+            <label class="celda">
+              <span class="etiqueta">Asistencia</span>
+              <select (change)="datos.cambiarGol($index, { asistenteId: idDe($event) })">
+                <option value="" [selected]="gol.asistenteId === null">Sin asistencia</option>
+                @for (jugador of jugadores; track jugador.id) {
+                  @if (jugador.id !== gol.jugadorId) {
+                    <option [value]="jugador.id" [selected]="jugador.id === gol.asistenteId">
+                      {{ jugador.dorsal ?? '–' }} · {{ jugador.nombreMostrar }}
+                    </option>
+                  }
+                }
+              </select>
+            </label>
+          }
+          <button
+            type="button"
+            class="quitar"
+            [attr.aria-label]="'Quitar el gol ' + ($index + 1)"
+            (click)="datos.quitarGol($index)"
+          >
+            Quitar
+          </button>
+        </div>
+      }
+      <button type="button" class="boton" (click)="datos.anadirGol()">Añadir gol</button>
+      @if (datos.aviso(); as aviso) {
+        <p class="aviso" role="status">{{ aviso }} Puedes guardar igualmente.</p>
+      }
+    </section>
+
+    <section class="seccion" aria-labelledby="titulo-tarjetas">
+      <h2 id="titulo-tarjetas" class="titulo-seccion">Tarjetas</h2>
+      @if (datos.tarjetas().length === 0) {
+        <p class="texto-secundario">Ninguna tarjeta apuntada.</p>
+      }
+      @for (tarjeta of datos.tarjetas(); track $index) {
+        <div class="fila fila--tarjeta">
+          <label class="celda">
+            <span class="etiqueta">Jugador</span>
+            <select (change)="datos.cambiarTarjeta($index, { jugadorId: jugadorDe($event) })">
+              @for (jugador of jugadores; track jugador.id) {
+                <option [value]="jugador.id" [selected]="jugador.id === tarjeta.jugadorId">
+                  {{ jugador.dorsal ?? '–' }} · {{ jugador.nombreMostrar }}
+                </option>
+              }
+            </select>
+          </label>
+          <label class="celda">
+            <span class="etiqueta">Tarjeta</span>
+            <select (change)="datos.cambiarTarjeta($index, { tipo: tipoDe($event) })">
+              <option value="amarilla" [selected]="tarjeta.tipo === 'amarilla'">Amarilla</option>
+              <option value="roja" [selected]="tarjeta.tipo === 'roja'">Roja</option>
+            </select>
+          </label>
+          <label class="celda celda--minuto">
+            <span class="etiqueta">Minuto</span>
+            <input
+              type="number"
+              min="0"
+              max="130"
+              inputmode="numeric"
+              [value]="tarjeta.minuto ?? ''"
+              (change)="datos.cambiarTarjeta($index, { minuto: minutoDe($event) })"
+            />
+          </label>
+          <button
+            type="button"
+            class="quitar"
+            [attr.aria-label]="'Quitar la tarjeta ' + ($index + 1)"
+            (click)="datos.quitarTarjeta($index)"
+          >
+            Quitar
+          </button>
+        </div>
+      }
+      <button type="button" class="boton" (click)="datos.anadirTarjeta()">Añadir tarjeta</button>
+    </section>
+
+    <div class="acciones">
+      <button
+        type="button"
+        class="boton boton--principal"
+        [disabled]="datos.ocupado()"
+        (click)="datos.guardar()"
+      >
+        Guardar acta
+      </button>
+      @if (datos.estado(); as estado) {
+        <span class="estado" [class.estado--error]="estado.tipo === 'error'" role="status">{{
+          estado.mensaje
+        }}</span>
+      }
+    </div>
+  }
+}

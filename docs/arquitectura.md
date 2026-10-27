@@ -61,8 +61,8 @@ Las fechas se escriben con `shared/utils/fechas` y el pipe `fechaPartido`, siemp
 Madrid.
 
 Entidades de `data-access/`: `competiciones`, `equipos`, `partidos` (calendario, detalle con
-acta, próximo partido y último resultado), `clasificacion`, `jugadores`, `estadisticas` y
-`convocatorias`. Cada una tiene en `interfaces/` sus modelos de dominio (`*.interface.ts`) y
+acta, próximo partido y último resultado), `clasificacion`, `jugadores`, `estadisticas`,
+`convocatorias` y `actas` (goles, asistencias y tarjetas que apuntan los gestores). Cada una tiene en `interfaces/` sus modelos de dominio (`*.interface.ts`) y
 la forma de las filas que devuelve Supabase (`fila-*.type.ts`), y un `*.fixtures.ts` con filas
 de ejemplo para los tests.
 

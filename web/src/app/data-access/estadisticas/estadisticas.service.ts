@@ -26,7 +26,9 @@ export class EstadisticasService {
   async obtenerGolesDeNuestrosPartidos(nuestroEquipoId: string): Promise<GolEquipo[]> {
     const { data, error } = await this.supabase
       .from('gol')
-      .select('*, partido!inner(id, local_id, visitante_id, jornada(numero)), jugador(*)')
+      .select(
+        '*, partido!inner(id, local_id, visitante_id, jornada(numero)), jugador:jugador!gol_jugador_id_fkey(*)',
+      )
       .or(`local_id.eq.${nuestroEquipoId},visitante_id.eq.${nuestroEquipoId}`, {
         referencedTable: 'partido',
       })

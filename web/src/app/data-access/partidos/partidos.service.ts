@@ -34,7 +34,7 @@ export class PartidosService {
       .select(
         `*, jornada(*), ${EQUIPOS_DEL_PARTIDO},
          participaciones:participacion(*, jugador(*)),
-         goles:gol(*, jugador(*)),
+         goles:gol(*, jugador:jugador!gol_jugador_id_fkey(*), asistente:jugador!gol_asistente_id_fkey(*)),
          tarjetas:tarjeta(*, jugador(*))`,
       )
       .eq('id', partidoId)

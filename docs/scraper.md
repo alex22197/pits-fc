@@ -79,8 +79,10 @@ utils/fechas.ts     Fechas de la intranet y hora de Madrid con horario de verano
 4. **Clasificación** de la última jornada cuya fecha ya ha pasado: borra la anterior y guarda
    la nueva. Los equipos se reconocen por su código de la federación.
 5. **Actas** de nuestros partidos jugados que no se hayan importado, y también las de los
-   últimos 14 días por si la federación las corrige: participaciones (titular o suplente y
-   dorsal), goles (los rivales sin autor) y tarjetas nuestras.
+   últimos 14 días por si la federación las corrige: el resultado y las participaciones
+   (titular o suplente y dorsal). Los goles y las tarjetas del acta se leen pero no se guardan:
+   los apuntan los gestores después de cada partido, con las asistencias, desde Gestión →
+   Acta del partido (#34).
 6. Cierra la ejecución con estado, resumen (cuántos partidos, jornadas, filas y actas, avisos
    y jugadores nuevos) y el error si lo hubo.
 
@@ -164,7 +166,8 @@ nombres de rivales (ADR 0004).
 
 ## Privacidad
 
-- De las actas solo se guardan con nombre nuestros jugadores (y en la tabla privada). Los
-  goles rivales se guardan sin autor; árbitros y rivales no se almacenan con nombre (ADR 0004).
+- De las actas solo se guardan con nombre nuestros jugadores (y en la tabla privada); árbitros
+  y rivales no se almacenan con nombre (ADR 0004). Los goles rivales que apuntan los gestores
+  van sin autor.
 - La página de equipo trae teléfono y correo del responsable del club: no se guarda nada de
   eso.
