@@ -8,6 +8,9 @@ export type FilaDetallePartido = FilaPartido & {
   readonly participaciones: readonly (Tables<'participacion'> & {
     readonly jugador: FilaJugador;
   })[];
-  readonly goles: readonly (Tables<'gol'> & { readonly jugador: FilaJugador | null })[];
+  readonly goles: readonly (Tables<'gol'> & {
+    readonly jugador: FilaJugador | null;
+    readonly asistente: FilaJugador | null;
+  })[];
   readonly tarjetas: readonly (Tables<'tarjeta'> & { readonly jugador: FilaJugador })[];
 };

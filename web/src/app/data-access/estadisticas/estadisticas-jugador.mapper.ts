@@ -19,6 +19,7 @@ export function mapearEstadisticasJugador(
     partidos: fila.partidos ?? 0,
     titularidades: fila.titularidades ?? 0,
     goles: fila.goles ?? 0,
+    asistencias: fila.asistencias ?? 0,
     amarillas: fila.amarillas ?? 0,
     rojas: fila.rojas ?? 0,
     golesEncajados: fila.goles_encajados ?? 0,

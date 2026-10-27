@@ -21,6 +21,7 @@ export class IncidenciasPartidoComponent {
         nuestro:
           gol.equipoId === (partido.local.esNuestro ? partido.local.id : partido.visitante.id),
         quien: gol.jugador?.nombreMostrar ?? nombreRival(partido),
+        asistencia: gol.asistente?.nombreMostrar ?? null,
         marcador: `${gol.marcador.local}-${gol.marcador.visitante}`,
       })),
       ...tarjetas.map((tarjeta): Incidencia => ({
@@ -28,6 +29,7 @@ export class IncidenciasPartidoComponent {
         minuto: tarjeta.minuto,
         nuestro: true,
         quien: tarjeta.jugador.nombreMostrar,
+        asistencia: null,
         marcador: null,
       })),
     ];

@@ -221,6 +221,7 @@ export type Database = {
       };
       gol: {
         Row: {
+          asistente_id: string | null;
           created_at: string;
           equipo_id: string;
           id: string;
@@ -231,6 +232,7 @@ export type Database = {
           partido_id: string;
         };
         Insert: {
+          asistente_id?: string | null;
           created_at?: string;
           equipo_id: string;
           id?: string;
@@ -241,6 +243,7 @@ export type Database = {
           partido_id: string;
         };
         Update: {
+          asistente_id?: string | null;
           created_at?: string;
           equipo_id?: string;
           id?: string;
@@ -251,6 +254,20 @@ export type Database = {
           partido_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: 'gol_asistente_id_fkey';
+            columns: ['asistente_id'];
+            isOneToOne: false;
+            referencedRelation: 'estadisticas_jugador';
+            referencedColumns: ['jugador_id'];
+          },
+          {
+            foreignKeyName: 'gol_asistente_id_fkey';
+            columns: ['asistente_id'];
+            isOneToOne: false;
+            referencedRelation: 'jugador';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'gol_equipo_id_fkey';
             columns: ['equipo_id'];
@@ -584,6 +601,7 @@ export type Database = {
         Row: {
           activo: boolean | null;
           amarillas: number | null;
+          asistencias: number | null;
           dorsal: number | null;
           goles: number | null;
           goles_encajados: number | null;
@@ -599,6 +617,7 @@ export type Database = {
     };
     Functions: {
       es_gestor: { Args: never; Returns: boolean };
+      es_partido_nuestro: { Args: { id_partido: string }; Returns: boolean };
       id_equipo: { Args: { nombre_en_federacion: string }; Returns: string };
       ultima_importacion: { Args: never; Returns: string };
     };

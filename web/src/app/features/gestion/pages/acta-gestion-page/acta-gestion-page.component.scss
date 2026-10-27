@@ -1,0 +1,106 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.volver {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.campo,
+.celda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.etiqueta {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
+select,
+input[type='number'] {
+  min-height: var(--minimo-tactil);
+  padding: 0 var(--espacio-3);
+  border: 1.5px solid var(--color-borde-control);
+  border-radius: var(--radio-control);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font: inherit;
+}
+
+.seccion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+// Cada gol o tarjeta es una fila de campos; en móvil se envuelven en dos columnas.
+.fila {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-2) var(--espacio-3);
+  width: 100%;
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: 6rem repeat(3, minmax(0, 1fr)) auto;
+    align-items: end;
+  }
+}
+
+.fila--tarjeta {
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 6rem auto;
+  }
+}
+
+.quitar {
+  align-self: end;
+  min-height: var(--minimo-tactil);
+  padding: 0 var(--espacio-3);
+  border: 0;
+  border-radius: var(--radio-control);
+  background: none;
+  color: var(--color-derrota);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.aviso {
+  color: var(--color-empate);
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.estado {
+  color: var(--color-victoria);
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.estado--error {
+  color: var(--color-derrota);
+}

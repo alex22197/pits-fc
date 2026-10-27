@@ -6,6 +6,7 @@ export interface EstadisticasJugador {
   readonly partidos: number;
   readonly titularidades: number;
   readonly goles: number;
+  readonly asistencias: number;
   readonly amarillas: number;
   readonly rojas: number;
   /** Goles del rival en los partidos que jugó; solo tiene sentido para porteros. */

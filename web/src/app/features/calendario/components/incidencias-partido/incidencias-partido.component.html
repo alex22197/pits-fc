@@ -14,7 +14,12 @@
                 : 'Tarjeta roja'
           }}
         </span>
-        <span class="quien">{{ incidencia.quien }}</span>
+        <span class="quien"
+          >{{ incidencia.quien }}
+          @if (incidencia.asistencia) {
+            <span class="asistencia">asistencia de {{ incidencia.asistencia }}</span>
+          }
+        </span>
         @if (incidencia.marcador) {
           <span class="marcador">{{ incidencia.marcador }}</span>
         }

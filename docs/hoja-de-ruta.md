@@ -73,6 +73,8 @@ terminarla, se marca aquí.
       dudas y quién no va; la misma pizarra en portada y en el partido (#33).
 - [x] Jugadores: nombre corto, dorsal, posición y si sigue en el equipo, viendo el nombre
       de las actas (#8).
+- [x] Acta del partido: goles, asistencias y tarjetas apuntados a mano tras cada partido; el
+      scraper deja de traerlos (#34).
 - [ ] Invitar gestores por correo desde la web (#9); de momento el administrador da el rol
       desde el panel.
 - [ ] Asociar a mano un jugador con otro nombre de las actas cuando la federación lo escriba
