@@ -11,6 +11,7 @@ const FILA: FilaEstadisticasJugador = {
   partidos: 2,
   titularidades: 1,
   goles: 3,
+  asistencias: 2,
   amarillas: 1,
   rojas: 0,
   goles_encajados: 4,
@@ -29,6 +30,7 @@ describe('mapearEstadisticasJugador', () => {
       partidos: 2,
       titularidades: 1,
       goles: 3,
+      asistencias: 2,
       amarillas: 1,
       rojas: 0,
       golesEncajados: 4,
@@ -41,6 +43,7 @@ describe('mapearEstadisticasJugador', () => {
       jugador_id: 'jugador-1',
       partidos: null,
       goles: null,
+      asistencias: null,
       goles_encajados: null,
     });
     expect(estadisticas.partidos).toBe(0);

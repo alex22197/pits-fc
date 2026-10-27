@@ -1,5 +1,5 @@
 <a class="volver" routerLink="/gestion">Volver a gestión</a>
-<h1 class="titulo-pagina">Convocatoria</h1>
+<h1 class="titulo-pagina">Alineación</h1>
 
 @if (datos.calendario.isLoading() || datos.plantilla.isLoading()) {
   <pits-mensaje-estado tipo="cargando" mensaje="Cargando partidos y jugadores…" />
@@ -26,39 +26,78 @@
     }}
   </p>
 
-  @if (datos.plantilla.value(); as jugadores) {
-    <div class="jugadores">
-      @for (jugador of jugadores; track jugador.id) {
-        @let decision = datos.decisiones().get(jugador.id);
-        <div class="jugador" [class.jugador--decidido]="decision">
-          <span class="dorsal">{{ jugador.dorsal ?? '–' }}</span>
-          <span class="nombre">{{ jugador.nombreMostrar }}</span>
-          <select
-            class="decision"
-            [attr.aria-label]="'Decisión para ' + jugador.nombreMostrar"
-            (change)="decidir(jugador.id, $event)"
-          >
-            @for (opcion of opciones; track opcion.valor) {
-              <option [value]="opcion.valor" [selected]="(decision?.estado ?? '') === opcion.valor">
-                {{ opcion.etiqueta }}
-              </option>
-            }
-          </select>
-          @if (decision) {
-            <input
-              class="nota"
-              type="text"
-              placeholder="Nota (opcional)"
-              maxlength="80"
-              [value]="decision.nota ?? ''"
-              (change)="anotar(jugador.id, $event)"
-              [attr.aria-label]="'Nota para ' + jugador.nombreMostrar"
-            />
+  <div class="tablero">
+    <section class="pizarra" aria-labelledby="titulo-pizarra">
+      <h2 id="titulo-pizarra" class="titulo-seccion">Titulares</h2>
+      <pits-campo-alineacion
+        [titulares]="datos.titulares()"
+        [interactivo]="true"
+        [puestoActivo]="puestoActivo()"
+        [ofrecerHuecos]="ofrecerHuecos()"
+        (puestoPulsado)="pulsarPuesto($event)"
+      />
+      <p class="ayuda" role="status" aria-live="polite">{{ ayuda() }}</p>
+
+      @if (puestoActivo()) {
+        <div class="candidatos">
+          @for (candidato of candidatos(); track candidato.jugador.id) {
+            <button type="button" class="candidato" (click)="elegirCandidato(candidato.jugador.id)">
+              <span class="dorsal">{{ candidato.jugador.dorsal ?? '–' }}</span>
+              <span class="nombre">{{ candidato.jugador.nombreMostrar }}</span>
+              @if (candidato.situacion) {
+                <span class="situacion">{{ candidato.situacion }}</span>
+              }
+            </button>
           }
+          <div class="acciones">
+            @if (ocupante()) {
+              <button type="button" class="boton" (click)="dejarLibre()">
+                Dejar el puesto libre
+              </button>
+            }
+            <button type="button" class="boton" (click)="cancelar()">Cancelar</button>
+          </div>
         </div>
       }
-    </div>
-  }
+    </section>
+
+    @if (datos.plantilla.value(); as jugadores) {
+      <section class="plantilla" aria-labelledby="titulo-plantilla">
+        <h2 id="titulo-plantilla" class="titulo-seccion">Plantilla</h2>
+        <div class="jugadores">
+          @for (jugador of jugadores; track jugador.id) {
+            @let decision = datos.decisiones().get(jugador.id);
+            <div class="jugador" [class.jugador--decidido]="decision">
+              <span class="dorsal">{{ jugador.dorsal ?? '–' }}</span>
+              <span class="nombre">{{ jugador.nombreMostrar }}</span>
+              <select
+                class="decision"
+                [attr.aria-label]="'Decisión para ' + jugador.nombreMostrar"
+                (change)="decidir(jugador.id, $event)"
+              >
+                @for (opcion of opciones; track opcion.valor) {
+                  <option [value]="opcion.valor" [selected]="valorDe(decision) === opcion.valor">
+                    {{ etiquetaDe(opcion.valor, decision) }}
+                  </option>
+                }
+              </select>
+              @if (decision) {
+                <input
+                  class="nota"
+                  type="text"
+                  placeholder="Nota (opcional)"
+                  maxlength="80"
+                  [value]="decision.nota ?? ''"
+                  (change)="anotar(jugador.id, $event)"
+                  [attr.aria-label]="'Nota para ' + jugador.nombreMostrar"
+                />
+              }
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
 
   <div class="acciones">
     <button type="button" class="boton" [disabled]="datos.ocupado()" (click)="datos.guardar()">

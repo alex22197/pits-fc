@@ -117,6 +117,7 @@ export type Database = {
           jugador_id: string;
           nota: string | null;
           partido_id: string;
+          puesto: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at: string;
         };
         Insert: {
@@ -125,6 +126,7 @@ export type Database = {
           jugador_id: string;
           nota?: string | null;
           partido_id: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at?: string;
         };
         Update: {
@@ -133,6 +135,7 @@ export type Database = {
           jugador_id?: string;
           nota?: string | null;
           partido_id?: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at?: string;
         };
         Relationships: [
@@ -218,6 +221,7 @@ export type Database = {
       };
       gol: {
         Row: {
+          asistente_id: string | null;
           created_at: string;
           equipo_id: string;
           id: string;
@@ -228,6 +232,7 @@ export type Database = {
           partido_id: string;
         };
         Insert: {
+          asistente_id?: string | null;
           created_at?: string;
           equipo_id: string;
           id?: string;
@@ -238,6 +243,7 @@ export type Database = {
           partido_id: string;
         };
         Update: {
+          asistente_id?: string | null;
           created_at?: string;
           equipo_id?: string;
           id?: string;
@@ -248,6 +254,20 @@ export type Database = {
           partido_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: 'gol_asistente_id_fkey';
+            columns: ['asistente_id'];
+            isOneToOne: false;
+            referencedRelation: 'estadisticas_jugador';
+            referencedColumns: ['jugador_id'];
+          },
+          {
+            foreignKeyName: 'gol_asistente_id_fkey';
+            columns: ['asistente_id'];
+            isOneToOne: false;
+            referencedRelation: 'jugador';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'gol_equipo_id_fkey';
             columns: ['equipo_id'];
@@ -581,6 +601,7 @@ export type Database = {
         Row: {
           activo: boolean | null;
           amarillas: number | null;
+          asistencias: number | null;
           dorsal: number | null;
           goles: number | null;
           goles_encajados: number | null;
@@ -596,6 +617,7 @@ export type Database = {
     };
     Functions: {
       es_gestor: { Args: never; Returns: boolean };
+      es_partido_nuestro: { Args: { id_partido: string }; Returns: boolean };
       id_equipo: { Args: { nombre_en_federacion: string }; Returns: string };
       ultima_importacion: { Args: never; Returns: string };
     };
@@ -604,6 +626,14 @@ export type Database = {
       estado_ejecucion: 'ok' | 'error';
       estado_partido: 'programado' | 'jugado' | 'aplazado' | 'suspendido';
       posicion_jugador: 'portero' | 'defensa' | 'centrocampista' | 'delantero';
+      puesto_alineacion:
+        | 'portero'
+        | 'central_izquierdo'
+        | 'central_derecho'
+        | 'lateral_izquierdo'
+        | 'medio'
+        | 'lateral_derecho'
+        | 'delantero';
       rol_usuario: 'admin' | 'gestor';
       tipo_tarjeta: 'amarilla' | 'roja';
     };
@@ -731,6 +761,15 @@ export const Constants = {
       estado_ejecucion: ['ok', 'error'],
       estado_partido: ['programado', 'jugado', 'aplazado', 'suspendido'],
       posicion_jugador: ['portero', 'defensa', 'centrocampista', 'delantero'],
+      puesto_alineacion: [
+        'portero',
+        'central_izquierdo',
+        'central_derecho',
+        'lateral_izquierdo',
+        'medio',
+        'lateral_derecho',
+        'delantero',
+      ],
       rol_usuario: ['admin', 'gestor'],
       tipo_tarjeta: ['amarilla', 'roja'],
     },

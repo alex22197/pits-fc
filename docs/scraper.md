@@ -43,15 +43,15 @@ cargue datos. Codigos de nuestra competición (temporada 2026-2027):
 
 Páginas, todas bajo `/nfg/NPcd/`:
 
-| Página        | URL                                                                              | Qué trae                                                                                   |
-| ------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Login         | `POST /nfg/NLogin` con `NUser` y `NPass`                                         | Cookie de sesión `JSESSIONID`. Sin captcha.                                                |
-| Calendario    | `NFG_VisCalendario_Vis?cod_primaria&codtemporada&codcompeticion&codgrupo`        | Las 26 jornadas con fecha y marcadores (vacíos si no se ha jugado).                        |
-| Jornada       | `NFG_CmpJornada?cod_primaria&CodCompeticion&CodGrupo&CodTemporada&CodJornada=N`  | Partidos con fecha, hora, campo, marcador y enlace al acta (`CodActa`).                   |
-| Clasificación | `NFG_VisClasificacion?cod_primaria&codjornada&codcompeticion&codgrupo`           | Puntos, J, G, E, P, F, C, últimos resultados y sanción. También versión casa/fuera.       |
-| Goleadores    | `NFG_CMP_Goleadores?cod_primaria&CodJornada&codcompeticion&codtemporada&codgrupo` | Jugador, equipo, partidos y goles de todo el grupo.                                       |
-| Acta          | `NFG_CmpPartido?cod_primaria&CodActa=X`                                          | Titulares con dorsal, suplentes, sustituciones, tarjetas con minuto, goles con minuto y autor, árbitro, campo. |
-| Equipo        | `NFG_VisEquipos?cod_primaria=1000102&Codigo_Equipo=X`                            | Plantilla con tipo de licencia. Trae datos de contacto: solo se usa para nombres.          |
+| Página        | URL                                                                               | Qué trae                                                                                                       |
+| ------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Login         | `POST /nfg/NLogin` con `NUser` y `NPass`                                          | Cookie de sesión `JSESSIONID`. Sin captcha.                                                                    |
+| Calendario    | `NFG_VisCalendario_Vis?cod_primaria&codtemporada&codcompeticion&codgrupo`         | Las 26 jornadas con fecha y marcadores (vacíos si no se ha jugado).                                            |
+| Jornada       | `NFG_CmpJornada?cod_primaria&CodCompeticion&CodGrupo&CodTemporada&CodJornada=N`   | Partidos con fecha, hora, campo, marcador y enlace al acta (`CodActa`).                                        |
+| Clasificación | `NFG_VisClasificacion?cod_primaria&codjornada&codcompeticion&codgrupo`            | Puntos, J, G, E, P, F, C, últimos resultados y sanción. También versión casa/fuera.                            |
+| Goleadores    | `NFG_CMP_Goleadores?cod_primaria&CodJornada&codcompeticion&codtemporada&codgrupo` | Jugador, equipo, partidos y goles de todo el grupo.                                                            |
+| Acta          | `NFG_CmpPartido?cod_primaria&CodActa=X`                                           | Titulares con dorsal, suplentes, sustituciones, tarjetas con minuto, goles con minuto y autor, árbitro, campo. |
+| Equipo        | `NFG_VisEquipos?cod_primaria=1000102&Codigo_Equipo=X`                             | Plantilla con tipo de licencia. Trae datos de contacto: solo se usa para nombres.                              |
 
 Las actas de esta liga no registran sustituciones, así que no hay minutos por jugador.
 
@@ -79,8 +79,10 @@ utils/fechas.ts     Fechas de la intranet y hora de Madrid con horario de verano
 4. **Clasificación** de la última jornada cuya fecha ya ha pasado: borra la anterior y guarda
    la nueva. Los equipos se reconocen por su código de la federación.
 5. **Actas** de nuestros partidos jugados que no se hayan importado, y también las de los
-   últimos 14 días por si la federación las corrige: participaciones (titular o suplente y
-   dorsal), goles (los rivales sin autor) y tarjetas nuestras.
+   últimos 14 días por si la federación las corrige: el resultado y las participaciones
+   (titular o suplente y dorsal). Los goles y las tarjetas del acta se leen pero no se guardan:
+   los apuntan los gestores después de cada partido, con las asistencias, desde Gestión →
+   Acta del partido (#34).
 6. Cierra la ejecución con estado, resumen (cuántos partidos, jornadas, filas y actas, avisos
    y jugadores nuevos) y el error si lo hubo.
 
@@ -164,7 +166,8 @@ nombres de rivales (ADR 0004).
 
 ## Privacidad
 
-- De las actas solo se guardan con nombre nuestros jugadores (y en la tabla privada). Los
-  goles rivales se guardan sin autor; árbitros y rivales no se almacenan con nombre (ADR 0004).
+- De las actas solo se guardan con nombre nuestros jugadores (y en la tabla privada); árbitros
+  y rivales no se almacenan con nombre (ADR 0004). Los goles rivales que apuntan los gestores
+  van sin autor.
 - La página de equipo trae teléfono y correo del responsable del club: no se guarda nada de
   eso.

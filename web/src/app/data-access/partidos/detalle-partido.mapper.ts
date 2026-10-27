@@ -24,6 +24,7 @@ export function mapearDetallePartido(fila: FilaDetallePartido): DetallePartido {
         id: gol.id,
         equipoId: gol.equipo_id,
         jugador: gol.jugador ? mapearJugador(gol.jugador) : null,
+        asistente: gol.asistente ? mapearJugador(gol.asistente) : null,
         minuto: gol.minuto,
         marcador: { local: gol.marcador_local, visitante: gol.marcador_visitante },
       })),

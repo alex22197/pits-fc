@@ -6,6 +6,8 @@ export interface Gol {
   readonly id: string;
   readonly equipoId: string;
   readonly jugador: Jugador | null;
+  /** Quien dio el pase, si es un gol nuestro y se apuntó. */
+  readonly asistente: Jugador | null;
   readonly minuto: number | null;
   readonly marcador: Marcador;
 }

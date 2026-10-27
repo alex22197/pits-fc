@@ -13,6 +13,7 @@ export function filaGolEquipo(cambios: Partial<FilaGolEquipo> = {}): FilaGolEqui
     partido_id: 'partido-1',
     equipo_id: NUESTRO_ID,
     jugador_id: 'jugador-1',
+    asistente_id: null,
     minuto: 24,
     marcador_local: 1,
     marcador_visitante: 0,

@@ -102,6 +102,22 @@ await db.exec(`
   insert into public.gol (partido_id, equipo_id, minuto, marcador_local, marcador_visitante)
   select id, public.id_equipo('PRIDE OF SPARTA'), 28, 1, 1 from (${partidoPits(2)}) p`);
 
+// Asistencias a mano (#34): solo en goles nuestros y de otro jugador.
+await db.exec(`insert into public.jugador (nombre_mostrar, dorsal) values ('Asistente', 7)`);
+await db.exec(`
+  insert into public.gol (partido_id, equipo_id, jugador_id, asistente_id, minuto, marcador_local, marcador_visitante)
+  select p.id, public.id_equipo('PITS'), j.id, a.id, 40, 2, 1
+  from (${partidoPits(2)}) p, public.jugador j, public.jugador a where j.dorsal = 10 and a.dorsal = 7`);
+comprobar('asistente en un gol rival: rechazado', await rechaza(`
+  insert into public.gol (partido_id, equipo_id, asistente_id, marcador_local, marcador_visitante)
+  select p.id, public.id_equipo('PRIDE OF SPARTA'), a.id, 2, 2 from (${partidoPits(2)}) p, public.jugador a where a.dorsal = 7`));
+comprobar('goleador y asistente iguales: rechazado', await rechaza(`
+  insert into public.gol (partido_id, equipo_id, jugador_id, asistente_id, marcador_local, marcador_visitante)
+  select p.id, public.id_equipo('PITS'), j.id, j.id, 3, 1 from (${partidoPits(2)}) p, public.jugador j where j.dorsal = 10`));
+const { rows: [asistente] } = await db.query('select asistencias, goles from public.estadisticas_jugador where dorsal = 7');
+comprobar('la vista suma las asistencias', asistente.asistencias === 1 && asistente.goles === 0);
+await db.exec(`delete from public.gol where asistente_id is not null; delete from public.jugador where dorsal = 7`);
+
 const { rows: [estadisticas] } = await db.query('select * from public.estadisticas_jugador');
 comprobar('vista estadisticas_jugador', estadisticas.partidos === 1 && estadisticas.titularidades === 1
   && estadisticas.goles === 1 && estadisticas.goles_encajados === 1 && estadisticas.amarillas === 0);
@@ -113,6 +129,17 @@ comprobar('convocatoria en un partido ajeno: rechazada', await rechaza(`
   insert into public.convocatoria (partido_id, jugador_id)
   select p.id, j.id from public.partido p join public.jornada jo on jo.id = p.jornada_id, public.jugador j
   where jo.numero = 1 and p.local_id = public.id_equipo('C.D. MONTEJO')`));
+comprobar('puesto de la alineación en una duda: rechazado', await rechaza(`
+  insert into public.convocatoria (partido_id, jugador_id, estado, puesto)
+  select p.id, j.id, 'duda', 'portero' from (${partidoPits(4)}) p, public.jugador j`));
+await db.exec(`insert into public.jugador (nombre_mostrar, dorsal) values ('Segundo', 2)`);
+await db.exec(`
+  insert into public.convocatoria (partido_id, jugador_id, puesto)
+  select p.id, j.id, 'portero' from (${partidoPits(4)}) p, public.jugador j where j.dorsal = 10`);
+comprobar('dos titulares en el mismo puesto: rechazado', await rechaza(`
+  insert into public.convocatoria (partido_id, jugador_id, puesto)
+  select p.id, j.id, 'portero' from (${partidoPits(4)}) p, public.jugador j where j.dorsal = 2`));
+await db.exec(`delete from public.convocatoria; delete from public.jugador where dorsal = 2`);
 comprobar('marcador sin estado jugado: rechazado', await rechaza(`
   update public.partido set goles_local = 1 where id in (${partidoPits(3)})`));
 
@@ -125,6 +152,7 @@ comprobar('visitante lee las estadísticas', (await contar('select count(*) n fr
 comprobar('visitante no ve la convocatoria sin publicar', (await contar('select count(*) n from public.convocatoria')) === 0);
 comprobar('visitante no accede a jugador_privado', await rechaza('select * from public.jugador_privado'));
 comprobar('visitante no accede al registro del scraper', await rechaza('select * from public.ejecucion_scraper'));
+comprobar('visitante no escribe goles', await rechaza(`insert into public.gol (partido_id, equipo_id, marcador_local, marcador_visitante) select p.id, public.id_equipo('PITS'), 9, 0 from (${partidoPits(2)}) p`));
 comprobar('visitante no escribe jugadores', await rechaza(`insert into public.jugador (nombre_mostrar) values ('Intruso')`));
 await db.exec('reset role');
 await db.exec('update public.partido set convocatoria_publicada = true where id in (select partido_id from public.convocatoria)');

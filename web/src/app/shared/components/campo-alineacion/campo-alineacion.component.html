@@ -1,0 +1,57 @@
+<div class="campo" [class.campo--ofreciendo]="ofrecerHuecos()">
+  <svg class="lineas" viewBox="0 0 200 300" aria-hidden="true" focusable="false">
+    <rect x="6" y="6" width="188" height="288" rx="2" />
+    <line x1="6" y1="150" x2="194" y2="150" />
+    <circle cx="100" cy="150" r="22" />
+    <circle class="punto" cx="100" cy="150" r="1.5" />
+    <rect x="46" y="6" width="108" height="42" />
+    <rect x="46" y="252" width="108" height="42" />
+    <rect x="76" y="6" width="48" height="14" />
+    <rect x="76" y="280" width="48" height="14" />
+    <circle class="punto" cx="100" cy="36" r="1.5" />
+    <circle class="punto" cx="100" cy="264" r="1.5" />
+    <path d="M 6 14 A 8 8 0 0 0 14 6" />
+    <path d="M 186 6 A 8 8 0 0 0 194 14" />
+    <path d="M 194 286 A 8 8 0 0 0 186 294" />
+    <path d="M 14 294 A 8 8 0 0 0 6 286" />
+  </svg>
+
+  @for (hueco of huecos(); track hueco.puesto) {
+    @if (interactivo()) {
+      <button
+        type="button"
+        class="hueco"
+        [class.hueco--ocupado]="hueco.jugador"
+        [class.hueco--activo]="hueco.puesto === puestoActivo()"
+        [style.left.%]="hueco.x"
+        [style.top.%]="hueco.y"
+        [attr.aria-label]="etiqueta(hueco)"
+        [attr.aria-pressed]="hueco.puesto === puestoActivo()"
+        (click)="puestoPulsado.emit(hueco.puesto)"
+      >
+        <ng-container *ngTemplateOutlet="ficha; context: { hueco }" />
+      </button>
+    } @else {
+      <div
+        class="hueco"
+        [class.hueco--ocupado]="hueco.jugador"
+        [style.left.%]="hueco.x"
+        [style.top.%]="hueco.y"
+        [attr.aria-label]="etiqueta(hueco)"
+        role="img"
+      >
+        <ng-container *ngTemplateOutlet="ficha; context: { hueco }" />
+      </div>
+    }
+  }
+</div>
+
+<ng-template #ficha let-hueco="hueco">
+  @if (hueco.jugador; as jugador) {
+    <span class="ficha ficha--jugador" aria-hidden="true">{{ jugador.dorsal ?? '·' }}</span>
+    <span class="nombre" aria-hidden="true">{{ jugador.nombreMostrar }}</span>
+  } @else {
+    <span class="ficha ficha--vacia" aria-hidden="true">{{ hueco.abreviatura }}</span>
+    <span class="nombre nombre--puesto" aria-hidden="true">{{ hueco.nombreCorto }}</span>
+  }
+</ng-template>

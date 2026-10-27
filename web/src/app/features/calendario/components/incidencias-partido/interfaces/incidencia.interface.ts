@@ -5,6 +5,8 @@ export interface Incidencia {
   readonly nuestro: boolean;
   /** Nombre corto del jugador, o el nombre del rival si el gol es suyo. */
   readonly quien: string;
+  /** Nombre corto de quien asistió, si se apuntó. */
+  readonly asistencia: string | null;
   /** Marcador tras el gol, p. ej. «2-1»; `null` en las tarjetas. */
   readonly marcador: string | null;
 }

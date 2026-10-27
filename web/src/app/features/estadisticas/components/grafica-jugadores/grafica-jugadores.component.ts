@@ -72,6 +72,11 @@ export class GraficaJugadoresComponent {
           cabeceras: ['Jugador', 'Goles'],
           filas: filas.map((j) => [j.jugador.nombreMostrar, j.goles]),
         };
+      case 'asistencias':
+        return {
+          cabeceras: ['Jugador', 'Asistencias'],
+          filas: filas.map((j) => [j.jugador.nombreMostrar, j.asistencias]),
+        };
       case 'partidos':
         return {
           cabeceras: ['Jugador', 'Titular', 'Suplente', 'Total'],
@@ -98,6 +103,15 @@ export class GraficaJugadoresComponent {
           serieBarrasHorizontales(
             'Goles',
             lista.map((j) => j.goles),
+            this.colores.nosotros,
+            this.colores,
+          ),
+        ];
+      case 'asistencias':
+        return [
+          serieBarrasHorizontales(
+            'Asistencias',
+            lista.map((j) => j.asistencias),
             this.colores.nosotros,
             this.colores,
           ),
@@ -143,6 +157,8 @@ export class GraficaJugadoresComponent {
     switch (this.medida()) {
       case 'goles':
         return jugador.goles;
+      case 'asistencias':
+        return jugador.asistencias;
       case 'partidos':
         return jugador.partidos;
       case 'tarjetas':

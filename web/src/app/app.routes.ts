@@ -81,11 +81,20 @@ export const routes: Routes = [
   },
   {
     path: 'gestion/convocatoria',
-    title: 'Convocatoria',
+    title: 'Alineación',
     canActivate: [gestorGuard],
     loadComponent: () =>
       import('@features/gestion/pages/convocatoria-gestion-page/convocatoria-gestion-page.component').then(
         (m) => m.ConvocatoriaGestionPageComponent,
+      ),
+  },
+  {
+    path: 'gestion/acta',
+    title: 'Acta del partido',
+    canActivate: [gestorGuard],
+    loadComponent: () =>
+      import('@features/gestion/pages/acta-gestion-page/acta-gestion-page.component').then(
+        (m) => m.ActaGestionPageComponent,
       ),
   },
   {

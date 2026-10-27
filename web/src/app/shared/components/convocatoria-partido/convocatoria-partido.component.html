@@ -1,5 +1,8 @@
 <section class="bloque">
-  <h2 class="titulo-seccion">Convocatoria</h2>
+  <h2 class="titulo-seccion">{{ titulares().size > 0 ? 'Alineación' : 'Convocatoria' }}</h2>
+  @if (titulares().size > 0) {
+    <pits-campo-alineacion [titulares]="titulares()" />
+  }
   @for (grupo of grupos(); track grupo.etiqueta) {
     <h3 class="subtitulo">{{ grupo.etiqueta }}</h3>
     <ul class="lista">
