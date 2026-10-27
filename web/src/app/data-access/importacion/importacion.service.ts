@@ -8,10 +8,20 @@ const FUNCION = 'importar-federacion';
 /** La única región de Supabase desde la que la intranet acepta conexiones (docs/scraper.md). */
 const REGION = 'eu-west-3';
 
-/** Importaciones de la federación: lanzar una a mano y ver las últimas. Solo gestores. */
+/**
+ * Importaciones de la federación. Cuándo acabó la última correcta lo ve cualquiera; el
+ * registro y lanzar una a mano, solo los gestores.
+ */
 @Injectable({ providedIn: 'root' })
 export class ImportacionService {
   private readonly supabase = inject(SupabaseClientService).cliente;
+
+  /** Fin de la última importación correcta, o `null` si aún no ha habido ninguna. */
+  async obtenerUltimaImportacion(): Promise<Date | null> {
+    const { data, error } = await this.supabase.rpc('ultima_importacion');
+    lanzarSiHayError(error, 'No se ha podido saber cuándo se actualizaron los datos.');
+    return data ? new Date(data) : null;
+  }
 
   /** Las últimas ejecuciones, de la más reciente a la más antigua. */
   async obtenerEjecuciones(limite = 10): Promise<EjecucionImportacion[]> {

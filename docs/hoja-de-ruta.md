@@ -51,6 +51,7 @@ terminarla, se marca aquí.
 - [x] Secretos de la función y del Vault, despliegue y primera importación con éxito:
       clasificación, fechas, horas y dos actas (24-10-2026).
 - [x] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión (#8).
+- [x] Aviso en el pie de cuándo se actualizaron los datos y cuándo será la próxima vez (#31).
 
 ## 4. Pantallas públicas
 

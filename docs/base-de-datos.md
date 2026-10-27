@@ -25,6 +25,7 @@ una regla o una tabla, se añade su comprobación ahí.
 | `programar_scraper` | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local). |
 | `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros. |
 | `scraper_en_paris` | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones. |
+| `ultima_importacion` | Función pública con el fin de la última importación correcta, para el aviso del pie (#31). |
 
 ## Modelo
 
@@ -95,6 +96,8 @@ Por jugador: `partidos`, `titularidades`, `goles`, `amarillas`, `rojas` y `goles
 - `es_gestor()`: si la cuenta actual tiene fila en `perfil`. La usan las políticas.
 - `id_equipo(nombre_en_federacion)`: id de un equipo por su nombre en la intranet. La usan
   las migraciones de datos y el scraper.
+- `ultima_importacion()`: fin de la última importación correcta, o `null`. La puede llamar
+  cualquiera (la usa el pie de la web); no da acceso al registro `ejecucion_scraper`.
 - `set_updated_at()`, `validar_gol()` y `exigir_partido_nuestro()`: triggers de abajo.
 
 ### Reglas que aplica la base de datos
