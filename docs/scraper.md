@@ -119,9 +119,13 @@ nombres de rivales (ADR 0004).
   datos con la clave de servicio, que Supabase inyecta a la función.
 - `pg_cron` + `pg_net` la llaman cada martes a las 8:00 UTC (9:00 o 10:00 en Madrid), cuando
   los partidos del lunes ya están cerrados (migración `programar_scraper`). Puede cambiarse a
-  diario: es barato.
-- Desde la zona de gestión, un botón «Actualizar ahora» la lanzará a mano con la sesión del
-  gestor (pendiente de pantalla).
+  diario: es barato. Si cambia, hay que cambiar también `PROGRAMACION_IMPORTACION`
+  (`web/src/app/data-access/importacion/proxima-importacion.ts`), con la que el pie de la web
+  avisa de la próxima importación.
+- Desde la zona de gestión, el botón «Actualizar ahora» la lanza a mano con la sesión del
+  gestor.
+- El pie de todas las páginas dice cuándo acabó la última importación correcta y cuándo será
+  la próxima (#31).
 - Para probarla a mano desde el terminal, con la sesión de la CLI y la URL del proyecto:
 
   ```bash

@@ -140,6 +140,23 @@ comprobar('el rol de servicio escribe partidos', !(await rechaza(`update public.
 comprobar('el rol de servicio lee jugador_privado', (await contar('select count(*) n from public.jugador_privado')) === 1);
 await db.exec('reset role');
 
+// Última importación: cualquiera ve cuándo acabó la última correcta, sin acceder al registro.
+const ultimaImportacion = async () =>
+  (await db.query('select public.ultima_importacion() as fin')).rows[0].fin;
+await db.exec('set role anon');
+comprobar('sin importaciones, la última es null', (await ultimaImportacion()) === null);
+await db.exec('reset role');
+await db.exec(`
+  insert into public.ejecucion_scraper (inicio, fin, estado) values
+    ('2026-10-27 08:00:00+00', '2026-10-27 08:00:40+00', 'ok'),
+    ('2026-10-28 08:00:00+00', '2026-10-28 08:00:05+00', 'error'),
+    ('2026-10-29 08:00:00+00', null, null)`);
+await db.exec('set role anon');
+const fin = await ultimaImportacion();
+comprobar('visitante ve el fin de la última importación correcta',
+  fin instanceof Date && fin.toISOString() === '2026-10-27T08:00:40.000Z');
+await db.exec('reset role');
+
 await db.close();
 if (fallos > 0) {
   console.error(`\n${fallos} comprobaciones han fallado.`);

@@ -3,6 +3,14 @@
 <main id="contenido" class="contenido" tabindex="-1">
   <router-outlet />
   <footer class="pie">
+    @if (!ultimaImportacion.isLoading()) {
+      <pits-aviso-actualizacion
+        class="pie-aviso"
+        [ultima]="ultimaImportacion.error() ? null : (ultimaImportacion.value() ?? null)"
+        [proxima]="proximaImportacion"
+        [ahora]="ahora"
+      />
+    }
     <a routerLink="/privacidad">Privacidad</a>
     <span>Datos oficiales de la Real Federación de Fútbol de Madrid</span>
   </footer>

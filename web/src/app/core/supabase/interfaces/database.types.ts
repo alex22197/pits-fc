@@ -597,6 +597,7 @@ export type Database = {
     Functions: {
       es_gestor: { Args: never; Returns: boolean };
       id_equipo: { Args: { nombre_en_federacion: string }; Returns: string };
+      ultima_importacion: { Args: never; Returns: string };
     };
     Enums: {
       estado_convocatoria: 'convocado' | 'duda' | 'descartado';

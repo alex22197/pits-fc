@@ -1,0 +1,6 @@
+<p class="aviso">
+  @if (textoUltima(); as ultima) {
+    <span><span class="punto" aria-hidden="true"></span>Datos actualizados {{ ultima }}.</span>
+  }
+  <span>Próxima actualización {{ textoProxima() }}.</span>
+</p>
