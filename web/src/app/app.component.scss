@@ -31,3 +31,24 @@
     padding: var(--espacio-8) var(--espacio-5) var(--espacio-12);
   }
 }
+
+// Al final de cada página, por encima de la barra inferior del móvil (el hueco ya lo deja el
+// relleno de .contenido).
+.pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-5);
+  margin-top: var(--espacio-12);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--minimo-tactil);
+    color: var(--color-tinta-tenue);
+  }
+}

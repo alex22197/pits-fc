@@ -1,36 +1,60 @@
 # Despliegue
 
-La web es un sitio estático en Cloudflare Workers (lo que antes era Cloudflare Pages), igual
-que en `ctp-valdelasfuentes`. Cloudflare compila y publica solo cada vez que llega algo a
-`main`.
+La web es un proyecto de **Cloudflare Pages** y vive en <https://pits-fc.pages.dev>.
+Cloudflare compila y publica solo cada vez que llega algo a `main`.
 
-## Cloudflare (una sola vez)
+Se eligió Pages y no un Worker (como en `ctp-valdelasfuentes`) por la dirección: un Worker
+cuelga del subdominio de la cuenta (`pits-fc.padel-ctp.workers.dev`), que es el de ctp,
+mientras que Pages da `pits-fc.pages.dev` sin coste. Las versiones 0.1.x se sirvieron con un
+Worker que ya no se usa.
 
-1. En el panel de Cloudflare, ve a **Workers & Pages** → **Create** → **Import a repository**
-   y da acceso a la cuenta de GitHub al repositorio `alex22197/pits-fc`.
+## Cloudflare Pages (una sola vez)
+
+1. En el panel de Cloudflare, ve a **Workers & Pages** → **Create** → pestaña **Pages** →
+   **Import an existing Git repository** (si solo aparece la opción de Workers, el enlace
+   «Looking to deploy Pages? Get started» lleva a la de Pages). Elige `alex22197/pits-fc`.
 2. Configura la compilación:
 
-   | Campo             | Valor                      |
-   | ----------------- | -------------------------- |
-   | Project name      | `pits-fc`                  |
-   | Production branch | `main`                     |
-   | Root directory    | `web`                      |
-   | Build command     | `npm run build:cloudflare` |
-   | Deploy command    | `npx wrangler deploy`      |
+   | Campo                  | Valor                      |
+   | ---------------------- | -------------------------- |
+   | Project name           | `pits-fc`                  |
+   | Production branch      | `main`                     |
+   | Framework preset       | None                       |
+   | Build command          | `npm run build:cloudflare` |
+   | Build output directory | `dist/pits-fc-web/browser` |
+   | Root directory (path)  | `web`                      |
 
-   La versión de Node la toma de `web/.nvmrc`; no hace falta ninguna variable de entorno.
-   Si **Root directory** se queda vacío, Cloudflare compila desde la raíz del repositorio y
-   falla con `Missing script: "build:cloudflare"`.
+   La versión de Node la toma de `web/.nvmrc`. Si **Root directory** se queda vacío,
+   Cloudflare compila desde la raíz del repositorio y falla con
+   `Missing script: "build:cloudflare"`.
 
-3. Desactiva **Builds for non-production branches**: solo se publica lo que llega a `main`.
-4. Guarda y despliega. La web queda en `https://pits-fc.<subdominio>.workers.dev`, donde el
-   subdominio es el de la cuenta de Cloudflare.
+3. **Save and Deploy**. Después, en **Settings → Builds → Branch control**, deja
+   **Automatic deployments** solo para la rama de producción.
+4. La web queda en `https://pits-fc.pages.dev`. Si el nombre estuviera cogido, Cloudflare
+   añade un sufijo y hay que cambiar la dirección en `index.html` (vista previa),
+   `sitio.constants.ts` y Supabase.
 
 `build:cloudflare` ejecuta linter y tests antes de compilar: si algo falla, no se publica y
-la versión anterior sigue en línea. La configuración del sitio está en
-[`web/wrangler.jsonc`](../web/wrangler.jsonc); `single-page-application` hace que cualquier
-ruta de Angular (`/clasificacion`, `/calendario/partido/…`) funcione al recargar la página.
+la versión anterior sigue en línea. La configuración está en
+[`web/wrangler.jsonc`](../web/wrangler.jsonc). Pages sirve `index.html` en cualquier ruta que
+no exista mientras no haya un `404.html`, así que las rutas de Angular funcionan al recargar.
 `web/public/_headers` fija las cabeceras de seguridad y la caché; Cloudflare lo lee tal cual.
+
+## Compartir el enlace
+
+- `index.html` lleva la vista previa para WhatsApp y otras apps (`og:title`, `og:image` con
+  `imagenes/compartir.jpg`, cuadrada y ligera). Las URL de esas etiquetas son absolutas.
+- La web no aparece en buscadores (`<meta name="robots" content="noindex, nofollow">`): es
+  pública, pero solo llega quien tiene el enlace. Lo dice la página de privacidad.
+
+## Dar acceso a un gestor
+
+Mientras no exista la invitación desde la web (#9):
+
+1. La persona entra en `/acceso` con su cuenta de Google.
+2. En Supabase, **Authentication → Users**, se copia su UID.
+3. En **Table Editor → `perfil`**, se añade una fila con ese `user_id` y `rol` = `gestor`.
+4. Al recargar la web, le aparece «Gestión» en la cabecera.
 
 ## Publicar una versión
 
@@ -62,9 +86,8 @@ correcciones (0.2.1). La 1.0.0 será la primera que se comparta con el equipo.
 
 En Authentication → URL Configuration:
 
-- **Site URL**: la dirección de producción (`https://pits-fc.<subdominio>.workers.dev`).
-- **Redirect URLs**: `https://pits-fc.<subdominio>.workers.dev/acceso` y
-  `http://localhost:4200/acceso`.
+- **Site URL**: `https://pits-fc.pages.dev`.
+- **Redirect URLs**: `https://pits-fc.pages.dev/acceso` y `http://localhost:4200/acceso`.
 
 Sin la de producción, «Entrar con Google» devuelve a `localhost` o da error.
 
