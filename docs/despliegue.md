@@ -36,9 +36,24 @@ ruta de Angular (`/clasificacion`, `/calendario/partido/…`) funcione al recarg
 
 1. Pull request de `develop` a `main` titulada «Publicación X.Y.Z», con la lista de lo que
    entra.
-2. Cuando la integración continua está en verde, se integra con un merge commit y se etiqueta
-   `main` con `vX.Y.Z`.
-3. Cloudflare compila y publica solo.
+2. Cuando la integración continua está en verde, se integra con un merge commit cuyo mensaje
+   es solo «Publicación X.Y.Z», sin cuerpo:
+
+   ```bash
+   gh pr merge <n> --merge --subject "Publicación X.Y.Z" --body ""
+   ```
+
+3. Se etiqueta ese merge commit con una etiqueta anotada con el mismo mensaje y se sube:
+
+   ```bash
+   git tag -a vX.Y.Z -m "Publicación X.Y.Z"
+   git push origin vX.Y.Z
+   ```
+
+4. Cloudflare compila y publica solo.
+
+El asistente hace la publicación entera (pull request, merge y etiqueta) cuando Alex lo pide;
+es el mismo procedimiento que en `ctp-valdelasfuentes`.
 
 Versiones: la cifra del medio sube con funcionalidades nuevas (0.2.0) y la última con
 correcciones (0.2.1). La 1.0.0 será la primera que se comparta con el equipo.
