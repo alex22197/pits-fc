@@ -1,0 +1,95 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.editor--inactivo {
+  opacity: 0.7;
+}
+
+.federacion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  font-size: var(--texto-s);
+
+  .valor {
+    font-weight: 600;
+  }
+}
+
+.etiqueta {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5rem;
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: minmax(0, 2fr) 5rem minmax(0, 1fr) auto;
+    align-items: end;
+  }
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.campo--activo {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--minimo-tactil);
+  font-weight: 600;
+
+  input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--color-marca);
+  }
+}
+
+input[type='text'],
+input[type='number'],
+select {
+  min-height: var(--minimo-tactil);
+  padding: 0 var(--espacio-3);
+  border: 1.5px solid var(--color-borde-control);
+  border-radius: var(--radio-control);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font: inherit;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.estado {
+  color: var(--color-victoria);
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.estado--error {
+  color: var(--color-derrota);
+}

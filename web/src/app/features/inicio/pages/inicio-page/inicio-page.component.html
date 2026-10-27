@@ -1,8 +1,53 @@
 <section class="portada">
-  <p class="temporada">Temporada {{ competicion.temporada }}</p>
-  <h1 class="titulo-pagina">PITS FC</h1>
-  <p class="competicion">{{ competicion.nombre }} · {{ competicion.grupo }}</p>
+  <img
+    class="escudo"
+    src="/imagenes/escudo-pits-fc-512.png"
+    alt="Escudo de PITS FC: un gorila rodeado de estrellas"
+    width="160"
+    height="160"
+  />
+  <div class="presentacion">
+    <p class="temporada">Temporada {{ competicion.temporada }}</p>
+    <h1 class="titulo-pagina">PITS FC</h1>
+    <p class="competicion">{{ competicion.nombre }} · {{ competicion.grupo }}</p>
+  </div>
 </section>
+
+@if (datos.error(); as error) {
+  <pits-mensaje-estado tipo="error" [mensaje]="error" />
+} @else if (datos.cargando()) {
+  <pits-mensaje-estado tipo="cargando" mensaje="Cargando la temporada…" />
+} @else {
+  <div class="bloques">
+    @if (datos.proximo(); as proximo) {
+      <div class="bloque">
+        <pits-proximo-partido [partido]="proximo" />
+        @if (datos.convocatoria.value(); as convocados) {
+          @if (convocados.length > 0) {
+            <pits-convocatoria-partido [convocados]="convocados" />
+          }
+        }
+      </div>
+    }
+
+    @if (datos.ultimo(); as ultimo) {
+      <section class="bloque">
+        <h2 class="titulo-seccion">Último resultado</h2>
+        <pits-tarjeta-partido [partido]="ultimo" [conJornada]="true" />
+      </section>
+    }
+  </div>
+
+  @if (datos.tabla.value(); as filas) {
+    @if (filas.length > 0) {
+      <section class="bloque">
+        <h2 class="titulo-seccion">Clasificación</h2>
+        <pits-tabla-clasificacion [filas]="filas" [primeros]="5" />
+        <a class="enlace" routerLink="/clasificacion">Ver la clasificación completa</a>
+      </section>
+    }
+  }
+}
 
 <nav class="secciones" aria-label="Secciones de la web">
   @for (seccion of secciones; track seccion.ruta) {

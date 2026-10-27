@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.grafica {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.lienzo {
+  width: 100%;
+}
+
+.datos summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--minimo-tactil);
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  margin-top: var(--espacio-2);
+  border-collapse: collapse;
+  font-size: var(--texto-s);
+}
+
+th,
+td {
+  padding: var(--espacio-2) var(--espacio-3);
+  border-bottom: 1px solid var(--color-borde);
+  text-align: left;
+}
+
+th {
+  color: var(--color-tinta-tenue);
+  font-weight: 600;
+}
+
+td {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,6 +1,7 @@
 <header class="cabecera">
   <div class="interior">
     <a class="marca" routerLink="/">
+      <img class="escudo" src="/imagenes/escudo-pits-fc-96.png" alt="" width="44" height="44" />
       <span class="nombre">
         <span class="nombre-equipo">PITS FC</span>
         <span class="nombre-liga">Fútbol 7 · Alcobendas</span>
@@ -23,6 +24,18 @@
     </nav>
 
     <div class="accesos">
+      @if (auth.esGestor()) {
+        <a
+          class="cuenta"
+          routerLink="/gestion"
+          routerLinkActive="cuenta--activa"
+          ariaCurrentWhenActive="page"
+          aria-label="Gestión"
+        >
+          <pits-icono nombre="gestion" />
+          <span class="cuenta-texto">Gestión</span>
+        </a>
+      }
       <a
         class="cuenta"
         routerLink="/acceso"

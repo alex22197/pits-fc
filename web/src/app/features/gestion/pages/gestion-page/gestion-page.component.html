@@ -1,0 +1,27 @@
+<h1 class="titulo-pagina">Gestión</h1>
+@if (auth.sesion(); as sesion) {
+  <p class="texto-secundario">
+    Has entrado como {{ sesion.nombre ?? sesion.email }} ({{ sesion.rol }}).
+  </p>
+}
+
+<nav class="tareas" aria-label="Tareas de gestión">
+  <a class="tarea" routerLink="/gestion/convocatoria">
+    <span class="tarea-titulo">Convocatoria</span>
+    <span class="tarea-texto"
+      >Elegir quién va al próximo partido, publicarla y copiarla para WhatsApp.</span
+    >
+  </a>
+  <a class="tarea" routerLink="/gestion/jugadores">
+    <span class="tarea-titulo">Jugadores</span>
+    <span class="tarea-texto"
+      >Nombre que se muestra, dorsal, posición y quién sigue en el equipo.</span
+    >
+  </a>
+  <a class="tarea" routerLink="/gestion/importar">
+    <span class="tarea-titulo">Importar de la federación</span>
+    <span class="tarea-texto"
+      >Traer ahora resultados, clasificación y actas, y ver cómo fueron las últimas veces.</span
+    >
+  </a>
+</nav>

@@ -32,7 +32,8 @@ npm run verificar --prefix web
 ```
 
 Ejecuta linter, formato, tests y compilación, igual que la integración continua. Un cambio
-no está terminado hasta que pasa.
+no está terminado hasta que pasa. Si el cambio toca `supabase/`, también `npm run db:probar`
+(migraciones) y `npm run funciones:probar` (Edge Function), desde la raíz.
 
 ## Estructura
 
@@ -117,6 +118,11 @@ Detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
 - Puntos de corte con `@use 'breakpoints' as bp;` y `@include bp.desde(tablet)`.
 - Clases globales reutilizables en `web/src/styles/_tipografia.scss` (`titulo-pagina`,
   `titulo-seccion`, `texto-secundario`, `boton`).
+- Gráficas con ECharts solo a través de `pits-grafica` (`shared/components/grafica`), con
+  las opciones comunes de `shared/utils/graficas` y los colores `--color-grafica-*` leídos
+  en tiempo de ejecución por `TemaGraficasService`; cada gráfica lleva su tabla de datos. Un
+  color nuevo se valida para fondo oscuro antes de usarlo (ver
+  [`docs/diseno.md`](docs/diseno.md)).
 - Cualquier origen externo nuevo (scripts, estilos, letras, peticiones) se añade a la política
   de contenido de `web/public/_headers`; ver [`docs/despliegue.md`](docs/despliegue.md).
 
@@ -149,6 +155,9 @@ Detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
   nunca se edita una migración ya aplicada ni se cambia el esquema desde el panel de Supabase.
 - Cada tabla nueva: RLS activado, políticas explícitas y `grant` solo de lo necesario (el
   proyecto no expone tablas automáticamente).
+- Antes de dar por buena una migración, `npm run db:probar` (la ejecuta en un PostgreSQL
+  embebido junto con las comprobaciones de `supabase/tests/`); cada regla nueva lleva su
+  comprobación ahí.
 - Tras aplicar la migración, `npm run db:tipos`.
 - Quien termina una tarea con migración la aplica en Supabase (`npm run db:migrar`) después
   de probarla en local, si solo añade (funciones, vistas, tablas o columnas nuevas). Si

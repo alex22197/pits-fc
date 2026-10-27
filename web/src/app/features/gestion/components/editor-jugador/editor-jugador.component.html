@@ -1,0 +1,49 @@
+@let j = jugador();
+<form class="editor" [class.editor--inactivo]="!activo()" (submit)="enviar($event)">
+  <div class="federacion">
+    <span class="etiqueta">En las actas</span>
+    <span class="valor">{{ j.nombreFederacion ?? 'Sin asociar todavía' }}</span>
+  </div>
+
+  <div class="campos">
+    <label class="campo campo--nombre">
+      <span class="etiqueta">Nombre que se muestra</span>
+      <input
+        type="text"
+        [value]="nombre()"
+        (input)="cambiarNombre($event)"
+        required
+        maxlength="40"
+      />
+    </label>
+    <label class="campo campo--dorsal">
+      <span class="etiqueta">Dorsal</span>
+      <input type="number" min="1" max="99" [value]="dorsal()" (input)="cambiarDorsal($event)" />
+    </label>
+    <label class="campo campo--posicion">
+      <span class="etiqueta">Posición</span>
+      <select [value]="posicion()" (change)="cambiarPosicion($event)">
+        @for (opcion of posiciones; track opcion.valor) {
+          <option [value]="opcion.valor" [selected]="opcion.valor === posicion()">
+            {{ opcion.etiqueta }}
+          </option>
+        }
+      </select>
+    </label>
+    <label class="campo campo--activo">
+      <input type="checkbox" [checked]="activo()" (change)="cambiarActivo($event)" />
+      <span>En el equipo</span>
+    </label>
+  </div>
+
+  <div class="acciones">
+    <button type="submit" class="boton boton--principal" [disabled]="guardando() || !valido()">
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
+    </button>
+    @if (estado(); as estado) {
+      <span class="estado" [class.estado--error]="estado.tipo === 'error'" role="status">{{
+        estado.mensaje
+      }}</span>
+    }
+  </div>
+</form>

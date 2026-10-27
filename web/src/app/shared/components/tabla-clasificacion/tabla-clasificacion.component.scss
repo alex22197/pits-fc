@@ -1,0 +1,93 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.contenedor {
+  overflow-x: auto;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-s);
+}
+
+th,
+td {
+  padding: var(--espacio-3) var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+  white-space: nowrap;
+}
+
+thead th {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  text-align: center;
+}
+
+tbody tr:last-child td,
+tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+.posicion {
+  width: 2.5rem;
+  color: var(--color-tinta-tenue);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.equipo {
+  width: 100%;
+  padding-left: var(--espacio-3);
+  font-weight: 600;
+  text-align: left;
+}
+
+.numero {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.puntos {
+  font-weight: 800;
+}
+
+.racha {
+  text-align: center;
+}
+
+// En móvil solo lo esencial; el resto a partir de tableta.
+.ancha {
+  display: none;
+
+  @include bp.desde(tablet) {
+    display: table-cell;
+  }
+}
+
+.nuestra {
+  background: var(--color-marca-suave);
+
+  .equipo,
+  .puntos {
+    color: var(--color-marca);
+  }
+}
+
+.salto td {
+  padding: var(--espacio-1);
+  color: var(--color-tinta-tenue);
+  text-align: center;
+  letter-spacing: 0.3em;
+}
+
+.pie {
+  margin-top: var(--espacio-2);
+}

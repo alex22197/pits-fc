@@ -37,3 +37,19 @@ jobs:
         run: npm run test:ci
       - name: Compilación de producción
         run: npm run build
+
+  supabase:
+    name: Base de datos y funciones
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts
+      - name: Migraciones en PostgreSQL embebido
+        run: npm run db:probar
+      - name: Funciones (tipos, formato y tests con Deno)
+        run: npm run funciones:probar

@@ -1,0 +1,17 @@
+<section class="bloque">
+  <h2 class="titulo-seccion">Convocatoria</h2>
+  @for (grupo of grupos(); track grupo.etiqueta) {
+    <h3 class="subtitulo">{{ grupo.etiqueta }}</h3>
+    <ul class="lista">
+      @for (convocado of grupo.jugadores; track convocado.jugador.id) {
+        <li class="jugador">
+          <span class="dorsal">{{ convocado.jugador.dorsal ?? '–' }}</span>
+          <span class="nombre">{{ convocado.jugador.nombreMostrar }}</span>
+          @if (convocado.nota) {
+            <span class="nota">{{ convocado.nota }}</span>
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>

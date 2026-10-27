@@ -1,0 +1,46 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+
+  @include bp.desde(tablet) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--minimo-tactil);
+  color: var(--color-tinta-suave);
+  font-weight: 600;
+  cursor: pointer;
+
+  input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--color-marca);
+  }
+}
+
+.salto {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.jornadas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-8);
+}

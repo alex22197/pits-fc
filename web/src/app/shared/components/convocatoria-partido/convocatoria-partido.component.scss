@@ -1,0 +1,66 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.subtitulo {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.jugador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+  min-height: var(--minimo-tactil);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-control);
+}
+
+.dorsal {
+  min-width: 2rem;
+  color: var(--color-marca);
+  font-size: var(--texto-l);
+  font-weight: 800;
+  font-stretch: var(--anchura-condensada);
+  text-align: center;
+}
+
+.nombre {
+  font-weight: 600;
+}
+
+.nota {
+  width: 100%;
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}

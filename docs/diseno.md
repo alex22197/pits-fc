@@ -32,6 +32,31 @@ Archivo (Google Fonts) con su eje de anchura:
 
 Todos cumplen 4,5:1 sobre el fondo y las superficies.
 
+## Gráficas
+
+Apache ECharts (`ngx-echarts`) a través de `pits-grafica` (`shared/components/grafica`), que
+añade título, descripción y los mismos datos en una tabla plegada, para que nada dependa del
+color ni del ratón. Las opciones comunes están en `shared/utils/graficas/opciones-base.ts`:
+barras de 24 px como máximo con la punta redondeada, líneas de 2 px con marcadores rodeados
+por la superficie, rejilla de un paso sobre el fondo y ayudas en texto plano (nunca HTML).
+
+Los colores de las series son tokens aparte de los de marca, porque el salmón es demasiado
+claro para una marca de gráfica sobre negro. Están validados para fondo oscuro (banda de
+luminosidad, separación para daltonismo y contraste):
+
+| Token                       | Valor     | Uso                                   |
+| --------------------------- | --------- | ------------------------------------- |
+| `--color-grafica-nosotros`  | `#d9773a` | Nuestras series                       |
+| `--color-grafica-rival`     | `#4f86c6` | Lo que hace el rival                  |
+| `--color-grafica-victoria`  | `#199e70` | Resultado: victoria                   |
+| `--color-grafica-empate`    | `#c98500` | Resultado: empate; tarjetas amarillas |
+| `--color-grafica-derrota`   | `#d55181` | Resultado: derrota; tarjetas rojas    |
+| `--color-grafica-rejilla`   | `#2a2a2a` | Rejilla y ejes                        |
+
+Reglas: una sola escala por gráfica; leyenda siempre que haya dos series y ninguna con una;
+el texto (ejes, etiquetas, leyenda) con los colores de texto, nunca con el de la serie; un
+color nuevo se valida antes de usarlo.
+
 ## Disposición
 
 - Móvil primero: navegación inferior con las cinco secciones; en tableta y escritorio el menú
@@ -42,6 +67,16 @@ Todos cumplen 4,5:1 sobre el fondo y las superficies.
 
 ## Escudo y favicon
 
-Pendiente: dejar el escudo en `web/public/imagenes/escudo-pits-fc.png` (mínimo 512 px) y
-generar `favicon.ico` y `apple-touch-icon.png` a partir de él. La cabecera lo mostrará junto
-al nombre.
+El escudo original es un JPG con el círculo sobre fondo blanco. En `web/public/` están las
+versiones derivadas, todas PNG con el fondo transparente para que funcionen sobre el tema
+oscuro:
+
+| Fichero                              | Uso                                   |
+| ------------------------------------ | ------------------------------------- |
+| `imagenes/escudo-pits-fc-512.png`    | Portada y cualquier sitio en grande   |
+| `imagenes/escudo-pits-fc-96.png`     | Cabecera (se muestra a 44 px)         |
+| `favicon.png` (64 px)                | Pestaña del navegador                 |
+| `apple-touch-icon.png` (180 px)      | Icono al añadir la web al móvil       |
+
+Si cambia el escudo, se regeneran los cuatro a partir del original (fondo blanco → alfa,
+reescalado); no se retocan a mano.

@@ -3,7 +3,7 @@
 ## Visión general
 
 ```
- Navegador ──► Cloudflare Pages (ficheros estáticos de Angular)
+ Navegador ──► Cloudflare Workers (ficheros estáticos de Angular)
      │
      └──────► Supabase
                 ├─ API REST generada sobre PostgreSQL (lecturas y escrituras)
@@ -48,8 +48,21 @@ features/
     interfaces/     Tipos propios de la sección
 ```
 
-Secciones actuales: `inicio`, `calendario`, `clasificacion`, `plantilla`, `estadisticas`,
-`acceso` y `no-encontrado`. `data-access/` está vacía hasta que exista el modelo de datos.
+Secciones actuales: `inicio`, `calendario` (con la página de un partido), `clasificacion`,
+`plantilla` (con la ficha de un jugador), `estadisticas`, `acceso`, `gestion` (jugadores,
+convocatoria e importación; solo gestores, protegida por `gestorGuard`) y `no-encontrado`.
+
+Componentes compartidos que usan varias secciones: `pits-tarjeta-partido` (un partido en
+una línea, con el color del resultado si es nuestro), `pits-tabla-clasificacion` (completa o
+resumida), `pits-racha`, `pits-convocatoria-partido`, `pits-grafica` y `pits-mensaje-estado`.
+Las fechas se escriben con `shared/utils/fechas` y el pipe `fechaPartido`, siempre en hora de
+Madrid.
+
+Entidades de `data-access/`: `competiciones`, `equipos`, `partidos` (calendario, detalle con
+acta, próximo partido y último resultado), `clasificacion`, `jugadores`, `estadisticas` y
+`convocatorias`. Cada una tiene en `interfaces/` sus modelos de dominio (`*.interface.ts`) y
+la forma de las filas que devuelve Supabase (`fila-*.type.ts`), y un `*.fixtures.ts` con filas
+de ejemplo para los tests.
 
 ### Reglas de dependencia
 

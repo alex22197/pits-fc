@@ -21,16 +21,15 @@ los ficheros que se van a subir).
 
 ### Conectar con Supabase
 
-Mientras el proyecto de Supabase no exista, la web arranca con valores de relleno
-(`pendiente.supabase.co`): se puede navegar, pero entrar con Google no funciona.
+La web ya apunta al proyecto de Supabase `ozmhigfbexqgteiythfx` (URL y publishable key en
+`web/src/environments/`, y la misma URL en `connect-src` de `web/public/_headers`). Para
+trabajar con la base de datos desde la terminal:
 
-Cuando exista:
-
-1. Copiar la URL del proyecto y la publishable key (panel de Supabase → Project Settings →
-   API) en `web/src/environments/environment.ts` y `environment.development.ts`.
-2. Poner la misma URL en `connect-src` de `web/public/_headers`.
-3. `npx supabase login` y `npx supabase link --project-ref <ref>`.
-4. `npm run db:migrar` y después `npm run db:tipos`.
+1. `npx supabase login` (abre el navegador).
+2. `npx supabase link --project-ref ozmhigfbexqgteiythfx` (pide la contraseña de la base
+   de datos, que solo tiene Alex).
+3. `npm run db:migrar` para aplicar las migraciones pendientes y `npm run db:tipos` para
+   regenerar los tipos.
 
 ## Día a día
 
@@ -42,6 +41,10 @@ Cuando exista:
 | `npm run formatear --prefix web`      | Prettier sobre todo `web/`                    |
 | `npm run verificar --prefix web`      | Todo lo que comprueba la integración continua |
 | `npm run db:nueva-migracion -- nombre` | Crea una migración vacía                     |
+| `npm run db:probar`                   | Ejecuta y comprueba las migraciones sin Docker |
+| `npm run funciones:probar`            | Tipos, formato y tests de la Edge Function    |
+| `npm run funciones:formatear`         | Formatea la Edge Function con Deno            |
+| `npm run funciones:desplegar`         | Sube la Edge Function al proyecto             |
 | `npm run db:migrar`                   | Aplica las migraciones pendientes en la nube  |
 | `npm run db:tipos`                    | Regenera `database.types.ts`                  |
 

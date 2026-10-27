@@ -14,57 +14,105 @@ terminarla, se marca aquí.
 
 ## 1. Configuración pendiente (Alex, desde los paneles)
 
-- [ ] Crear el proyecto de Supabase «pits-fc» y pasar la URL y la publishable key a
-      `web/src/environments/` y a `web/public/_headers`.
-- [ ] Enlazar el repositorio con el proyecto (`npx supabase link`) y aplicar la migración
-      (`npm run db:migrar`); después `npm run db:tipos`.
-- [ ] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud.
-- [ ] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil`.
-- [ ] Guardar las credenciales de la intranet como secretos de Supabase (`supabase secrets
-      set FEDERACION_USUARIO=… FEDERACION_CLAVE=…`), tecleadas en el terminal, nunca en
-      ficheros.
-- [ ] Dejar el escudo en `web/public/imagenes/escudo-pits-fc.png` (y un favicon a partir
-      de él) para que la cabecera y la pestaña lo usen.
+- [x] Crear el proyecto de Supabase «pits-fc» y pasar la URL y la publishable key a
+      `web/src/environments/` y a `web/public/_headers` (24-10-2026).
+- [x] Enlazar el repositorio con el proyecto (`npx supabase link`) y aplicar las migraciones
+      (`npm run db:migrar`); después `npm run db:tipos` (24-10-2026).
+- [x] Activar el login con Google en Supabase y crear la aplicación OAuth en Google Cloud
+      (24-10-2026).
+- [x] Entrar una vez con Google y asignarse el rol `admin` en la tabla `perfil` (24-10-2026).
+- [x] Credenciales de la intranet como secretos de la función, secretos del Vault y
+      despliegue (24-10-2026).
+- [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
+      (24-10-2026).
 - [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
-      [`despliegue.md`](despliegue.md)).
+      [`despliegue.md`](despliegue.md)) (#10).
 - [ ] Decidir el nombre corto que se muestra de cada jugador.
 
 ## 2. Modelo de datos
 
-- [ ] Revisar [`base-de-datos.md`](base-de-datos.md) y escribir la migración del modelo:
-      competición, equipos, jornadas, partidos, clasificación, jugadores, participaciones,
-      goles, tarjetas, convocatorias y registro del scraper, con RLS y permisos.
-- [ ] Cargar la competición actual, los 13 equipos y el calendario de 26 jornadas.
-- [ ] Servicios de `data-access/` con mapeadores y tests.
+- [x] Migración del modelo: competición, equipos, jornadas, partidos, clasificación,
+      jugadores, participaciones, goles, tarjetas, convocatorias y registro del scraper, con
+      RLS, triggers y vista de estadísticas (#3).
+- [x] Datos iniciales: competición 2026-2027, 13 equipos, 26 jornadas y 156 partidos (#3).
+- [x] `npm run db:probar`: las migraciones se ejecutan y comprueban en un PostgreSQL embebido,
+      también en la integración continua (#3).
+- [x] Servicios de `data-access/` con mapeadores, fixtures, funciones puras (próximo
+      partido, resultado) y tests (#4).
 
 ## 3. Scraper de la federación
 
-- [ ] Edge Function `importar-federacion`: login, lectura de calendario, clasificación,
-      goleadores y actas nuevas, y guardado en la base de datos.
-- [ ] Programación semanal con `pg_cron` y botón «Actualizar ahora» en gestión.
-- [ ] Registro de cada ejecución (`ejecucion_scraper`) visible para los gestores.
+- [x] Edge Function `importar-federacion`: login, lectura de calendario, jornadas,
+      clasificación y actas nuevas, y guardado en la base de datos, con tests de los
+      analizadores (#5).
+- [x] Programación semanal con `pg_cron` (migración `programar_scraper`) (#5).
+- [x] Secretos de la función y del Vault, despliegue y primera importación con éxito:
+      clasificación, fechas, horas y dos actas (24-10-2026).
+- [x] Botón «Actualizar ahora» y registro de ejecuciones visible en gestión (#8).
 
 ## 4. Pantallas públicas
 
-- [ ] Portada: próximo partido, convocatoria publicada, último resultado y resumen de la
-      clasificación.
-- [ ] Calendario: jornadas con fecha, hora, campo y marcador; detalle de nuestro partido con
-      goles y tarjetas.
-- [ ] Clasificación: tabla del grupo con nuestra fila destacada.
-- [ ] Plantilla: jugadores con dorsal y posición; ficha con sus estadísticas.
+- [x] Portada: próximo partido, convocatoria publicada, último resultado y resumen de la
+      clasificación (#7).
+- [x] Calendario: jornadas con fecha, hora, campo y marcador, abierto por la jornada que
+      toca y con filtro a nuestros partidos; detalle de nuestro partido con cronología de
+      goles y tarjetas, alineación y convocatoria (#7).
+- [x] Clasificación: tabla del grupo con nuestra fila destacada (#7).
+- [x] Plantilla: jugadores con dorsal y posición; ficha con sus cifras y sus partidos (#7).
+- [ ] Página de privacidad con Alex como contacto, antes de publicar (#10).
 
 ## 5. Gestión
 
-- [ ] Convocatoria de un partido: elegir jugadores y publicarla; texto para WhatsApp.
-- [ ] Jugadores: nombre corto, dorsal, posición y correspondencia con el nombre de las actas.
-- [ ] Invitar gestores por correo.
+- [x] Convocatoria de un partido: elegir jugadores (convocado, duda, no va, con nota),
+      guardar, publicar o retirar, y copiar el texto para WhatsApp (#8).
+- [x] Jugadores: nombre corto, dorsal, posición y si sigue en el equipo, viendo el nombre
+      de las actas (#8).
+- [ ] Invitar gestores por correo desde la web (#9); de momento el administrador da el rol
+      desde el panel.
+- [ ] Asociar a mano un jugador con otro nombre de las actas cuando la federación lo escriba
+      distinto.
 
 ## 6. Estadísticas
 
-- [ ] Por jugador: partidos, titularidades, goles, tarjetas; goles encajados para porteros.
-- [ ] Del equipo por jornada, con gráficas (Apache ECharts).
+- [x] Del equipo: fichas de posición, partidos, goles y diferencia; racha; casa y fuera;
+      puntos acumulados y goles por jornada (gráficas con Apache ECharts) (#6).
+- [x] Por jugador: goleadores, partidos (titular y suplente) y tarjetas; minuto de los goles
+      del equipo (#6).
+- [x] Ficha de cada jugador en «Plantilla», con goles encajados si es portero (#7).
+- [ ] Montaña rusa de la liga: posición de cada equipo jornada a jornada (#17).
+- [ ] Datos curiosos y récords del equipo (#19).
 
-## Mejoras para después
+## 7. Una web viva: interactividad y animación
+
+Ideas para que la web sea original y divertida, cada una con su issue. Primero la guía de
+animación (#14), que fija cómo se anima en todo el proyecto.
+
+Prioridad alta:
+
+- [ ] Invitar gestores desde la web (#9).
+- [ ] Publicar la web: Cloudflare Pages, dominio y privacidad (#10).
+- [ ] Portada viva: cuenta atrás y cara a cara con el próximo rival (#11).
+- [ ] Añadir los partidos al calendario del móvil, con suscripción (#12).
+- [ ] Instalable como app en el móvil (PWA) (#13).
+
+Prioridad media:
+
+- [ ] Guía de animación: ADR, tokens de movimiento y transiciones entre páginas (#14).
+- [ ] Revivir el partido: cronología animada del acta (#15).
+- [ ] Cromos de jugadores que giran, con foto (#16).
+- [ ] Montaña rusa de la liga (#17).
+- [ ] Compartir el resultado como imagen para WhatsApp e Instagram (#18).
+- [ ] Datos curiosos y récords del equipo (#19).
+- [ ] Celebración al abrir la web tras una victoria (#20).
+
+Prioridad baja (requieren decidirlo con el equipo o identidad para jugadores):
+
+- [ ] Porra del equipo: predicciones y ranking (#21).
+- [ ] Votación del jugador del partido (#22).
+- [ ] Cómo llegar a los campos (#23).
+- [ ] Avisos en el móvil cuando se publica la convocatoria (#24).
+
+## Mejoras sin fecha
 
 - Disponibilidad de los jugadores en la web, entrenamientos, cuotas y multas.
 - Torneo de la Hispanidad u otras competiciones.

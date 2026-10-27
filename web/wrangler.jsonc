@@ -1,0 +1,10 @@
+// Despliegue en Cloudflare Workers como sitio estático. Ver docs/despliegue.md.
+{
+  "name": "pits-fc",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist/pits-fc-web/browser",
+    // Cualquier ruta de Angular (/clasificacion, /calendario/partido/…) sirve index.html.
+    "not_found_handling": "single-page-application",
+  },
+}

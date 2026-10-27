@@ -1,0 +1,12 @@
+<ol
+  class="racha"
+  [class.racha--pequena]="tamano() === 'pequena'"
+  aria-label="Últimos resultados, del más antiguo al más reciente"
+>
+  @for (ficha of fichas(); track $index) {
+    <li class="ficha" [class]="'ficha ficha--' + ficha.resultado">
+      <span aria-hidden="true">{{ ficha.letra }}</span>
+      <span class="solo-lector">{{ ficha.resultado }}</span>
+    </li>
+  }
+</ol>

@@ -6,10 +6,17 @@
     "prepare": "husky",
     "db:migrar": "supabase db push",
     "db:nueva-migracion": "supabase migration new",
-    "db:tipos": "supabase gen types typescript --linked --schema public > web/src/app/core/supabase/interfaces/database.types.ts && npm --prefix web run formatear:tipos"
+    "db:tipos": "supabase gen types typescript --linked --schema public > web/src/app/core/supabase/interfaces/database.types.ts && npm --prefix web run formatear:tipos",
+    "db:probar": "node supabase/tests/probar-migraciones.mjs",
+    "funciones:probar": "deno check --config supabase/functions/importar-federacion/deno.json supabase/functions/importar-federacion/index.ts && deno fmt --config supabase/functions/importar-federacion/deno.json --check supabase/functions/importar-federacion && deno test --config supabase/functions/importar-federacion/deno.json supabase/functions/importar-federacion",
+    "funciones:desplegar": "supabase functions deploy importar-federacion",
+    "funciones:formatear": "deno fmt --config supabase/functions/importar-federacion/deno.json supabase/functions/importar-federacion"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "supabase": "^2.120.0"
+    "supabase": "^2.120.0",
+    "@electric-sql/pglite": "^0.5.11",
+    "libpg-query": "^18.2.0",
+    "deno": "^2.9.6"
   }
 }

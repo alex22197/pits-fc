@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:cloudflare": "npm run lint && npm run test:ci && ng build",
     "test": "ng test",
     "test:ci": "ng test --watch=false",
     "lint": "ng lint --max-warnings=0",
@@ -23,6 +24,8 @@
     "@angular/platform-browser": "^22.2.0",
     "@angular/router": "^22.2.0",
     "@supabase/supabase-js": "^2.118.0",
+    "echarts": "^6.1.0",
+    "ngx-echarts": "^22.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
