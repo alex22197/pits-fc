@@ -1,8 +1,9 @@
 # Cabeceras de seguridad para todas las páginas y ficheros (Cloudflare las lee de aquí).
 # Ver docs/despliegue.md antes de cambiar la política de contenido. El origen de
-# Supabase es el proyecto ozmhigfbexqgteiythfx.
+# Supabase es el proyecto ozmhigfbexqgteiythfx. Cloudflare Web Analytics inyecta su script
+# (static.cloudflareinsights.com) y envía las visitas a cloudflareinsights.com.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://ozmhigfbexqgteiythfx.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://ozmhigfbexqgteiythfx.supabase.co https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
