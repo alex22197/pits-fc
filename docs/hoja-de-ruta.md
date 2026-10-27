@@ -69,6 +69,8 @@ terminarla, se marca aquí.
 
 - [x] Convocatoria de un partido: elegir jugadores (convocado, duda, no va, con nota),
       guardar, publicar o retirar, y copiar el texto para WhatsApp (#8).
+- [x] Alineación en la pizarra: titulares en el 1-2-3-1 sobre un campo de fútbol 7, banquillo,
+      dudas y quién no va; la misma pizarra en portada y en el partido (#33).
 - [x] Jugadores: nombre corto, dorsal, posición y si sigue en el equipo, viendo el nombre
       de las actas (#8).
 - [ ] Invitar gestores por correo desde la web (#9); de momento el administrador da el rol

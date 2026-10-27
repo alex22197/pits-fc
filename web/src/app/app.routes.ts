@@ -81,7 +81,7 @@ export const routes: Routes = [
   },
   {
     path: 'gestion/convocatoria',
-    title: 'Convocatoria',
+    title: 'Alineación',
     canActivate: [gestorGuard],
     loadComponent: () =>
       import('@features/gestion/pages/convocatoria-gestion-page/convocatoria-gestion-page.component').then(

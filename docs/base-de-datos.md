@@ -17,15 +17,16 @@ una regla o una tabla, se añade su comprobación ahí.
 
 ## Migraciones
 
-| Migración          | Qué trae                                                                   |
-| ------------------ | -------------------------------------------------------------------------- |
-| `esquema_inicial`  | enum `rol_usuario`, tabla `perfil` y función `es_gestor()`.                |
-| `modelo_de_datos`  | Todo el modelo de abajo, con triggers, vista y permisos.                   |
-| `datos_iniciales`  | Competición 2026-2027, 13 equipos, 26 jornadas, 156 partidos y resultados conocidos al 23-10-2026; función `id_equipo()`. |
-| `programar_scraper` | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local). |
-| `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros. |
-| `scraper_en_paris` | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones. |
-| `ultima_importacion` | Función pública con el fin de la última importación correcta, para el aviso del pie (#31). |
+| Migración               | Qué trae                                                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `esquema_inicial`       | enum `rol_usuario`, tabla `perfil` y función `es_gestor()`.                                                               |
+| `modelo_de_datos`       | Todo el modelo de abajo, con triggers, vista y permisos.                                                                  |
+| `datos_iniciales`       | Competición 2026-2027, 13 equipos, 26 jornadas, 156 partidos y resultados conocidos al 23-10-2026; función `id_equipo()`. |
+| `programar_scraper`     | `pg_cron` + `pg_net`: llamada semanal a la función del scraper (solo sintaxis en local).                                  |
+| `permisos_service_role` | Permisos del rol de servicio sobre todo el esquema, presentes y futuros.                                                  |
+| `scraper_en_paris`      | El cron fija la región `eu-west-3`, la única desde la que la intranet acepta conexiones.                                  |
+| `ultima_importacion`    | Función pública con el fin de la última importación correcta, para el aviso del pie (#31).                                |
+| `puesto_alineacion`     | Enum con los siete puestos del 1-2-3-1 y columna `convocatoria.puesto` con sus reglas (#33).                              |
 
 ## Modelo
 
@@ -77,7 +78,9 @@ perfil      ejecucion_scraper      vista estadisticas_jugador
 - **tarjeta**: `id`, `partido_id`, `jugador_id`, `tipo` (`amarilla`, `roja`), `minuto`.
   Solo las nuestras.
 - **convocatoria**: `partido_id`, `jugador_id`, `estado` (`convocado`, `duda`,
-  `descartado`), `nota`. La publica un gestor marcando `partido.convocatoria_publicada`.
+  `descartado`), `puesto` (enum `puesto_alineacion`: los siete del 1-2-3-1; solo un convocado
+  por puesto y partido, y solo si está convocado) y `nota`. Convocado con puesto es titular;
+  sin puesto, banquillo. La publica un gestor marcando `partido.convocatoria_publicada`.
 
 ### Operación
 
@@ -115,17 +118,17 @@ Por jugador: `partidos`, `titularidades`, `goles`, `amarillas`, `rojas` y `goles
 
 ### Permisos (RLS)
 
-| Tabla                                      | Visitante                    | Gestor          | Scraper (service role) |
-| ------------------------------------------ | ---------------------------- | --------------- | ---------------------- |
-| competicion, equipo, jornada               | lee                          | lee             | escribe                |
-| partido                                    | lee                          | lee y corrige   | escribe                |
-| clasificacion, gol, tarjeta, participacion | lee                          | lee             | escribe                |
-| jugador                                    | lee                          | lee y escribe   | lee                    |
-| jugador_privado                            | —                            | lee y escribe   | lee                    |
-| convocatoria                               | lee si está publicada        | lee y escribe   | —                      |
-| estadisticas_jugador (vista)               | lee                          | lee             | —                      |
-| ejecucion_scraper                          | —                            | lee             | escribe                |
-| perfil                                     | —                            | lee el suyo     | —                      |
+| Tabla                                      | Visitante             | Gestor        | Scraper (service role) |
+| ------------------------------------------ | --------------------- | ------------- | ---------------------- |
+| competicion, equipo, jornada               | lee                   | lee           | escribe                |
+| partido                                    | lee                   | lee y corrige | escribe                |
+| clasificacion, gol, tarjeta, participacion | lee                   | lee           | escribe                |
+| jugador                                    | lee                   | lee y escribe | lee                    |
+| jugador_privado                            | —                     | lee y escribe | lee                    |
+| convocatoria                               | lee si está publicada | lee y escribe | —                      |
+| estadisticas_jugador (vista)               | lee                   | lee           | —                      |
+| ejecucion_scraper                          | —                     | lee           | escribe                |
+| perfil                                     | —                     | lee el suyo   | —                      |
 
 ## Convenciones
 

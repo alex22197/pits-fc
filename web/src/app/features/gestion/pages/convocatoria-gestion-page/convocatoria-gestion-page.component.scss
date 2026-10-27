@@ -42,6 +42,74 @@ input[type='text'] {
   color: var(--color-victoria);
 }
 
+// En escritorio, la pizarra a la izquierda y la plantilla a la derecha; en móvil, una encima
+// de otra.
+.tablero {
+  display: grid;
+  gap: var(--espacio-6);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: 22rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.pizarra,
+.plantilla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.pizarra {
+  @include bp.desde(tablet) {
+    position: sticky;
+    top: var(--espacio-4);
+  }
+}
+
+.ayuda {
+  min-height: 2lh;
+  color: var(--color-tinta-suave);
+  text-align: center;
+}
+
+.candidatos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-marca);
+  border-radius: var(--radio-contenedor);
+  background: var(--color-superficie);
+}
+
+.candidato {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--minimo-tactil);
+  padding: var(--espacio-1) var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-control);
+  background: var(--color-fondo);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-marca);
+  }
+}
+
+.situacion {
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-xs);
+}
+
 .jugadores {
   display: flex;
   flex-direction: column;
@@ -50,7 +118,7 @@ input[type='text'] {
 
 .jugador {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) 8rem;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 11rem;
   align-items: center;
   gap: var(--espacio-2) var(--espacio-3);
   padding: var(--espacio-2) var(--espacio-3);
@@ -59,7 +127,7 @@ input[type='text'] {
   background: var(--color-superficie);
 
   @include bp.desde(tablet) {
-    grid-template-columns: 2.5rem minmax(0, 1fr) 9rem minmax(0, 1fr);
+    grid-template-columns: 2.5rem minmax(0, 1fr) 11rem minmax(0, 1fr);
   }
 }
 

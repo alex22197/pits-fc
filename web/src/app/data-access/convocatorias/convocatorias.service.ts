@@ -40,6 +40,7 @@ export class ConvocatoriasService {
         partido_id: partidoId,
         jugador_id: decision.jugadorId,
         estado: decision.estado,
+        puesto: decision.estado === 'convocado' ? decision.puesto : null,
         nota: decision.nota?.trim() || null,
       })),
     );
