@@ -11,11 +11,13 @@ function convocado(
   dorsal: number | null,
   estado: FilaConvocado['estado'],
   nota: string | null = null,
+  puesto: FilaConvocado['puesto'] = null,
 ) {
   return mapearConvocado({
     partido_id: 'partido-1',
     jugador_id: nombre,
     estado,
+    puesto,
     nota,
     created_at: '',
     updated_at: '',
@@ -32,11 +34,11 @@ const PARTIDO = mapearPartido(
 );
 
 describe('textoConvocatoria', () => {
-  it('escribe cabecera, convocados por dorsal y los demás grupos', () => {
+  it('escribe cabecera, titulares con puesto, banquillo y los demás grupos', () => {
     const texto = textoConvocatoria(
       PARTIDO,
       [
-        convocado('Carlos', 10, 'convocado'),
+        convocado('Carlos', 10, 'convocado', null, 'delantero'),
         convocado('Raúl', 8, 'convocado'),
         convocado('Samuel', null, 'duda', 'Llega tarde'),
         convocado('Jorge', 14, 'descartado'),
@@ -50,8 +52,10 @@ describe('textoConvocatoria', () => {
         'viernes, 6 de noviembre, 22:00',
         'Pvo. José Caballero, campo 2',
         '',
-        '*Convocados*',
-        '10. Carlos',
+        '*Titulares*',
+        '10. Carlos · Delantero',
+        '',
+        '*Banquillo*',
         '8. Raúl',
         '',
         '*Dudas*',

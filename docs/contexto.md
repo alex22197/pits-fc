@@ -54,8 +54,10 @@ secretos de Supabase, y guarda en la base de datos (ADR 0003, [`scraper.md`](scr
 
 Lo que la federación **no** tiene y meten los gestores a mano:
 
-- **Convocatorias**: quién va a cada partido. La disponibilidad se sigue preguntando por
-  WhatsApp; la web solo publica la convocatoria final.
+- **Alineación**: quién va a cada partido y cómo salen: los siete titulares colocados en la
+  pizarra en un 1-2-3-1 (portero, dos centrales, lateral izquierdo, medio, lateral derecho y
+  delantero), el banquillo, las dudas y quienes no van. La disponibilidad se sigue preguntando
+  por WhatsApp; la web solo publica la alineación final.
 - Nombres cortos, dorsal y posición de cada jugador.
 
 Las actas de esta liga no registran sustituciones, así que **no se pueden calcular minutos

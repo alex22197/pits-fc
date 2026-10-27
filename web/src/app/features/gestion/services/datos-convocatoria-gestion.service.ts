@@ -3,6 +3,8 @@ import { CompeticionesService } from '@data-access/competiciones/competiciones.s
 import { ConvocatoriasService } from '@data-access/convocatorias/convocatorias.service';
 import type { DecisionConvocatoria } from '@data-access/convocatorias/interfaces/decision-convocatoria.interface';
 import type { EstadoConvocatoria } from '@data-access/convocatorias/interfaces/estado-convocatoria.type';
+import type { PuestoAlineacion } from '@data-access/convocatorias/interfaces/puesto-alineacion.type';
+import { titularesPorPuesto } from '@data-access/convocatorias/puestos';
 import { textoConvocatoria } from '@data-access/convocatorias/texto-convocatoria';
 import { JugadoresService } from '@data-access/jugadores/jugadores.service';
 import { PartidosService } from '@data-access/partidos/partidos.service';
@@ -13,6 +15,7 @@ import {
 } from '@data-access/partidos/proximo-partido';
 import { FechaPartidoPipe } from '@shared/pipes/fecha-partido.pipe';
 import type { EstadoGuardado } from '../interfaces/estado-guardado.interface';
+import { anotarNota, colocarEnPuesto, decidirEstado, vaciarPuesto } from './decisiones-alineacion';
 
 /**
  * Datos de la gestión de la convocatoria: nuestros partidos pendientes, el elegido, los
@@ -67,9 +70,10 @@ export class DatosConvocatoriaGestionService {
       .filter((jugador) => decisiones.has(jugador.id))
       .map((jugador) => {
         const decision = decisiones.get(jugador.id) as DecisionConvocatoria;
-        return { jugador, estado: decision.estado, nota: decision.nota };
+        return { jugador, estado: decision.estado, puesto: decision.puesto, nota: decision.nota };
       });
   });
+  readonly titulares = computed(() => titularesPorPuesto(this.convocadosEnFormulario()));
   readonly texto = computed(() => {
     const partido = this.partido();
     return partido
@@ -90,7 +94,7 @@ export class DatosConvocatoriaGestionService {
         new Map(
           guardada.map((c) => [
             c.jugador.id,
-            { jugadorId: c.jugador.id, estado: c.estado, nota: c.nota },
+            { jugadorId: c.jugador.id, estado: c.estado, puesto: c.puesto, nota: c.nota },
           ]),
         ),
       );
@@ -103,25 +107,19 @@ export class DatosConvocatoriaGestionService {
   }
 
   decidir(jugadorId: string, estado: EstadoConvocatoria | null): void {
-    this.decisiones.update((actual) => {
-      const nuevo = new Map(actual);
-      if (estado === null) {
-        nuevo.delete(jugadorId);
-      } else {
-        nuevo.set(jugadorId, { jugadorId, estado, nota: actual.get(jugadorId)?.nota ?? null });
-      }
-      return nuevo;
-    });
+    this.decisiones.update((actual) => decidirEstado(actual, jugadorId, estado));
+  }
+
+  colocar(jugadorId: string, puesto: PuestoAlineacion): void {
+    this.decisiones.update((actual) => colocarEnPuesto(actual, jugadorId, puesto));
+  }
+
+  vaciar(puesto: PuestoAlineacion): void {
+    this.decisiones.update((actual) => vaciarPuesto(actual, puesto));
   }
 
   anotar(jugadorId: string, nota: string): void {
-    this.decisiones.update((actual) => {
-      const decision = actual.get(jugadorId);
-      if (!decision) {
-        return actual;
-      }
-      return new Map(actual).set(jugadorId, { ...decision, nota: nota.trim() || null });
-    });
+    this.decisiones.update((actual) => anotarNota(actual, jugadorId, nota));
   }
 
   async guardar(): Promise<void> {

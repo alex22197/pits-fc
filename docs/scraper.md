@@ -43,15 +43,15 @@ cargue datos. Codigos de nuestra competición (temporada 2026-2027):
 
 Páginas, todas bajo `/nfg/NPcd/`:
 
-| Página        | URL                                                                              | Qué trae                                                                                   |
-| ------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Login         | `POST /nfg/NLogin` con `NUser` y `NPass`                                         | Cookie de sesión `JSESSIONID`. Sin captcha.                                                |
-| Calendario    | `NFG_VisCalendario_Vis?cod_primaria&codtemporada&codcompeticion&codgrupo`        | Las 26 jornadas con fecha y marcadores (vacíos si no se ha jugado).                        |
-| Jornada       | `NFG_CmpJornada?cod_primaria&CodCompeticion&CodGrupo&CodTemporada&CodJornada=N`  | Partidos con fecha, hora, campo, marcador y enlace al acta (`CodActa`).                   |
-| Clasificación | `NFG_VisClasificacion?cod_primaria&codjornada&codcompeticion&codgrupo`           | Puntos, J, G, E, P, F, C, últimos resultados y sanción. También versión casa/fuera.       |
-| Goleadores    | `NFG_CMP_Goleadores?cod_primaria&CodJornada&codcompeticion&codtemporada&codgrupo` | Jugador, equipo, partidos y goles de todo el grupo.                                       |
-| Acta          | `NFG_CmpPartido?cod_primaria&CodActa=X`                                          | Titulares con dorsal, suplentes, sustituciones, tarjetas con minuto, goles con minuto y autor, árbitro, campo. |
-| Equipo        | `NFG_VisEquipos?cod_primaria=1000102&Codigo_Equipo=X`                            | Plantilla con tipo de licencia. Trae datos de contacto: solo se usa para nombres.          |
+| Página        | URL                                                                               | Qué trae                                                                                                       |
+| ------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Login         | `POST /nfg/NLogin` con `NUser` y `NPass`                                          | Cookie de sesión `JSESSIONID`. Sin captcha.                                                                    |
+| Calendario    | `NFG_VisCalendario_Vis?cod_primaria&codtemporada&codcompeticion&codgrupo`         | Las 26 jornadas con fecha y marcadores (vacíos si no se ha jugado).                                            |
+| Jornada       | `NFG_CmpJornada?cod_primaria&CodCompeticion&CodGrupo&CodTemporada&CodJornada=N`   | Partidos con fecha, hora, campo, marcador y enlace al acta (`CodActa`).                                        |
+| Clasificación | `NFG_VisClasificacion?cod_primaria&codjornada&codcompeticion&codgrupo`            | Puntos, J, G, E, P, F, C, últimos resultados y sanción. También versión casa/fuera.                            |
+| Goleadores    | `NFG_CMP_Goleadores?cod_primaria&CodJornada&codcompeticion&codtemporada&codgrupo` | Jugador, equipo, partidos y goles de todo el grupo.                                                            |
+| Acta          | `NFG_CmpPartido?cod_primaria&CodActa=X`                                           | Titulares con dorsal, suplentes, sustituciones, tarjetas con minuto, goles con minuto y autor, árbitro, campo. |
+| Equipo        | `NFG_VisEquipos?cod_primaria=1000102&Codigo_Equipo=X`                             | Plantilla con tipo de licencia. Trae datos de contacto: solo se usa para nombres.                              |
 
 Las actas de esta liga no registran sustituciones, así que no hay minutos por jugador.
 

@@ -124,11 +124,11 @@ cabeceras: hay que comprobarlo en la dirección publicada.
 
 ## Claves y secretos
 
-| Dónde                           | Qué                                            | Público |
-| ------------------------------- | ---------------------------------------------- | ------- |
-| `web/src/environments/`         | URL y publishable key de Supabase              | Sí      |
-| Panel de Supabase               | Secreto de Google OAuth                        | No      |
-| Secretos de la Edge Function    | `FEDERACION_USUARIO`, `FEDERACION_CLAVE`       | No      |
+| Dónde                        | Qué                                      | Público |
+| ---------------------------- | ---------------------------------------- | ------- |
+| `web/src/environments/`      | URL y publishable key de Supabase        | Sí      |
+| Panel de Supabase            | Secreto de Google OAuth                  | No      |
+| Secretos de la Edge Function | `FEDERACION_USUARIO`, `FEDERACION_CLAVE` | No      |
 
 ## Integración continua
 

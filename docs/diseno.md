@@ -22,13 +22,13 @@ Archivo (Google Fonts) con su eje de anchura:
 
 ## Colores de estado
 
-| Uso                    | Variable            |
-| ---------------------- | ------------------- |
-| Victoria               | `--color-victoria`  |
-| Empate                 | `--color-empate`    |
-| Derrota                | `--color-derrota`   |
-| Tarjeta amarilla       | `--color-amarilla`  |
-| Tarjeta roja           | `--color-roja`      |
+| Uso              | Variable           |
+| ---------------- | ------------------ |
+| Victoria         | `--color-victoria` |
+| Empate           | `--color-empate`   |
+| Derrota          | `--color-derrota`  |
+| Tarjeta amarilla | `--color-amarilla` |
+| Tarjeta roja     | `--color-roja`     |
 
 Todos cumplen 4,5:1 sobre el fondo y las superficies.
 
@@ -44,14 +44,14 @@ Los colores de las series son tokens aparte de los de marca, porque el salmón e
 claro para una marca de gráfica sobre negro. Están validados para fondo oscuro (banda de
 luminosidad, separación para daltonismo y contraste):
 
-| Token                       | Valor     | Uso                                   |
-| --------------------------- | --------- | ------------------------------------- |
-| `--color-grafica-nosotros`  | `#d9773a` | Nuestras series                       |
-| `--color-grafica-rival`     | `#4f86c6` | Lo que hace el rival                  |
-| `--color-grafica-victoria`  | `#199e70` | Resultado: victoria                   |
-| `--color-grafica-empate`    | `#c98500` | Resultado: empate; tarjetas amarillas |
-| `--color-grafica-derrota`   | `#d55181` | Resultado: derrota; tarjetas rojas    |
-| `--color-grafica-rejilla`   | `#2a2a2a` | Rejilla y ejes                        |
+| Token                      | Valor     | Uso                                   |
+| -------------------------- | --------- | ------------------------------------- |
+| `--color-grafica-nosotros` | `#d9773a` | Nuestras series                       |
+| `--color-grafica-rival`    | `#4f86c6` | Lo que hace el rival                  |
+| `--color-grafica-victoria` | `#199e70` | Resultado: victoria                   |
+| `--color-grafica-empate`   | `#c98500` | Resultado: empate; tarjetas amarillas |
+| `--color-grafica-derrota`  | `#d55181` | Resultado: derrota; tarjetas rojas    |
+| `--color-grafica-rejilla`  | `#2a2a2a` | Rejilla y ejes                        |
 
 Reglas: una sola escala por gráfica; leyenda siempre que haya dos series y ninguna con una;
 el texto (ejes, etiquetas, leyenda) con los colores de texto, nunca con el de la serie; un
@@ -71,12 +71,21 @@ El escudo original es un JPG con el círculo sobre fondo blanco. En `web/public/
 versiones derivadas, todas PNG con el fondo transparente para que funcionen sobre el tema
 oscuro:
 
-| Fichero                              | Uso                                   |
-| ------------------------------------ | ------------------------------------- |
-| `imagenes/escudo-pits-fc-512.png`    | Portada y cualquier sitio en grande   |
-| `imagenes/escudo-pits-fc-96.png`     | Cabecera (se muestra a 44 px)         |
-| `favicon.png` (64 px)                | Pestaña del navegador                 |
-| `apple-touch-icon.png` (180 px)      | Icono al añadir la web al móvil       |
+| Fichero                           | Uso                                 |
+| --------------------------------- | ----------------------------------- |
+| `imagenes/escudo-pits-fc-512.png` | Portada y cualquier sitio en grande |
+| `imagenes/escudo-pits-fc-96.png`  | Cabecera (se muestra a 44 px)       |
+| `favicon.png` (64 px)             | Pestaña del navegador               |
+| `apple-touch-icon.png` (180 px)   | Icono al añadir la web al móvil     |
 
 Si cambia el escudo, se regeneran los cuatro a partir del original (fondo blanco → alfa,
 reescalado); no se retocan a mano.
+
+## La pizarra
+
+La alineación se coloca sobre un campo de fútbol 7 dibujado como la pizarra del míster
+(`pits-campo-alineacion`): fondo verde pino apagado (`--color-pizarra`), líneas a tiza
+(`--color-tiza`) y fichas en salmón con el dorsal en letra condensada. Es el único elemento
+llamativo de esa pantalla; las listas de alrededor se quedan en silencio. Los puestos vacíos
+van en tiza discontinua; cuando hay un jugador esperando sitio, pasan a salmón. Al colocar una
+ficha hay un único movimiento corto («aterrizar»), que se anula con «reducir movimiento».

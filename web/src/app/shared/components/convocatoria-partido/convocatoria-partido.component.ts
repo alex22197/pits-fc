@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { Convocado } from '@data-access/convocatorias/interfaces/convocado.interface';
+import { banquillo, titularesPorPuesto } from '@data-access/convocatorias/puestos';
+import { CampoAlineacionComponent } from '../campo-alineacion/campo-alineacion.component';
 
-const ETIQUETAS = { convocado: 'Convocados', duda: 'Dudas', descartado: 'No van' } as const;
-
-/** La convocatoria publicada de un partido, por grupos. */
+/** La convocatoria publicada de un partido: la pizarra con los titulares y los demás grupos. */
 @Component({
   selector: 'pits-convocatoria-partido',
+  imports: [CampoAlineacionComponent],
   templateUrl: './convocatoria-partido.component.html',
   styleUrl: './convocatoria-partido.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,12 +14,16 @@ const ETIQUETAS = { convocado: 'Convocados', duda: 'Dudas', descartado: 'No van'
 export class ConvocatoriaPartidoComponent {
   readonly convocados = input.required<readonly Convocado[]>();
 
-  protected readonly grupos = computed(() =>
-    (['convocado', 'duda', 'descartado'] as const)
-      .map((estado) => ({
-        etiqueta: ETIQUETAS[estado],
-        jugadores: this.convocados().filter((convocado) => convocado.estado === estado),
-      }))
-      .filter((grupo) => grupo.jugadores.length > 0),
-  );
+  protected readonly titulares = computed(() => titularesPorPuesto(this.convocados()));
+
+  /** Sin titulares colocados, los convocados van en lista; con ellos, el resto es el banquillo. */
+  protected readonly grupos = computed(() => {
+    const convocados = this.convocados();
+    const hayTitulares = this.titulares().size > 0;
+    return [
+      { etiqueta: hayTitulares ? 'Banquillo' : 'Convocados', jugadores: banquillo(convocados) },
+      { etiqueta: 'Dudas', jugadores: convocados.filter((c) => c.estado === 'duda') },
+      { etiqueta: 'No van', jugadores: convocados.filter((c) => c.estado === 'descartado') },
+    ].filter((grupo) => grupo.jugadores.length > 0);
+  });
 }

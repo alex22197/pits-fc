@@ -54,7 +54,9 @@ convocatoria e importación; solo gestores, protegida por `gestorGuard`) y `no-e
 
 Componentes compartidos que usan varias secciones: `pits-tarjeta-partido` (un partido en
 una línea, con el color del resultado si es nuestro), `pits-tabla-clasificacion` (completa o
-resumida), `pits-racha`, `pits-convocatoria-partido`, `pits-grafica` y `pits-mensaje-estado`.
+resumida), `pits-racha`, `pits-convocatoria-partido` (la alineación publicada), `pits-campo-alineacion`
+(la pizarra con los siete puestos; solo muestra, o interactiva en gestión), `pits-grafica` y
+`pits-mensaje-estado`.
 Las fechas se escriben con `shared/utils/fechas` y el pipe `fechaPartido`, siempre en hora de
 Madrid.
 

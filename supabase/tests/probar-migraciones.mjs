@@ -113,6 +113,17 @@ comprobar('convocatoria en un partido ajeno: rechazada', await rechaza(`
   insert into public.convocatoria (partido_id, jugador_id)
   select p.id, j.id from public.partido p join public.jornada jo on jo.id = p.jornada_id, public.jugador j
   where jo.numero = 1 and p.local_id = public.id_equipo('C.D. MONTEJO')`));
+comprobar('puesto de la alineación en una duda: rechazado', await rechaza(`
+  insert into public.convocatoria (partido_id, jugador_id, estado, puesto)
+  select p.id, j.id, 'duda', 'portero' from (${partidoPits(4)}) p, public.jugador j`));
+await db.exec(`insert into public.jugador (nombre_mostrar, dorsal) values ('Segundo', 2)`);
+await db.exec(`
+  insert into public.convocatoria (partido_id, jugador_id, puesto)
+  select p.id, j.id, 'portero' from (${partidoPits(4)}) p, public.jugador j where j.dorsal = 10`);
+comprobar('dos titulares en el mismo puesto: rechazado', await rechaza(`
+  insert into public.convocatoria (partido_id, jugador_id, puesto)
+  select p.id, j.id, 'portero' from (${partidoPits(4)}) p, public.jugador j where j.dorsal = 2`));
+await db.exec(`delete from public.convocatoria; delete from public.jugador where dorsal = 2`);
 comprobar('marcador sin estado jugado: rechazado', await rechaza(`
   update public.partido set goles_local = 1 where id in (${partidoPits(3)})`));
 

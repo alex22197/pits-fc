@@ -117,6 +117,7 @@ export type Database = {
           jugador_id: string;
           nota: string | null;
           partido_id: string;
+          puesto: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at: string;
         };
         Insert: {
@@ -125,6 +126,7 @@ export type Database = {
           jugador_id: string;
           nota?: string | null;
           partido_id: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at?: string;
         };
         Update: {
@@ -133,6 +135,7 @@ export type Database = {
           jugador_id?: string;
           nota?: string | null;
           partido_id?: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           updated_at?: string;
         };
         Relationships: [
@@ -604,6 +607,14 @@ export type Database = {
       estado_ejecucion: 'ok' | 'error';
       estado_partido: 'programado' | 'jugado' | 'aplazado' | 'suspendido';
       posicion_jugador: 'portero' | 'defensa' | 'centrocampista' | 'delantero';
+      puesto_alineacion:
+        | 'portero'
+        | 'central_izquierdo'
+        | 'central_derecho'
+        | 'lateral_izquierdo'
+        | 'medio'
+        | 'lateral_derecho'
+        | 'delantero';
       rol_usuario: 'admin' | 'gestor';
       tipo_tarjeta: 'amarilla' | 'roja';
     };
@@ -731,6 +742,15 @@ export const Constants = {
       estado_ejecucion: ['ok', 'error'],
       estado_partido: ['programado', 'jugado', 'aplazado', 'suspendido'],
       posicion_jugador: ['portero', 'defensa', 'centrocampista', 'delantero'],
+      puesto_alineacion: [
+        'portero',
+        'central_izquierdo',
+        'central_derecho',
+        'lateral_izquierdo',
+        'medio',
+        'lateral_derecho',
+        'delantero',
+      ],
       rol_usuario: ['admin', 'gestor'],
       tipo_tarjeta: ['amarilla', 'roja'],
     },
