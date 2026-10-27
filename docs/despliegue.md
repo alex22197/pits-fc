@@ -47,6 +47,20 @@ no exista mientras no haya un `404.html`, así que las rutas de Angular funciona
 - La web no aparece en buscadores (`<meta name="robots" content="noindex, nofollow">`): es
   pública, pero solo llega quien tiene el enlace. Lo dice la página de privacidad.
 
+## Medición de visitas
+
+Cloudflare Web Analytics, sin cookies ni datos personales: visitas, páginas, de dónde se
+llega, país y dispositivo, en conjunto (#29). Por eso no hay aviso de cookies y la página de
+privacidad puede decir que no hay ninguna.
+
+- Se activa en el proyecto de Pages: **Metrics** → **Web Analytics** → **Enable**. Cloudflare
+  inyecta su script en cada página al servirla; no está en el repositorio.
+- La política de contenido de `_headers` permite `https://static.cloudflareinsights.com`
+  (script) y `https://cloudflareinsights.com` (envío de las visitas). Sin eso el navegador lo
+  bloquea y no se cuenta nada.
+- Las cifras se ven en el mismo sitio, **Metrics** → **Web Analytics**, o en **Analytics &
+  Logs → Web Analytics** de la cuenta.
+
 ## Dar acceso a un gestor
 
 Mientras no exista la invitación desde la web (#9):
