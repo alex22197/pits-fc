@@ -9,6 +9,7 @@ describe('mapearParticipacionJugador', () => {
       partido_id: 'partido-1',
       jugador_id: 'jugador-1',
       titular: false,
+      puesto: null,
       dorsal: 7,
       created_at: '',
       partido: {

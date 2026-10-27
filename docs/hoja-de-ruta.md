@@ -75,6 +75,8 @@ terminarla, se marca aquí.
       de las actas (#8).
 - [x] Acta del partido: goles, asistencias y tarjetas apuntados a mano tras cada partido; el
       scraper deja de traerlos (#34).
+- [x] La pizarra en «Quién jugó»: los titulares del acta colocados en el 1-2-3-1, copiados de
+      la alineación publicada y corregibles desde el acta (#36).
 - [ ] Invitar gestores por correo desde la web (#9); de momento el administrador da el rol
       desde el panel.
 - [ ] Asociar a mano un jugador con otro nombre de las actas cuando la federación lo escriba

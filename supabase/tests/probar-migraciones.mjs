@@ -140,6 +140,10 @@ comprobar('dos titulares en el mismo puesto: rechazado', await rechaza(`
   insert into public.convocatoria (partido_id, jugador_id, puesto)
   select p.id, j.id, 'portero' from (${partidoPits(4)}) p, public.jugador j where j.dorsal = 2`));
 await db.exec(`delete from public.convocatoria; delete from public.jugador where dorsal = 2`);
+comprobar('puesto del acta en un suplente: rechazado', await rechaza(`
+  update public.participacion set titular = false, puesto = 'medio'`));
+await db.exec(`update public.participacion set puesto = 'delantero'`);
+comprobar('el titular del acta guarda su puesto', (await contar(`select count(*) n from public.participacion where puesto = 'delantero'`)) === 1);
 comprobar('marcador sin estado jugado: rechazado', await rechaza(`
   update public.partido set goles_local = 1 where id in (${partidoPits(3)})`));
 

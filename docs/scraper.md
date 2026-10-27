@@ -80,7 +80,9 @@ utils/fechas.ts     Fechas de la intranet y hora de Madrid con horario de verano
    la nueva. Los equipos se reconocen por su código de la federación.
 5. **Actas** de nuestros partidos jugados que no se hayan importado, y también las de los
    últimos 14 días por si la federación las corrige: el resultado y las participaciones
-   (titular o suplente y dorsal). Los goles y las tarjetas del acta se leen pero no se guardan:
+   (titular o suplente y dorsal; a cada titular se le copia el puesto que tenía en la
+   alineación publicada, si la había, para la pizarra de «Quién jugó»). Los goles y las
+   tarjetas del acta se leen pero no se guardan:
    los apuntan los gestores después de cada partido, con las asistencias, desde Gestión →
    Acta del partido (#34).
 6. Cierra la ejecución con estado, resumen (cuántos partidos, jornadas, filas y actas, avisos
