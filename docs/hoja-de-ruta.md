@@ -25,8 +25,10 @@ terminarla, se marca aquí.
       despliegue (24-10-2026).
 - [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
       (24-10-2026).
-- [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
-      [`despliegue.md`](despliegue.md)) (#10).
+- [x] Primeras versiones (0.1.x) publicadas con un Worker de Cloudflare (27-10-2026) (#10).
+- [ ] Crear el proyecto de Cloudflare Pages para servir la web en <https://pits-fc.pages.dev>
+      y borrar el Worker `pits-fc` ([`despliegue.md`](despliegue.md)) (#10).
+- [ ] Añadir `https://pits-fc.pages.dev` a las URL del login en Supabase (#10).
 - [ ] Decidir el nombre corto que se muestra de cada jugador.
 
 ## 2. Modelo de datos
@@ -59,7 +61,8 @@ terminarla, se marca aquí.
       goles y tarjetas, alineación y convocatoria (#7).
 - [x] Clasificación: tabla del grupo con nuestra fila destacada (#7).
 - [x] Plantilla: jugadores con dorsal y posición; ficha con sus cifras y sus partidos (#7).
-- [ ] Página de privacidad con Alex como contacto, antes de publicar (#10).
+- [x] Página de privacidad con Alex como contacto, pie con enlace en todas las páginas,
+      vista previa para WhatsApp y fuera de buscadores (#10).
 
 ## 5. Gestión
 

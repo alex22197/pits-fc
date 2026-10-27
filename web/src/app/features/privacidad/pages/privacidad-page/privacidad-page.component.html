@@ -1,0 +1,119 @@
+<header class="cabecera">
+  <h1 class="titulo-pagina">Privacidad</h1>
+  <p class="entradilla">
+    Esta es la web del equipo de fútbol 7 PITS FC. Aquí se explica qué datos guarda, de dónde salen,
+    para qué se usan y cómo pedir que se cambien o se borren.
+  </p>
+</header>
+
+<div class="secciones">
+  <section class="prosa" aria-labelledby="titulo-responsable">
+    <h2 id="titulo-responsable" class="titulo-seccion">Quién es el responsable</h2>
+    <p>
+      {{ responsable.nombre }}, que hace y administra la web para el equipo. Para cualquier cosa
+      sobre tus datos, escribe a
+      <a [href]="'mailto:' + responsable.correo">{{ responsable.correo }}</a
+      >.
+    </p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-origen">
+    <h2 id="titulo-origen" class="titulo-seccion">De dónde salen los datos</h2>
+    <p>
+      El calendario, los resultados, la clasificación y las actas de los partidos son los que
+      publica la Real Federación de Fútbol de Madrid para la liga del Ayuntamiento de Alcobendas. La
+      web los copia una vez por semana desde la zona del club en la federación, para que el equipo
+      los tenga a mano sin entrar allí. Las convocatorias las ponen los gestores del equipo.
+    </p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-datos">
+    <h2 id="titulo-datos" class="titulo-seccion">Qué datos guarda</h2>
+    <h3>De los jugadores de PITS FC</h3>
+    <ul>
+      <li>
+        <strong>A la vista de todos:</strong> el nombre con el que se te conoce en el equipo (un
+        nombre corto o un apodo, nunca el completo), tu dorsal y tu posición, en qué partidos has
+        jugado y si fue de inicio, tus goles, tus tarjetas y las convocatorias publicadas.
+      </li>
+      <li>
+        <strong>Solo para los gestores:</strong> tu nombre completo tal como figura en las actas de
+        la federación. Sirve para saber a quién corresponde cada gol o tarjeta y no se muestra en la
+        web.
+      </li>
+    </ul>
+    <h3>De los demás equipos</h3>
+    <p>
+      Solo el nombre del equipo, sus resultados y su puesto en la clasificación. No se guarda el
+      nombre de ningún jugador rival ni de los árbitros.
+    </p>
+    <h3>De quien entra con Google</h3>
+    <p>
+      Entrar solo hace falta para gestionar el equipo. Al hacerlo se guardan el correo, el nombre y
+      la foto de tu cuenta de Google, y si tienes permisos de gestión. Entrar no da ningún permiso:
+      el administrador decide quién gestiona. La contraseña nunca llega a la web: la comprueba
+      Google.
+    </p>
+    <h3>De quien solo visita la web</h3>
+    <p>
+      Para ver la web no hace falta cuenta ni dar ningún dato. No hay cookies de publicidad ni de
+      medición de visitas. Como en cualquier web, el servidor que te la envía (Cloudflare) y el de
+      las letras (Google Fonts) ven la dirección IP de tu conexión para poder mandártela. Quien
+      entra para gestionar guarda su sesión en el navegador para no tener que entrar cada vez; se
+      borra al salir.
+    </p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-para-que">
+    <h2 id="titulo-para-que" class="titulo-seccion">Para qué se usan</h2>
+    <p>
+      Solo para que el equipo siga su temporada: el calendario, las convocatorias, los resultados,
+      la clasificación y las estadísticas. No se venden ni se ceden a nadie, no se usan para
+      publicidad y la web no aparece en los buscadores: solo llega quien tiene el enlace.
+    </p>
+    <p>
+      La base es el interés del equipo en organizar su participación en la liga, cuyos resultados ya
+      publica la federación. Quien gestiona el equipo usa su cuenta porque quiere.
+    </p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-servicios">
+    <h2 id="titulo-servicios" class="titulo-seccion">Qué servicios intervienen</h2>
+    <ul>
+      <li>
+        <strong>Supabase</strong> guarda los datos en servidores de Irlanda, dentro de la Unión
+        Europea, y copia los de la federación desde Francia.
+      </li>
+      <li><strong>Cloudflare</strong> sirve la web.</li>
+      <li><strong>Google Fonts</strong> sirve el tipo de letra.</li>
+      <li><strong>Google</strong> comprueba quién eres cuando entras con tu cuenta.</li>
+    </ul>
+    <p>Cada uno trata los datos solo para dar su servicio, con sus propias garantías.</p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-tiempo">
+    <h2 id="titulo-tiempo" class="titulo-seccion">Cuánto tiempo se guardan</h2>
+    <p>
+      Mientras formes parte del equipo. Los partidos de temporadas pasadas se quedan como historia
+      del equipo, salvo que pidas que se quite tu nombre. Los datos de una cuenta de Google se
+      borran cuando lo pides, también los de quien deja de gestionar.
+    </p>
+  </section>
+
+  <section class="prosa" aria-labelledby="titulo-derechos">
+    <h2 id="titulo-derechos" class="titulo-seccion">Qué puedes pedir</h2>
+    <p>
+      Ver qué datos tuyos hay, corregirlos, borrarlos, que salgas como «Jugador» con tu dorsal en
+      lugar de con tu nombre, o que se dejen de usar. Escribe a
+      <a [href]="'mailto:' + responsable.correo">{{ responsable.correo }}</a> y se atiende en menos
+      de un mes. Si no te convence la respuesta, puedes reclamar ante la
+      <a href="https://www.aepd.es" target="_blank" rel="noopener"
+        >Agencia Española de Protección de Datos</a
+      >.
+    </p>
+  </section>
+
+  <p class="texto-secundario">
+    Última actualización: {{ fecha }}. <a routerLink="/">Volver al inicio</a>
+  </p>
+</div>
