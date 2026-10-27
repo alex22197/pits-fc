@@ -25,8 +25,10 @@ terminarla, se marca aquí.
       despliegue (24-10-2026).
 - [x] Escudo en `web/public/imagenes/` con favicon e icono de móvil; en cabecera y portada
       (24-10-2026).
-- [ ] Crear el proyecto en Cloudflare Pages apuntando a `main` (ver
-      [`despliegue.md`](despliegue.md)) (#10).
+- [x] Proyecto en Cloudflare Workers compilando `main`: la web está en
+      <https://pits-fc.padel-ctp.workers.dev> desde la 0.1.2 (27-10-2026) (#10).
+- [ ] Añadir la dirección publicada a las URL del login en Supabase
+      ([`despliegue.md`](despliegue.md)).
 - [ ] Decidir el nombre corto que se muestra de cada jugador.
 
 ## 2. Modelo de datos
