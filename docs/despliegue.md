@@ -79,6 +79,12 @@ La política de contenido de `web/public/_headers` solo permite la propia web, G
 el proyecto de Supabase. Cualquier origen nuevo se añade ahí antes de usarlo, o el navegador
 lo bloqueará.
 
+Como `script-src` no admite scripts en línea, la compilación de producción tiene desactivado
+el CSS crítico en línea (`inlineCritical: false` en `web/angular.json`): Angular lo resuelve
+con un pequeño script en `index.html` que la política bloquea, y entonces la hoja de estilos
+se queda sin aplicar (pasó en la 0.1.1). En local no se nota, porque `ng serve` no usa estas
+cabeceras: hay que comprobarlo en la dirección publicada.
+
 ## Claves y secretos
 
 | Dónde                           | Qué                                            | Público |
