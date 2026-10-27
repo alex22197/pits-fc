@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { lanzarSiHayError } from '@core/supabase/error-acceso-datos';
 import { SupabaseClientService } from '@core/supabase/supabase-client.service';
+import type { PuestoAlineacion } from '@data-access/convocatorias/interfaces/puesto-alineacion.type';
 import type { Partido } from '@data-access/partidos/interfaces/partido.interface';
 import type { ActaPartido } from './interfaces/acta-partido.interface';
 import { marcadoresDeLosGoles } from './marcadores-acta';
@@ -80,6 +81,26 @@ export class ActasService {
         })),
       );
       lanzarSiHayError(error, 'No se han podido guardar las tarjetas.');
+    }
+  }
+
+  /** Coloca a los titulares del acta en sus puestos: `jugadorId` por puesto; el resto, sin puesto. */
+  async guardarAlineacion(
+    partidoId: string,
+    puestos: ReadonlyMap<PuestoAlineacion, string>,
+  ): Promise<void> {
+    const { error } = await this.supabase
+      .from('participacion')
+      .update({ puesto: null })
+      .eq('partido_id', partidoId);
+    lanzarSiHayError(error, 'No se ha podido guardar la alineación.');
+    for (const [puesto, jugadorId] of puestos) {
+      const { error: errorPuesto } = await this.supabase
+        .from('participacion')
+        .update({ puesto })
+        .eq('partido_id', partidoId)
+        .eq('jugador_id', jugadorId);
+      lanzarSiHayError(errorPuesto, 'No se ha podido guardar la alineación.');
     }
   }
 

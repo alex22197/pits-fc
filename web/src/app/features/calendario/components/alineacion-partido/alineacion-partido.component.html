@@ -1,16 +1,21 @@
 <section class="bloque">
   <h2 class="titulo-seccion">Quién jugó</h2>
-  <h3 class="subtitulo">Titulares</h3>
-  <ul class="lista">
-    @for (jugador of titulares(); track jugador.jugador.id) {
-      <li>
-        <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
-          <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
-          <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
-        </a>
-      </li>
-    }
-  </ul>
+  @if (colocados().size > 0) {
+    <pits-campo-alineacion [titulares]="colocados()" />
+  }
+  @if (sinColocar().length > 0) {
+    <h3 class="subtitulo">{{ colocados().size > 0 ? 'Titulares sin colocar' : 'Titulares' }}</h3>
+    <ul class="lista">
+      @for (jugador of sinColocar(); track jugador.jugador.id) {
+        <li>
+          <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
+            <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
+            <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
   @if (suplentes().length > 0) {
     <h3 class="subtitulo">Suplentes</h3>
     <ul class="lista">
@@ -23,5 +28,10 @@
         </li>
       }
     </ul>
+  }
+  @if (puedeColocar()) {
+    <a class="boton" routerLink="/gestion/acta" [queryParams]="{ partido: partidoId() }">
+      {{ colocados().size > 0 ? 'Cambiar la alineación' : 'Colocar la alineación' }}
+    </a>
   }
 </section>

@@ -415,6 +415,7 @@ export type Database = {
           dorsal: number | null;
           jugador_id: string;
           partido_id: string;
+          puesto: Database['public']['Enums']['puesto_alineacion'] | null;
           titular: boolean;
         };
         Insert: {
@@ -422,6 +423,7 @@ export type Database = {
           dorsal?: number | null;
           jugador_id: string;
           partido_id: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           titular?: boolean;
         };
         Update: {
@@ -429,6 +431,7 @@ export type Database = {
           dorsal?: number | null;
           jugador_id?: string;
           partido_id?: string;
+          puesto?: Database['public']['Enums']['puesto_alineacion'] | null;
           titular?: boolean;
         };
         Relationships: [

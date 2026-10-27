@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '@core/auth/auth.service';
 import { MensajeEstadoComponent } from '@shared/components/mensaje-estado/mensaje-estado.component';
 import { TarjetaPartidoComponent } from '@shared/components/tarjeta-partido/tarjeta-partido.component';
 import { AlineacionPartidoComponent } from '../../components/alineacion-partido/alineacion-partido.component';
@@ -28,6 +29,7 @@ export class PartidoPageComponent {
   readonly idPartido = input.required<string>();
 
   protected readonly datos = inject(DatosPartidoService);
+  protected readonly auth = inject(AuthService);
 
   constructor() {
     effect(() => this.datos.idPartido.set(this.idPartido()));
