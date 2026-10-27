@@ -1,10 +1,8 @@
-// Despliegue en Cloudflare Workers como sitio estático. Ver docs/despliegue.md.
+// Despliegue en Cloudflare Pages (https://pits-fc.pages.dev). Ver docs/despliegue.md.
+// Pages sirve index.html en cualquier ruta que no exista mientras no haya un 404.html, así que
+// las rutas de Angular (/clasificacion, /calendario/partido/…) funcionan al recargar.
 {
   "name": "pits-fc",
+  "pages_build_output_dir": "./dist/pits-fc-web/browser",
   "compatibility_date": "2026-10-01",
-  "assets": {
-    "directory": "./dist/pits-fc-web/browser",
-    // Cualquier ruta de Angular (/clasificacion, /calendario/partido/…) sirve index.html.
-    "not_found_handling": "single-page-application",
-  },
 }

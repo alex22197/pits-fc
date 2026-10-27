@@ -3,7 +3,7 @@
 ## Visión general
 
 ```
- Navegador ──► Cloudflare Workers (ficheros estáticos de Angular)
+ Navegador ──► Cloudflare Pages (ficheros estáticos de Angular)
      │
      └──────► Supabase
                 ├─ API REST generada sobre PostgreSQL (lecturas y escrituras)

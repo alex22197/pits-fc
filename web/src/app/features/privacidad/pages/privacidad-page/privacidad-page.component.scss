@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.entradilla {
+  max-width: 44rem;
+  color: var(--color-tinta-suave);
+  font-size: var(--texto-l);
+  line-height: 1.4;
+}
+
+.secciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-8);
+}
