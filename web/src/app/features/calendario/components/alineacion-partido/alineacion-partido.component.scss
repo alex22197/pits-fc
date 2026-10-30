@@ -92,3 +92,22 @@
 .boton {
   align-self: center;
 }
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.error {
+  color: var(--color-derrota);
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.lista--suplentes {
+  @include bp.desde(tablet) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

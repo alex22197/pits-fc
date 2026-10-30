@@ -15,8 +15,10 @@
   @if (detalle.participantes.length > 0) {
     <pits-alineacion-partido
       [participantes]="detalle.participantes"
-      [partidoId]="detalle.partido.id"
       [puedeColocar]="auth.esGestor()"
+      [guardando]="datos.guardandoAlineacion()"
+      [error]="datos.errorAlineacion()"
+      (guardar)="datos.guardarAlineacion($event)"
     />
   } @else if (detalle.partido.estado === 'jugado') {
     <pits-mensaje-estado tipo="vacio" mensaje="El acta de este partido aún no se ha importado." />

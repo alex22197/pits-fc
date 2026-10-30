@@ -1,0 +1,40 @@
+<div class="editor">
+  <pits-campo-alineacion
+    [titulares]="titulares()"
+    [interactivo]="true"
+    [vuelos]="true"
+    [puestoActivo]="puestoActivo()"
+    [ofrecerHuecos]="jugadorElegido() !== null"
+    [jugadorResaltado]="jugadorElegido()"
+    (puestoPulsado)="pulsarPuesto($event)"
+  />
+
+  <div class="lateral">
+    <p class="ayuda" role="status" aria-live="polite">{{ ayuda() }}</p>
+
+    @if (elegidoEnCampo()) {
+      <button type="button" class="boton" (click)="sacarElegido()">Sacar del campo</button>
+    }
+
+    @if (porColocar().length > 0) {
+      <ul class="fichas" aria-label="Jugadores por colocar">
+        @for (jugador of porColocar(); track jugador.id) {
+          <li>
+            <button
+              type="button"
+              class="ficha-lista"
+              [class.ficha-lista--elegida]="jugador.id === jugadorElegido()"
+              [attr.aria-pressed]="jugador.id === jugadorElegido()"
+              (click)="pulsarJugador(jugador)"
+            >
+              <span class="disco" [attr.data-flip-id]="jugador.id">{{
+                jugador.dorsal ?? '·'
+              }}</span>
+              <span class="nombre">{{ jugador.nombreMostrar }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>
