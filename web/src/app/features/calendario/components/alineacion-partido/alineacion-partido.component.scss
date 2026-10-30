@@ -14,6 +14,31 @@
   background: var(--color-superficie);
 }
 
+// La pizarra siempre a la vista; en escritorio, las listas a su derecha.
+.disposicion {
+  display: grid;
+  gap: var(--espacio-5);
+
+  @include bp.desde(tablet) {
+    grid-template-columns: 22rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.pizarra,
+.listas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.pendiente {
+  margin: 0;
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
 .subtitulo {
   color: var(--color-tinta-tenue);
   font-size: var(--texto-s);
@@ -31,7 +56,7 @@
   list-style: none;
 
   @include bp.desde(tablet) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -65,5 +90,5 @@
 }
 
 .boton {
-  align-self: flex-start;
+  align-self: center;
 }
