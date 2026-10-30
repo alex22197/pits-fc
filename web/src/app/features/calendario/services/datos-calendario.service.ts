@@ -5,13 +5,16 @@ import { PartidosService } from '@data-access/partidos/partidos.service';
 import { elegirJornadaActual } from '@data-access/partidos/jornada-actual';
 import { hoyEnMadrid } from '@shared/utils/fechas/hoy';
 
-/** Datos de la página de calendario: todas las jornadas, con filtro a nuestros partidos. */
+/**
+ * Datos de la página de calendario: todas las jornadas, filtradas por defecto a nuestros
+ * partidos (la jornada entera se ve al desmarcar el filtro).
+ */
 @Injectable()
 export class DatosCalendarioService {
   private readonly competiciones = inject(CompeticionesService);
   private readonly partidos = inject(PartidosService);
 
-  readonly soloNuestros = signal(false);
+  readonly soloNuestros = signal(true);
 
   readonly competicion = resource({ loader: () => this.competiciones.obtenerActiva() });
   readonly calendario = resource({
