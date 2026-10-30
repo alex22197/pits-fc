@@ -39,6 +39,10 @@ la versión anterior sigue en línea. La configuración está en
 [`web/wrangler.jsonc`](../web/wrangler.jsonc). Pages sirve `index.html` en cualquier ruta que
 no exista mientras no haya un `404.html`, así que las rutas de Angular funcionan al recargar.
 `web/public/_headers` fija las cabeceras de seguridad y la caché; Cloudflare lo lee tal cual.
+También desactiva las Early Hints (`! Link`): Cloudflare las genera de los `modulepreload` del
+HTML resolviéndolos contra la URL de la página, sin mirar `<base href="/">`, y en las rutas
+profundas pedía los chunks en sitios que devuelven la página (errores de tipo MIME en la
+consola).
 
 ## Compartir el enlace
 
