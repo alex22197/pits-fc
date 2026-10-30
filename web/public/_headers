@@ -2,6 +2,9 @@
 # Ver docs/despliegue.md antes de cambiar la política de contenido. El origen de
 # Supabase es el proyecto ozmhigfbexqgteiythfx. Cloudflare Web Analytics inyecta su script
 # (static.cloudflareinsights.com) y envía las visitas a cloudflareinsights.com.
+# `! Link` quita las Early Hints que Cloudflare genera del HTML: resuelve los modulepreload
+# relativos contra la URL de la página (sin mirar <base>) y en rutas como /calendario/partido/x
+# pide los chunks donde no están.
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://ozmhigfbexqgteiythfx.supabase.co https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
@@ -9,6 +12,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  ! Link
 
 # Los ficheros con huella en el nombre (main-XXXX.js, styles-XXXX.css…) no cambian nunca: el
 # navegador los guarda un año. index.html no entra aquí y se revalida en cada visita.
