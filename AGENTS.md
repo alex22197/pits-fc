@@ -123,6 +123,9 @@ Detalle en [`docs/arquitectura.md`](docs/arquitectura.md).
   en tiempo de ejecución por `TemaGraficasService`; cada gráfica lleva su tabla de datos. Un
   color nuevo se valida para fondo oscuro antes de usarlo (ver
   [`docs/diseno.md`](docs/diseno.md)).
+- Animaciones que CSS no resuelve (mover un elemento de sitio, arrastrar, dibujar SVG) con
+  GSAP, solo a través de `shared/utils/animacion` (ADR 0008), y siempre comprobando
+  `movimientoReducido()`. Las transiciones simples siguen en CSS.
 - Cualquier origen externo nuevo (scripts, estilos, letras, peticiones) se añade a la política
   de contenido de `web/public/_headers`; ver [`docs/despliegue.md`](docs/despliegue.md).
 

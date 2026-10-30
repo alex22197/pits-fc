@@ -1,47 +1,75 @@
 <section class="bloque">
   <h2 class="titulo-seccion">Quién jugó</h2>
-  <div class="disposicion">
-    <div class="pizarra">
-      <pits-campo-alineacion [titulares]="colocados()" />
-      @if (colocados().size === 0) {
-        <p class="pendiente">Los gestores aún no han colocado la alineación de este partido.</p>
-      }
-      @if (puedeColocar()) {
-        <a class="boton" routerLink="/gestion/acta" [queryParams]="{ partido: partidoId() }">
-          {{ colocados().size > 0 ? 'Cambiar la alineación' : 'Colocar la alineación' }}
-        </a>
-      }
-    </div>
 
-    <div class="listas">
-      @if (sinColocar().length > 0) {
-        <h3 class="subtitulo">
-          {{ colocados().size > 0 ? 'Titulares sin colocar' : 'Titulares' }}
-        </h3>
-        <ul class="lista">
-          @for (jugador of sinColocar(); track jugador.jugador.id) {
-            <li>
-              <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
-                <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
-                <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
-              </a>
-            </li>
-          }
-        </ul>
+  @if (editando()) {
+    <pits-editor-alineacion
+      [candidatos]="titularesActa()"
+      [titulares]="borrador()"
+      (cambio)="borrador.set($event)"
+    />
+    <div class="acciones">
+      <button
+        type="button"
+        class="boton boton--principal"
+        [disabled]="guardando() || borrador().size === 0"
+        (click)="guardar.emit(borrador())"
+      >
+        {{ guardando() ? 'Guardando…' : 'Guardar alineación' }}
+      </button>
+      @if (colocados().size > 0) {
+        <button type="button" class="boton" [disabled]="guardando()" (click)="cancelar()">
+          Cancelar
+        </button>
       }
-      @if (suplentes().length > 0) {
-        <h3 class="subtitulo">Suplentes</h3>
-        <ul class="lista">
-          @for (jugador of suplentes(); track jugador.jugador.id) {
-            <li>
-              <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
-                <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
-                <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
-              </a>
-            </li>
-          }
-        </ul>
+      @if (error(); as mensaje) {
+        <span class="error" role="alert">{{ mensaje }}</span>
       }
     </div>
-  </div>
+  } @else {
+    <div class="disposicion">
+      <div class="pizarra">
+        <pits-campo-alineacion [titulares]="colocados()" />
+        @if (colocados().size === 0) {
+          <p class="pendiente">Los gestores aún no han colocado la alineación de este partido.</p>
+        }
+        @if (puedeColocar()) {
+          <button type="button" class="boton" (click)="editando.set(true)">
+            {{ colocados().size > 0 ? 'Cambiar la alineación' : 'Colocar la alineación' }}
+          </button>
+        }
+      </div>
+
+      @if (sinColocar().length > 0) {
+        <div class="listas">
+          <h3 class="subtitulo">
+            {{ colocados().size > 0 ? 'Titulares sin colocar' : 'Titulares' }}
+          </h3>
+          <ul class="lista">
+            @for (jugador of sinColocar(); track jugador.jugador.id) {
+              <li>
+                <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
+                  <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
+                  <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  }
+
+  @if (suplentes().length > 0) {
+    <h3 class="subtitulo">Suplentes</h3>
+    <ul class="lista lista--suplentes">
+      @for (jugador of suplentes(); track jugador.jugador.id) {
+        <li>
+          <a class="jugador" [routerLink]="['/jugadores', jugador.jugador.id]">
+            <span class="dorsal">{{ jugador.dorsal ?? jugador.jugador.dorsal ?? '–' }}</span>
+            <span class="nombre">{{ jugador.jugador.nombreMostrar }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
 </section>

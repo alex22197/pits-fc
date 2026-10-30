@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import type { TipoTarjeta } from '@data-access/partidos/interfaces/tipo-tarjeta.type';
 import { MensajeEstadoComponent } from '@shared/components/mensaje-estado/mensaje-estado.component';
 import { FechaPartidoPipe } from '@shared/pipes/fecha-partido.pipe';
-import { EditorAlineacionComponent } from '../../components/editor-alineacion/editor-alineacion.component';
+import { EditorAlineacionComponent } from '@shared/components/editor-alineacion/editor-alineacion.component';
 import { DatosActaGestionService } from '../../services/datos-acta-gestion.service';
 
 /** Apuntar los goles, las asistencias y las tarjetas de un partido ya jugado. */

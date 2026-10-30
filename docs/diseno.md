@@ -87,5 +87,12 @@ La alineación se coloca sobre un campo de fútbol 7 dibujado como la pizarra de
 (`pits-campo-alineacion`): fondo verde pino apagado (`--color-pizarra`), líneas a tiza
 (`--color-tiza`) y fichas en salmón con el dorsal en letra condensada. Es el único elemento
 llamativo de esa pantalla; las listas de alrededor se quedan en silencio. Los puestos vacíos
-van en tiza discontinua; cuando hay un jugador esperando sitio, pasan a salmón. Al colocar una
-ficha hay un único movimiento corto («aterrizar»), que se anula con «reducir movimiento».
+van en tiza discontinua; cuando hay un jugador esperando sitio, pasan a salmón y laten.
+
+Movimiento (GSAP, ADR 0008), anulado entero con «reducir movimiento»:
+
+- Al aparecer, las líneas se trazan a tiza y las fichas caen de la portería hacia delante.
+- Al colocar a alguien, el disco de su dorsal vuela desde la lista hasta el hueco y aterriza
+  con dos anillos de tiza. Arrastrar una ficha hace lo mismo; entre dos del campo se
+  intercambian y fuera del campo vuelve a la lista.
+- Con los siete en su sitio, una ola recorre el equipo y las líneas brillan en salmón.

@@ -23,6 +23,8 @@
         class="hueco"
         [class.hueco--ocupado]="hueco.jugador"
         [class.hueco--activo]="hueco.puesto === puestoActivo()"
+        [class.hueco--elegido]="hueco.jugador && hueco.jugador.id === jugadorResaltado()"
+        [attr.data-puesto]="hueco.puesto"
         [style.left.%]="hueco.x"
         [style.top.%]="hueco.y"
         [attr.aria-label]="etiqueta(hueco)"
@@ -35,6 +37,7 @@
       <div
         class="hueco"
         [class.hueco--ocupado]="hueco.jugador"
+        [attr.data-puesto]="hueco.puesto"
         [style.left.%]="hueco.x"
         [style.top.%]="hueco.y"
         [attr.aria-label]="etiqueta(hueco)"
@@ -48,9 +51,13 @@
 
 <ng-template #ficha let-hueco="hueco">
   @if (hueco.jugador; as jugador) {
-    <span class="ficha ficha--jugador" aria-hidden="true">{{ jugador.dorsal ?? '·' }}</span>
+    <span class="onda" aria-hidden="true"></span>
+    <span class="ficha ficha--jugador" aria-hidden="true" [attr.data-flip-id]="jugador.id">{{
+      jugador.dorsal ?? '·'
+    }}</span>
     <span class="nombre" aria-hidden="true">{{ jugador.nombreMostrar }}</span>
   } @else {
+    <span class="onda" aria-hidden="true"></span>
     <span class="ficha ficha--vacia" aria-hidden="true">{{ hueco.abreviatura }}</span>
     <span class="nombre nombre--puesto" aria-hidden="true">{{ hueco.nombreCorto }}</span>
   }
