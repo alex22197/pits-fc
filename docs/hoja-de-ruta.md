@@ -107,6 +107,8 @@ Prioridad alta:
 
 Prioridad media:
 
+- [x] Pizarra animada con GSAP: colocar la alineación en el propio partido, tocando o
+      arrastrando, con vuelos, onda de tiza y celebración (ADR 0008) (#39).
 - [ ] Guía de animación: ADR, tokens de movimiento y transiciones entre páginas (#14).
 - [ ] Revivir el partido: cronología animada del acta (#15).
 - [ ] Cromos de jugadores que giran, con foto (#16).
